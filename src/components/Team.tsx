@@ -9,7 +9,7 @@ const team = [
   },
   {
     name: "Atul",
-    role: "Co-Founder & Software Engineer",
+    role: "Co-Founder & Solution Architect",
     description:
       "Designing and developing robust, scalable applications with modern technologies, ensuring high performance and seamless user experience.",
   },

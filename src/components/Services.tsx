@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { Cloud, GitBranch, Shield, Activity, Container, Workflow, ArrowRightLeft, Network, LifeBuoy } from "lucide-react";
+import { Cloud, DollarSign, Shield, Activity, Container, Workflow, ArrowRightLeft, Network, LifeBuoy } from "lucide-react";
 
 const services = [
   { icon: Cloud, title: "Cloud Architecture", description: "AWS, GCP, and Azure — designed for scale, security, and cost control." },
-  { icon: GitBranch, title: "CI/CD Pipelines", description: "Automated build, test, and deploy pipelines that ship code faster." },
+  { icon: DollarSign, title: "Cost Optimization", description: "Reduce cloud spend with right-sizing, auto-scaling, and efficient resource utilization." },
   { icon: Container, title: "Containerization & Orchestration", description: "Production-grade K8s clusters + Docker for high availability." },
   { icon: Shield, title: "DevSecOps", description: "Zero-trust networking, secrets management, and audit-ready infrastructure." },
   { icon: Activity, title: "Observability", description: "Full-stack monitoring, logging, and alerting with Datadog, Grafana, and more." },
