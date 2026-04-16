@@ -13,7 +13,7 @@ export default async function handler(req: any, res: any) {
     const response = await resend.emails.send({
       from: "Anrotex <contact@anrotex.com>",
       to: ["sales@anrotex.com"],
-      reply_to: email,
+      replyTo: email,
       subject: `New Inquiry from ${name}`,
       html: `
         <h2>New Contact Form Submission</h2>
