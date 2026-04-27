@@ -8,7 +8,7 @@ const team = [
       "Building scalable cloud infrastructure, CI/CD pipelines, and Kubernetes-based systems with a focus on performance, security, and cost optimization.",
   },
   {
-    name: "Atul",
+    name: "Anuj",
     role: "Co-Founder & Solution Architect",
     description:
       "Designing and developing robust, scalable applications with modern technologies, ensuring high performance and seamless user experience.",

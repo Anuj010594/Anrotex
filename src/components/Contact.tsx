@@ -57,10 +57,10 @@ const Contact = () => {
               const formData = new FormData(form);
 
               const data = {
-                name: formData.get("name"),
-                email: formData.get("email"),
-                company: formData.get("company"),
-                message: formData.get("message"),
+                name: String(formData.get("name") || ""),
+                email: String(formData.get("email") || ""),
+                company: String(formData.get("company") || ""),
+                message: String(formData.get("message") || ""),
               };
 
               try {
@@ -78,7 +78,7 @@ const Contact = () => {
                   setSubmitted(true);
                   form.reset();
                 } else {
-                  alert("Something went wrong. Try again.");
+                  alert(result.error || "Something went wrong.");
                 }
               } catch (error) {
                 console.error(error);
