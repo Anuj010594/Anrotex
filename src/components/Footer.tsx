@@ -21,7 +21,7 @@ const Footer = () => {
 
             <p>
               <span className="font-medium text-foreground">Email:</span>{" "}
-              sales@anrotex.com
+              rohan@anrotex.com
             </p>
 
             <p>
