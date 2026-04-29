@@ -5,7 +5,7 @@ const solutions = [
   {
     title: "DevOps-as-a-Service",
     description:
-      "Seamless integration, automation, pipelines, and faster delivery with enterprise-grade DevOps.",
+      "Automate deployments and reduce release time from hours to minutes.",
     color: "from-blue-500 to-cyan-500",
     details: (
       <>
@@ -48,7 +48,7 @@ export default function Solutions() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-20 px-6 bg-background">
+    <section id="solutions" className="py-20 px-6 bg-background">
       <div className="max-w-5xl mx-auto text-center">
         
         <h2 className="text-4xl font-bold mb-4">
