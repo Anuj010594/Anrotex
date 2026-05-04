@@ -1,9 +1,26 @@
 import { motion } from "framer-motion";
-import { Cloud, DollarSign, Shield, Activity, Container, Workflow, ArrowRightLeft, Network, LifeBuoy } from "lucide-react";
+import {
+  Cloud,
+  DollarSign,
+  Shield,
+  Activity,
+  Container,
+  Workflow,
+  ArrowRightLeft,
+  Network,
+  LifeBuoy
+} from "lucide-react";
 
 const services = [
   { icon: Cloud, title: "Cloud Architecture", description: "AWS, GCP, and Azure — designed for scale, security, and cost control." },
-  { icon: DollarSign, title: "Cost Optimization", description: "Reduce cloud spend with right-sizing, auto-scaling, and efficient resource utilization." },
+
+  {
+    icon: DollarSign,
+    title: "Cost Optimization",
+    description: "Reduce cloud spend with right-sizing, auto-scaling, and efficient resource utilization.",
+    link: "/aws-cost-optimization"
+  },
+
   { icon: Container, title: "Containerization & Orchestration", description: "Production-grade K8s clusters + Docker for high availability." },
   { icon: Shield, title: "DevSecOps", description: "Zero-trust networking, secrets management, and audit-ready infrastructure." },
   { icon: Activity, title: "Observability", description: "Full-stack monitoring, logging, and alerting with Datadog, Grafana, and more." },
@@ -11,7 +28,6 @@ const services = [
   { icon: LifeBuoy, title: "Incident Management & Support", description: "24/7 monitoring & rapid issue resolution." },
   { icon: Network, title: "Scalable Infrastructure Design", description: "Auto-scaling, load balancing & high availability." },
   { icon: ArrowRightLeft, title: "Migration Services", description: "Seamless on-prem to cloud migration." },
-
 ];
 
 const Services = () => (
@@ -24,8 +40,12 @@ const Services = () => (
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <span className="text-primary text-base font-medium tracking-widest uppercase mb-3 block">DevOps-as-a-Service:</span>
-        <h2 className="font-heading text-4xl md:text-5xl font-bold">What we Provide</h2>
+        <span className="text-primary text-base font-medium tracking-widest uppercase mb-3 block">
+          DevOps-as-a-Service:
+        </span>
+        <h2 className="font-heading text-4xl md:text-5xl font-bold">
+          What we Provide
+        </h2>
       </motion.div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -39,8 +59,24 @@ const Services = () => (
             transition={{ duration: 0.5, delay: i * 0.08 }}
           >
             <s.icon className="w-8 h-8 text-primary mb-5 group-hover:scale-110 transition-transform" />
-            <h3 className="font-heading text-xl font-semibold mb-3">{s.title}</h3>
-            <p className="text-muted-foreground leading-relaxed text-sm">{s.description}</p>
+
+            <h3 className="font-heading text-xl font-semibold mb-3">
+              {s.title}
+            </h3>
+
+            <p className="text-muted-foreground leading-relaxed text-sm mb-4">
+              {s.description}
+            </p>
+
+            {/* 🔥 Only show link if available */}
+            {s.link && (
+              <a
+                href={s.link}
+                className="text-primary text-sm font-medium inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition"
+              >
+                Reduce AWS costs →
+              </a>
+            )}
           </motion.div>
         ))}
       </div>
