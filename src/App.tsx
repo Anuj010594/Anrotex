@@ -4,7 +4,7 @@ import ServicesPage from "./pages/ServicesPage";
 import CaseStudiesPage from "./pages/CaseStudiesPage";
 import ContactPage from "./pages/ContactPage";
 import SolutionsPage from "./pages/SolutionsPage";
-import AwsCostOptimization from "./pages/AwsCostOptimization";
+import AWSCostOptimization from "./pages/AWSCostOptimization";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       <Route path="/case-studies" element={<CaseStudiesPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/solutions" element={<SolutionsPage />} />
-      <Route path="/aws-cost-optimization" element={<AwsCostOptimization />} />
+      <Route path="/aws-cost-optimization" element={<AWSCostOptimization />} />
    </Routes>
   );
 }
