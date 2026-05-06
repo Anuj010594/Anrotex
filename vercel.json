@@ -2,10 +2,6 @@
   "rewrites": [
     { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
     { "source": "/robots.txt", "destination": "/robots.txt" },
-    { "source": "/services", "destination": "/" },
-    { "source": "/solutions", "destination": "/" },
-    { "source": "/case-studies", "destination": "/" },
-    { "source": "/contact", "destination": "/" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }
