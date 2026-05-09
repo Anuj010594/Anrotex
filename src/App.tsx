@@ -5,37 +5,23 @@ import CaseStudiesPage from "./pages/CaseStudiesPage";
 import ContactPage from "./pages/ContactPage";
 import SolutionsPage from "./pages/SolutionsPage";
 import AWSCostOptimization from "./pages/AWSCostOptimization";
-import { Analytics } from "@vercel/analytics/react"
-
-function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Index />} />
-      <Route path="/services" element={<ServicesPage />} />
-      <Route path="/case-studies" element={<CaseStudiesPage />} />
-      <Route path="/contact" element={<ContactPage />} />
-      <Route path="/solutions" element={<SolutionsPage />} />
-      <Route path="/aws-cost-optimization" element={<AWSCostOptimization />} />
-   </Routes>
-  );
-}
-
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   return (
     <>
-      {/* your app */}
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/case-studies" element={<CaseStudiesPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/solutions" element={<SolutionsPage />} />
+        <Route path="/aws-cost-optimization" element={<AWSCostOptimization />} />
+      </Routes>
 
       <Analytics />
     </>
-  )
+  );
 }
-
-
-
-
-
-
 
 export default App;
