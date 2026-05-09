@@ -5,6 +5,7 @@ import CaseStudiesPage from "./pages/CaseStudiesPage";
 import ContactPage from "./pages/ContactPage";
 import SolutionsPage from "./pages/SolutionsPage";
 import AWSCostOptimization from "./pages/AWSCostOptimization";
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   return (
@@ -18,5 +19,23 @@ function App() {
    </Routes>
   );
 }
+
+import { Analytics } from "@vercel/analytics/react"
+
+function App() {
+  return (
+    <>
+      {/* your app */}
+
+      <Analytics />
+    </>
+  )
+}
+
+
+
+
+
+
 
 export default App;
