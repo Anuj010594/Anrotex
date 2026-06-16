@@ -1,0 +1,72 @@
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
+export default function KubernetesScalingBestPractices() {
+  return (
+    <>
+      <Navbar />
+
+      <main className="bg-background text-foreground max-w-4xl mx-auto px-6 py-24">
+
+        <h1 className="text-4xl md:text-5xl font-heading font-bold mb-8">
+          Kubernetes Scaling Best Practices for Production Workloads
+        </h1>
+
+        <p className="text-muted-foreground mb-8">
+          Kubernetes can scale efficiently—but only when configured properly.
+          Poor scaling setups lead to wasted resources and instability.
+        </p>
+
+        <h2 className="text-2xl font-bold mb-4">
+          1. Set resource requests correctly
+        </h2>
+
+        <p className="text-muted-foreground mb-8">
+          Avoid overprovisioning by accurately setting CPU and memory requirements.
+        </p>
+
+        <h2 className="text-2xl font-bold mb-4">
+          2. Use Horizontal Pod Autoscaler
+        </h2>
+
+        <p className="text-muted-foreground mb-8">
+          HPA helps scale workloads dynamically based on real traffic demand.
+        </p>
+
+        <h2 className="text-2xl font-bold mb-4">
+          3. Monitor cluster performance
+        </h2>
+
+        <p className="text-muted-foreground mb-8">
+          Observability tools like Prometheus and Grafana provide critical insights.
+        </p>
+
+        <h2 className="text-2xl font-bold mb-4">
+          4. Optimize node utilization
+        </h2>
+
+        <p className="text-muted-foreground mb-8">
+          Better node efficiency means lower cloud costs and improved performance.
+        </p>
+
+        <h2 className="text-2xl font-bold mb-4">
+          Final thoughts
+        </h2>
+
+        <p className="text-muted-foreground mb-8">
+          Proper Kubernetes scaling creates resilient, cost-efficient infrastructure.
+        </p>
+
+        <a
+          href="/kubernetes-scaling"
+          className="inline-block px-8 py-4 rounded-lg bg-primary text-primary-foreground font-semibold"
+        >
+          Optimize your Kubernetes Infrastructure →
+        </a>
+
+      </main>
+
+      <Footer />
+    </>
+  );
+}

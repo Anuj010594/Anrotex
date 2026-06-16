@@ -7,6 +7,7 @@ const links = [
   { label: "Case Studies", href: "/case-studies", scroll: "#cases" },
   { label: "Team", href: "/", scroll: "#team" },
   { label: "Contact", href: "/contact", scroll: "#contact" },
+  { label: "Blog", href: "/blog" },
 ];
 
 const Navbar = () => {

@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://anrotex.com/</loc>
+    <loc>https://www.anrotex.com/</loc>
     <lastmod>2026-04-28</lastmod>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://anrotex.com/services</loc>
+    <loc>https://www.anrotex.com/services</loc>
     <lastmod>2026-04-28</lastmod>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://anrotex.com/aws-cost-optimization</loc>
+    <loc>https://www.anrotex.com/aws-cost-optimization</loc>
     <lastmod>2026-05-07</lastmod>
     <priority>0.9</priority>
   </url>
@@ -22,22 +22,62 @@
 
 
   <url>
-    <loc>https://anrotex.com/solutions</loc>
+    <loc>https://www.anrotex.com/solutions</loc>
     <lastmod>2026-04-28</lastmod>
     <priority>0.9</priority>
   </url>
 
 
   <url>
-    <loc>https://anrotex.com/case-studies</loc>
+    <loc>https://www.anrotex.com/case-studies</loc>
     <lastmod>2026-04-28</lastmod>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://anrotex.com/contact</loc>
+    <loc>https://www.anrotex.com/contact</loc>
     <lastmod>2026-04-28</lastmod>
     <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.anrotex.com/kubernetes-scaling</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.anrotex.com/ci-cd-automation</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.anrotex.com/devops-consulting</loc>
+    <lastmod>2026-06-16</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.anrotex.com/blog/reduce-aws-costs</loc>
+    <lastmod>2026-06-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+ 
+  <url>
+    <loc>https://www.anrotex.com/blog/cicd-best-practices</loc>
+    <lastmod>2026-06-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.anrotex.com/blog/kubernetes-scaling-best-practices</loc>
+    <lastmod>2026-06-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.anrotex.com/blog</loc>
+    <lastmod>2026-06-16</lastmod>
+    <priority>0.9</priority>
   </url>
 
 </urlset>
