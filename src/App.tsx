@@ -13,6 +13,7 @@ import CICDBestPractices from "./pages/blog/CICDBestPractices";
 import KubernetesScalingBestPractices from "./pages/blog/KubernetesScalingBestPractices";
 import Blog from "./pages/Blog";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
       </Routes>
 
       <Analytics />
+      <SpeedInsights />
     </>
   );
 }
