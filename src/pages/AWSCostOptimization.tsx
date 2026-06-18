@@ -1,12 +1,31 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useState } from "react";
 
 export default function AwsCostOptimization() {
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+
+  const toggleFAQ = (index: number) => {
+    setOpenFAQ(openFAQ === index ? null : index);
+  };
+
   return (
     <>
       <Navbar />
 
-      <main className="bg-background text-foreground">
+      <main className="bg-background text-foreground pt-20">
+
+      <section className="px-6 py-6 max-w-5xl mx-auto text-sm text-white/70 border-b border-border">
+        <div className="flex items-center gap-2">
+        <a href="/" className="hover:text-primary transition">Home</a>
+        <span>/</span>
+        <a href="/services" className="hover:text-primary transition">Services</a>
+        <span>/</span>
+        <span className="text-foreground font-medium">AWS Cost Optimization</span>
+      </div>
+   </section>
+
+
 
         {/* HERO */}
         <section className="py-24 px-6 text-center">
@@ -84,6 +103,88 @@ export default function AwsCostOptimization() {
           </div>
         </section>
 
+        {/* RELATED READING */}
+        <section className="py-20 px-6 max-w-5xl mx-auto border-t border-border">
+          <h2 className="text-3xl font-bold mb-6">
+            Related Reading
+          </h2>
+
+          <div className="grid md:grid-cols-1 gap-6">
+            <a
+              href="/blog/reduce-aws-costs"
+              aria-label="Read article about reducing AWS costs"
+              className="block p-6 rounded-xl border border-border hover:border-primary hover:shadow-md transition"
+            >
+              <h3 className="font-semibold mb-2">
+                How to Reduce AWS Costs Without Affecting Performance
+              </h3>
+
+              <p className="text-sm text-muted-foreground">
+                Learn practical strategies to cut AWS spend while maintaining performance.
+              </p>
+            </a>
+          </div>
+        </section>
+
+        {/* FAQ SECTION */}
+        <section className="py-20 px-6 max-w-5xl mx-auto border-t border-border">
+          <h2 className="text-3xl font-bold mb-8">
+            Frequently Asked Questions
+          </h2>
+
+          <div className="space-y-4">
+
+            {/* FAQ 1 */}
+            <div className="border rounded-xl p-4">
+              <button
+                onClick={() => toggleFAQ(0)}
+                className="w-full text-left text-xl font-semibold"
+              >
+                How much can AWS optimization reduce costs?
+              </button>
+
+              {openFAQ === 0 && (
+                <div className="mt-3 text-muted-foreground animate-accordion-down">
+                  Most companies reduce AWS costs by 20% to 50% depending on current infrastructure inefficiencies.
+                </div>
+              )}
+            </div>
+
+            {/* FAQ 2 */}
+            <div className="border rounded-xl p-4">
+              <button
+                onClick={() => toggleFAQ(1)}
+                className="w-full text-left text-xl font-semibold"
+              >
+                How long does an AWS cost audit take?
+              </button>
+
+              {openFAQ === 1 && (
+                <div className="mt-3 text-muted-foreground animate-accordion-down">
+                  A full AWS cost audit usually takes between 3 to 7 business days.
+                </div>
+              )}
+            </div>
+
+            {/* FAQ 3 */}
+            <div className="border rounded-xl p-4">
+              <button
+                onClick={() => toggleFAQ(2)}
+                className="w-full text-left text-xl font-semibold"
+              >
+                Do you optimize EKS, RDS, and S3 too?
+              </button>
+
+              {openFAQ === 2 && (
+                <div className="mt-3 text-muted-foreground animate-accordion-down">
+                  Yes. We optimize EC2, EKS, RDS, S3, CloudFront, and other AWS services.
+                </div>
+              )}
+            </div>
+
+          </div>
+        </section>
+
         {/* CTA */}
         <section className="py-24 px-6 text-center bg-card border-t border-border">
           <h2 className="text-3xl font-bold mb-6">
@@ -103,6 +204,75 @@ export default function AwsCostOptimization() {
         </section>
 
       </main>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "How much can AWS optimization reduce costs?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Most companies can reduce AWS costs by 20% to 50% depending on infrastructure inefficiencies."
+                }
+              },
+              {
+                "@type": "Question",
+                name: "How long does an AWS audit take?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "A full AWS cost audit usually takes 3 to 7 business days."
+                }
+              },
+              {
+                "@type": "Question",
+                name: "Do you optimize EKS, RDS, and S3 too?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Yes, we optimize EC2, EKS, RDS, S3, and other AWS services."
+                }
+              }
+            ]
+          })
+        }}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                 position: 1,
+                 name: "Home",
+                 item: "https://www.anrotex.com/"
+              },
+             {
+                "@type": "ListItem",
+                 position: 2,
+                 name: "Services",
+                 item: "https://www.anrotex.com/services"
+              },
+             {
+                "@type": "ListItem",
+                 position: 3,
+                 name: "AWS Cost Optimization",
+                 item: "https://www.anrotex.com/aws-cost-optimization"
+                }
+               ]
+             })
+           }}
+        />
+
+
+
 
       <Footer />
     </>

@@ -1,12 +1,31 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useState } from "react";
 
 export default function DevOpsConsulting() {
+  
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+
+  const toggleFAQ = (index: number) => {
+    setOpenFAQ(openFAQ === index ? null : index);
+  };	
+	
   return (
     <>
       <Navbar />
 
-      <main className="bg-background text-foreground">
+    <main className="bg-background text-foreground pt-20">
+
+    <section className="px-6 py-6 max-w-5xl mx-auto text-sm text-white/70 border-b border-border">
+      <div className="flex items-center gap-2">
+        <a href="/" className="hover:text-primary transition">Home</a>
+        <span>/</span>
+        <a href="/services" className="hover:text-primary transition">Services</a>
+        <span>/</span>
+        <span className="text-foreground font-medium">Devops Consulting</span>
+     </div>
+   </section>
+
 
         {/* HERO */}
         <section className="py-24 px-6 text-center">
@@ -92,6 +111,118 @@ export default function DevOpsConsulting() {
           </div>
         </section>
 
+        {/* RELATED READING */}
+        <section className="py-20 px-6 max-w-5xl mx-auto border-t border-border">
+          <h2 className="text-3xl font-bold mb-6">
+            Related Reading
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-6">
+
+            <a
+              href="/blog/reduce-aws-costs"
+              aria-label="Read article about reducing AWS costs"
+              className="block p-6 rounded-xl border border-border hover:border-primary hover:shadow-md transition"
+            >
+              <h3 className="font-semibold mb-2">
+                Reduce AWS Costs
+              </h3>
+
+              <p className="text-sm text-muted-foreground">
+                Learn practical ways to optimize AWS infrastructure costs.
+              </p>
+            </a>
+
+            <a
+              href="/blog/cicd-best-practices"
+              aria-label="Read article about CI/CD best practices"
+              className="block p-6 rounded-xl border border-border hover:border-primary hover:shadow-md transition"
+            >
+              <h3 className="font-semibold mb-2">
+                CI/CD Best Practices
+              </h3>
+
+              <p className="text-sm text-muted-foreground">
+                Improve release speed, reliability, and deployment automation.
+              </p>
+            </a>
+
+            <a
+              href="/blog/kubernetes-scaling-best-practices"
+              aria-label="Read article about Kubernetes scaling"
+              className="block p-6 rounded-xl border border-border hover:border-primary hover:shadow-md transition"
+            >
+              <h3 className="font-semibold mb-2">
+                Kubernetes Scaling Guide
+              </h3>
+
+              <p className="text-sm text-muted-foreground">
+                Learn autoscaling and production optimization strategies.
+              </p>
+            </a>
+
+          </div>
+        </section>
+
+        {/* FAQ SECTION */}
+        <section className="py-20 px-6 max-w-5xl mx-auto border-t border-border">
+          <h2 className="text-3xl font-bold mb-8">
+            Frequently Asked Questions
+          </h2>
+
+          <div className="space-y-4">
+
+            {/* FAQ 1 */}
+            <div className="border rounded-xl p-4">
+              <button
+                onClick={() => toggleFAQ(0)}
+                className="w-full text-left text-xl font-semibold"
+              >
+                What does DevOps consulting include?
+              </button>
+
+              {openFAQ === 0 && (
+                <div className="mt-3 text-muted-foreground animate-accordion-down">
+                  Our DevOps consulting includes CI/CD, cloud optimization, Kubernetes scaling, observability, and infrastructure automation.
+                </div>
+              )}
+            </div>
+
+            {/* FAQ 2 */}
+            <div className="border rounded-xl p-4">
+              <button
+                onClick={() => toggleFAQ(1)}
+                className="w-full text-left text-xl font-semibold"
+              >
+                Do you work with startups and enterprises?
+              </button>
+
+              {openFAQ === 1 && (
+                <div className="mt-3 text-muted-foreground animate-accordion-down">
+                  Yes, we support startups, scaleups, and enterprise engineering teams.
+                </div>
+              )}
+            </div>
+
+            {/* FAQ 3 */}
+            <div className="border rounded-xl p-4">
+              <button
+                onClick={() => toggleFAQ(2)}
+                className="w-full text-left text-xl font-semibold"
+              >
+                Which cloud providers do you support?
+              </button>
+
+              {openFAQ === 2 && (
+                <div className="mt-3 text-muted-foreground animate-accordion-down">
+                  We support AWS, Google Cloud Platform, and Microsoft Azure.
+                </div>
+              )}
+            </div>
+
+          </div>
+        </section>
+
         {/* CTA */}
         <section className="py-24 px-6 text-center bg-card border-t border-border">
           <h2 className="text-3xl font-bold mb-6">
@@ -111,6 +242,76 @@ export default function DevOpsConsulting() {
         </section>
 
       </main>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "What does DevOps consulting include?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Our DevOps consulting includes CI/CD, cloud optimization, Kubernetes scaling, observability, and infrastructure automation."
+                }
+              },
+             {
+                "@type": "Question",
+                name: "Do you work with startups and enterprises?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Yes, we support startups, scaleups, and enterprise engineering teams."
+                }
+              },
+            {
+                "@type": "Question",
+                name: "Which cloud providers do you support?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "We support AWS, Google Cloud Platform, and Microsoft Azure."
+                }
+              }
+            ]
+          })
+        }}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+         __html: JSON.stringify({
+           "@context": "https://schema.org",
+           "@type": "BreadcrumbList",
+            itemListElement: [
+          {
+            "@type": "ListItem",
+             position: 1,
+             name: "Home",
+             item: "https://www.anrotex.com/"
+           },
+          {
+            "@type": "ListItem",
+             position: 2,
+             name: "Services",
+             item: "https://www.anrotex.com/services"
+           },
+          {
+            "@type": "ListItem",
+             position: 3,
+             name: "DevOps Consulting",
+             item: "https://www.anrotex.com/devops-consulting"
+            }
+          ]
+        })
+      }}
+   />
+
+
+
+
 
       <Footer />
     </>

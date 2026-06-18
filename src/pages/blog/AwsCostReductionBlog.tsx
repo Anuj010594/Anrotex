@@ -121,12 +121,7 @@ export default function AwsCostReductionBlog() {
         <h2 className="text-2xl font-bold mb-4">
           Final thoughts
         </h2>
-
-        <p className="text-muted-foreground mb-8">
-          AWS optimization isn’t just about cutting costs — it’s about building
-          sustainable infrastructure that scales efficiently.
-        </p>
-
+      
         <a
           href="/aws-cost-optimization"
           className="inline-block px-8 py-4 rounded-lg bg-primary text-primary-foreground font-semibold"
@@ -134,7 +129,62 @@ export default function AwsCostReductionBlog() {
           Get an AWS Cost Audit →
         </a>
 
+           {/* Related Articles */}
+        <div className="mt-20 border-t border-border pt-10">
+          <h3 className="text-2xl font-bold mb-6">Related Articles</h3>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <a href="/blog/cicd-best-practices" className="block p-6 rounded-xl border border-border hover:border-primary transition">
+              <h4 className="font-semibold mb-2">
+                CI/CD Best Practices for Faster Deployments
+              </h4>
+              <p className="text-sm text-muted-foreground">
+                Improve release speed and reliability. 
+              </p>
+            </a>
+
+            <a href="/blog/kubernetes-scaling-best-practices" className="block p-6 rounded-xl border border-border hover:border-primary transition">
+              <h4 className="font-semibold mb-2">
+                Kubernetes Scaling Best Practices
+              </h4>
+              <p className="text-sm text-muted-foreground">
+                Learn how to scale Kubernetes efficiently.
+              </p>
+            </a>
+          </div>
+        </div>
+
       </main>
+      
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+         "@context": "https://schema.org",
+         "@type": "BreadcrumbList",
+         itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.anrotex.com/"
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Blog",
+          item: "https://www.anrotex.com/blog"
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "AWS Cost Reduction",
+          item: "https://www.anrotex.com/blog/reduce-aws-costs"
+        }
+      ]
+    })
+  }}
+/>
 
       <Footer />
     </>
