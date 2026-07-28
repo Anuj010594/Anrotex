@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import nodemailer from "nodemailer";
 import { z } from "zod";
-import { leadSubmissionSchema } from "../src/lib/lead-security";
+import { leadSubmissionSchema } from "../src/lib/lead-security.js";
 
 type RateLimitEntry = {
   count: number;
