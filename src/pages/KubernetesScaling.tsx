@@ -15,7 +15,7 @@ export default function KubernetesScaling() {
 
       <main className="bg-background text-foreground pt-20">
 
-      <section className="px-6 py-6 max-w-5xl mx-auto text-sm text-white/70 border-b border-border">
+      <section className="px-6 py-6 max-w-5xl mx-auto text-sm text-muted-foreground border-b border-border">
         <div className="flex items-center gap-2">
           <a href="/" className="hover:text-primary transition">Home</a>
           <span>/</span>

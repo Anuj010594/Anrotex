@@ -1,0 +1,27 @@
+:root {
+  /* Exact palette extracted from WelcomNote-Anrotex.pdf */
+  --brand-navy: #09324a;
+  --brand-off-white: #f3f2ea;
+  --brand-mint: #aed0c9;
+  --brand-yellow: #fffb08;
+  --brand-teal: #1b6f81;
+  --brand-stone: #dad7c8;
+  --brand-black: #000000;
+
+  /* Present once as a stray/clipped PDF glyph; do not use by default. */
+  --brand-cyan-artifact: #00c2cb;
+
+  /* Semantic aliases for website implementation */
+  --brand-primary: var(--brand-navy);
+  --brand-secondary: var(--brand-mint);
+  --brand-accent: var(--brand-yellow);
+  --brand-background: var(--brand-off-white);
+  --brand-surface-muted: var(--brand-stone);
+  --brand-text: var(--brand-navy);
+  --brand-text-on-dark: var(--brand-off-white);
+  --brand-emphasis: var(--brand-teal);
+
+  --font-brand:
+    "Urbanist", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}

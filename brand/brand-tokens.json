@@ -1,0 +1,67 @@
+{
+  "source": "source/WelcomNote-Anrotex.pdf",
+  "extractionNote": "Exact RGB values extracted from embedded PDF text and vector graphics. Semantic roles are inferred from usage because the source does not label primary and secondary colors.",
+  "colors": {
+    "navy": {
+      "hex": "#09324A",
+      "rgb": [9, 50, 74],
+      "role": "primary"
+    },
+    "offWhite": {
+      "hex": "#F3F2EA",
+      "rgb": [243, 242, 234],
+      "role": "primary-neutral"
+    },
+    "mint": {
+      "hex": "#AED0C9",
+      "rgb": [174, 208, 201],
+      "role": "secondary"
+    },
+    "yellow": {
+      "hex": "#FFFB08",
+      "rgb": [255, 251, 8],
+      "role": "accent"
+    },
+    "teal": {
+      "hex": "#1B6F81",
+      "rgb": [27, 111, 129],
+      "role": "secondary"
+    },
+    "stone": {
+      "hex": "#DAD7C8",
+      "rgb": [218, 215, 200],
+      "role": "supporting-neutral"
+    },
+    "black": {
+      "hex": "#000000",
+      "rgb": [0, 0, 0],
+      "role": "utility-neutral"
+    },
+    "cyanArtifact": {
+      "hex": "#00C2CB",
+      "rgb": [0, 194, 203],
+      "role": "unconfirmed-artifact",
+      "useByDefault": false
+    }
+  },
+  "typography": {
+    "primaryFamily": "Urbanist",
+    "fallbacks": [
+      "ui-sans-serif",
+      "system-ui",
+      "-apple-system",
+      "BlinkMacSystemFont",
+      "Segoe UI",
+      "sans-serif"
+    ],
+    "weights": {
+      "thin": 100,
+      "light": 300,
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    "decorativePdfOnly": "Cooper Black"
+  }
+}

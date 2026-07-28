@@ -6,7 +6,7 @@ const solutions = [
     title: "DevOps-as-a-Service",
     description:
       "Automate deployments and reduce release time from hours to minutes.",
-    color: "from-blue-500 to-cyan-500",
+    color: "from-brand-yellow to-brand-mint",
     details: (
       <>
         <p className="mb-4">
@@ -26,7 +26,7 @@ const solutions = [
     title: "Custom Software Development",
     description:
       "Innovative, scalable, and secure applications tailored to your business goals.",
-    color: "from-purple-500 to-pink-500",
+    color: "from-brand-mint to-brand-stone",
     details: (
       <>
         <p className="mb-4">
@@ -78,7 +78,7 @@ export default function Solutions() {
 
                   <button
                     onClick={() => setActiveIndex(index)}
-                    className={`w-full py-2 rounded-lg bg-gradient-to-r ${item.color} text-white`}
+                    className={`w-full py-2 rounded-lg bg-gradient-to-r ${item.color} text-brand-navy font-semibold`}
                   >
                     Learn More →
                   </button>

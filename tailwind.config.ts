@@ -19,11 +19,19 @@ export default {
 
     extend: {
       fontFamily: {
-        heading: ["Space Grotesk", "sans-serif"],
-        body: ["DM Sans", "sans-serif"],
+        heading: ["Urbanist", "ui-sans-serif", "system-ui", "sans-serif"],
+        body: ["Urbanist", "ui-sans-serif", "system-ui", "sans-serif"],
       },
 
       colors: {
+        brand: {
+          navy: "#09324A",
+          "off-white": "#F3F2EA",
+          mint: "#AED0C9",
+          yellow: "#FFFB08",
+          teal: "#1B6F81",
+          stone: "#DAD7C8",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
