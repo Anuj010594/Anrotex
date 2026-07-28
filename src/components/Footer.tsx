@@ -1,49 +1,95 @@
-const Footer = () => {
-  return (
-    <footer className="border-t border-border py-16 px-6 bg-background">
-      <div className="container grid md:grid-cols-2 gap-10 items-start">
+import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
-        {/* LEFT SECTION */}
+const serviceLinks = [
+  { label: "DevOps consulting", href: "/devops-consulting" },
+  { label: "AWS cost optimization", href: "/aws-cost-optimization" },
+  { label: "Kubernetes scaling", href: "/kubernetes-scaling" },
+  { label: "CI/CD automation", href: "/ci-cd-automation" },
+];
+
+const companyLinks = [
+  { label: "Case studies", href: "/case-studies" },
+  { label: "Insights", href: "/blog" },
+  { label: "Contact", href: "/contact" },
+];
+
+const Footer = () => (
+  <footer className="bg-brand-navy px-6 pb-8 pt-20 text-brand-off-white">
+    <div className="container">
+      <div className="grid gap-12 border-b border-brand-mint/20 pb-16 md:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_0.8fr]">
         <div>
-          <h2 className="font-heading text-2xl font-bold tracking-tight mb-4">
-            <span className="text-primary">Anro</span>tex
-          </h2>
-
-          <p className="text-muted-foreground text-sm mb-6">
-            © {new Date().getFullYear()} Anrotex. All rights reserved.
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-3xl font-bold tracking-[-0.04em]"
+          >
+            Anrotex
+            <span className="h-2.5 w-2.5 rounded-full bg-brand-yellow" />
+          </Link>
+          <p className="mt-5 max-w-md leading-relaxed text-brand-stone">
+            Founder-led cloud, DevOps, and platform engineering for teams that
+            need to ship faster, run reliably, and spend less.
           </p>
+          <Link
+            to="/contact"
+            className="mt-7 inline-flex items-center gap-2 font-bold text-brand-yellow"
+          >
+            Book a free strategy call
+            <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </div>
 
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <p>
-              <span className="font-medium text-foreground">Address:</span>{" "}
-              Pune, India
-            </p>
-
-            <p>
-              <span className="font-medium text-foreground">Email:</span>{" "}
-              rohan@anrotex.com
-            </p>
-
-            <p>
-              <span className="font-medium text-foreground">Phone:</span>{" "}
-              +91 7972702722
-            </p>
+        <div>
+          <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-brand-mint">
+            Services
+          </h3>
+          <div className="mt-5 space-y-3">
+            {serviceLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="block text-sm text-brand-stone transition hover:text-brand-off-white"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
 
-        {/* RIGHT SECTION (EMPTY SPACE FOR BALANCE / FUTURE USE) */}
-        <div className="hidden md:block" />
-
+        <div>
+          <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-brand-mint">
+            Company
+          </h3>
+          <div className="mt-5 space-y-3">
+            {companyLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="block text-sm text-brand-stone transition hover:text-brand-off-white"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+          <div className="mt-7 space-y-2 text-sm text-brand-stone">
+            <a href="mailto:rohan@anrotex.com" className="block hover:text-brand-off-white">
+              rohan@anrotex.com
+            </a>
+            <a href="tel:+917972702722" className="block hover:text-brand-off-white">
+              +91 79727 02722
+            </a>
+            <p>Pune, India</p>
+            <p className="font-semibold text-brand-off-white">LLPIN : ACY-8754</p>
+          </div>
+        </div>
       </div>
 
-      {/* BOTTOM LINE */}
-      <div className="mt-12 border-t border-border pt-6 text-center">
-        <p className="text-xs text-muted-foreground">
-          Built for modern DevOps-driven businesses.
-        </p>
+      <div className="flex flex-col gap-3 pt-7 text-xs text-brand-stone sm:flex-row sm:items-center sm:justify-between">
+        <p>© {new Date().getFullYear()} Anrotex. All rights reserved.</p>
+        <p>Cloud engineering with measurable outcomes.</p>
       </div>
-    </footer>
-  );
-};
+    </div>
+  </footer>
+);
 
 export default Footer;

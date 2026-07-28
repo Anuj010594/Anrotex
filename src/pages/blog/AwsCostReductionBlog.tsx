@@ -1,68 +1,32 @@
-import { Helmet } from "react-helmet";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
+import { articleSchema, breadcrumbSchema } from "@/lib/seo";
 
 export default function AwsCostReductionBlog() {
   return (
     <>
-      <Helmet>
-        <title>How to Reduce AWS Costs Without Affecting Performance | Anrotex</title>
-
-        <meta
-          name="description"
-          content="Learn practical AWS cost optimization strategies including rightsizing, autoscaling, storage lifecycle optimization, and reducing idle resources."
-        />
-
-        <link
-          rel="canonical"
-          href="https://www.anrotex.com/blog/reduce-aws-costs"
-        />
-
-        {/* Open Graph */}
-        <meta
-          property="og:title"
-          content="How to Reduce AWS Costs Without Affecting Performance"
-        />
-        <meta
-          property="og:description"
-          content="Reduce AWS costs with practical optimization strategies while maintaining performance and scalability."
-        />
-        <meta
-          property="og:url"
-          content="https://www.anrotex.com/blog/reduce-aws-costs"
-        />
-        <meta property="og:type" content="article" />
-
-        {/* Article Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            headline:
-              "How to Reduce AWS Costs Without Affecting Performance",
+      <SEO
+        title="How to Reduce AWS Costs Without Hurting Performance | Anrotex"
+        description="Learn practical AWS cost optimization strategies for rightsizing, autoscaling, storage lifecycle management, and eliminating idle cloud resources."
+        path="/blog/reduce-aws-costs"
+        type="article"
+        structuredData={[
+          articleSchema({
+            headline: "How to Reduce AWS Costs Without Affecting Performance",
             description:
               "Learn practical AWS cost optimization strategies for reducing cloud spend while maintaining infrastructure reliability.",
-            author: {
-              "@type": "Organization",
-              name: "Anrotex"
-            },
-            publisher: {
-              "@type": "Organization",
-              name: "Anrotex",
-              logo: {
-                "@type": "ImageObject",
-                url: "https://www.anrotex.com/Anrotex.png"
-              }
-            },
+            path: "/blog/reduce-aws-costs",
             datePublished: "2026-06-16",
             dateModified: "2026-06-16",
-            mainEntityOfPage: {
-              "@type": "WebPage",
-              "@id": "https://www.anrotex.com/blog/reduce-aws-costs"
-            }
-          })}
-        </script>
-      </Helmet>
+          }),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+            { name: "AWS Cost Reduction", path: "/blog/reduce-aws-costs" },
+          ]),
+        ]}
+      />
 
       <Navbar />
 
@@ -156,36 +120,6 @@ export default function AwsCostReductionBlog() {
 
       </main>
       
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-         "@context": "https://schema.org",
-         "@type": "BreadcrumbList",
-         itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: "https://www.anrotex.com/"
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Blog",
-          item: "https://www.anrotex.com/blog"
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "AWS Cost Reduction",
-          item: "https://www.anrotex.com/blog/reduce-aws-costs"
-        }
-      ]
-    })
-  }}
-/>
-
       <Footer />
     </>
   );

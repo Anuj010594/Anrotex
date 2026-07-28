@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
+import { serviceSchema } from "@/lib/seo";
 import { useState } from "react";
 
 export default function DevOpsConsulting() {
@@ -12,6 +14,18 @@ export default function DevOpsConsulting() {
 	
   return (
     <>
+      <SEO
+        title="DevOps Consulting Services for Growing Teams | Anrotex"
+        description="Founder-led DevOps consulting for CI/CD, Kubernetes, cloud costs, Infrastructure as Code, observability, security, and reliable platform operations."
+        path="/devops-consulting"
+        structuredData={serviceSchema({
+          name: "DevOps Consulting Services",
+          description:
+            "Founder-led DevOps consulting for cloud reliability, delivery automation, Kubernetes, infrastructure efficiency, observability, and security.",
+          path: "/devops-consulting",
+          serviceType: "DevOps consulting",
+        })}
+      />
       <Navbar />
 
     <main className="bg-background text-foreground pt-20">
@@ -103,7 +117,7 @@ export default function DevOpsConsulting() {
             </div>
 
             <div className="p-6 border rounded-xl">
-              <h3 className="text-xl font-semibold mb-2">99.9%</h3>
+              <h3 className="text-xl font-semibold mb-2">95%</h3>
               <p className="text-muted-foreground">
                 Infrastructure uptime
               </p>

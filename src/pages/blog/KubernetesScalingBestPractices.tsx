@@ -1,37 +1,35 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Helmet } from "react-helmet";
+import SEO from "@/components/SEO";
+import { articleSchema, breadcrumbSchema } from "@/lib/seo";
 
 export default function KubernetesScalingBestPractices() {
   return (
     <>
-
-    <Helmet>
-
-    	<meta property="og:image" content="https://www.anrotex.com/Anrotex-preview.png" />
-        <title>Kubernetes Scaling Best Practices for Production Workloads | Anrotex</title>
-
-    <meta
-        name="description"
-        content="Learn Kubernetes scaling best practices including autoscaling, resource optimization, and node efficiency improvements."
-    />
-
-    <link
-        rel="canonical"
-        href="https://www.anrotex.com/blog/kubernetes-scaling-best-practices"
-    />
-
-    <meta property="og:title" content="Kubernetes Scaling Best Practices for Production Workloads" />
-    <meta
-        property="og:description"
-        content="Learn how to scale Kubernetes efficiently with autoscaling, observability, and workload optimization."
-    />
-    <meta property="og:url" content="https://www.anrotex.com/blog/kubernetes-scaling-best-practices" />
-    <meta property="og:type" content="article" />
-    </Helmet>
-
-
-
+      <SEO
+        title="Kubernetes Scaling Best Practices | Anrotex"
+        description="Learn Kubernetes scaling best practices for production workloads, including resource requests, HPA, cluster observability, and better node utilization."
+        path="/blog/kubernetes-scaling-best-practices"
+        type="article"
+        structuredData={[
+          articleSchema({
+            headline: "Kubernetes Scaling Best Practices for Production Workloads",
+            description:
+              "Learn Kubernetes scaling best practices including autoscaling, resource optimization, and node efficiency improvements.",
+            path: "/blog/kubernetes-scaling-best-practices",
+            datePublished: "2026-06-17",
+            dateModified: "2026-06-17",
+          }),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+            {
+              name: "Kubernetes Scaling Best Practices",
+              path: "/blog/kubernetes-scaling-best-practices",
+            },
+          ]),
+        ]}
+      />
       <Navbar />
 
       <main className="bg-background text-foreground max-w-4xl mx-auto px-6 py-24">
@@ -124,68 +122,6 @@ export default function KubernetesScalingBestPractices() {
 
       </main>
       
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-         "@context": "https://schema.org",
-         "@type": "BreadcrumbList",
-         itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: "https://www.anrotex.com/"
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Blog",
-          item: "https://www.anrotex.com/blog"
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "Kubernetes Scaling Best Practices",
-          item: "https://www.anrotex.com/blog/kubernetes-scaling-best-practices"
-        }
-      ]
-    })
-  }}
-/>
-
-
-<script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      headline: "Kubernetes Scaling Best Practices for Production Workloads",
-      description:
-        "Learn Kubernetes scaling best practices including autoscaling, resource optimization, and node efficiency improvements.",
-      author: {
-        "@type": "Organization",
-        name: "Anrotex"
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "Anrotex",
-        logo: {
-          "@type": "ImageObject",
-          url: "https://www.anrotex.com/Anrotex.png"
-        }
-      },
-      datePublished: "2026-06-17",
-      dateModified: "2026-06-17",
-      mainEntityOfPage: {
-        "@type": "WebPage",
-        "@id": "https://www.anrotex.com/blog/kubernetes-scaling-best-practices"
-      }
-    })
-  }}
-/>
-
       <Footer />
     </>
   );

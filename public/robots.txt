@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://anrotex.com/sitemap.xml
+Sitemap: https://www.anrotex.com/sitemap.xml

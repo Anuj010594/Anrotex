@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
+import { serviceSchema } from "@/lib/seo";
 import { useState } from "react";
 
 export default function AwsCostOptimization() {
@@ -11,6 +13,18 @@ export default function AwsCostOptimization() {
 
   return (
     <>
+      <SEO
+        title="AWS Cost Optimization Services | Anrotex"
+        description="Reduce AWS waste without sacrificing performance. Anrotex audits and optimizes EC2, EKS, RDS, S3, autoscaling, storage, and cloud cost controls."
+        path="/aws-cost-optimization"
+        structuredData={serviceSchema({
+          name: "AWS Cost Optimization Services",
+          description:
+            "AWS cost audits and infrastructure optimization for engineering teams that need to reduce cloud waste without sacrificing reliability.",
+          path: "/aws-cost-optimization",
+          serviceType: "AWS cost optimization",
+        })}
+      />
       <Navbar />
 
       <main className="bg-background text-foreground pt-20">

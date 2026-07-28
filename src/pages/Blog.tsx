@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 
 const posts = [
   {
@@ -25,6 +26,11 @@ const posts = [
 export default function Blog() {
   return (
     <>
+      <SEO
+        title="DevOps, Kubernetes & AWS Insights | Anrotex"
+        description="Practical engineering guides on AWS cost optimization, CI/CD automation, Kubernetes scaling, cloud reliability, and modern DevOps practices."
+        path="/blog"
+      />
       <Navbar />
 
       <main className="bg-background text-foreground px-6 py-24">

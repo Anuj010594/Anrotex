@@ -1,113 +1,68 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
 
-const solutions = [
+const outcomes = [
   {
-    title: "DevOps-as-a-Service",
-    description:
-      "Automate deployments and reduce release time from hours to minutes.",
-    color: "from-brand-yellow to-brand-mint",
-    details: (
-      <>
-        <p className="mb-4">
-          We understand the importance of agility in software development.
-        </p>
-        <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-          <li><b>CI/CD Pipeline Automation:</b> Faster and reliable deployments.</li>
-          <li><b>Cloud Infrastructure:</b> AWS, Azure & GCP optimization.</li>
-          <li><b>Containerization:</b> Docker & Kubernetes scaling.</li>
-          <li><b>Monitoring:</b> Prometheus, Grafana, ELK.</li>
-          <li><b>DevSecOps:</b> Security across lifecycle.</li>
-        </ul>
-      </>
-    ),
+    value: "42%",
+    label: "cloud cost reduction",
+    context: "for a fintech platform",
   },
   {
-    title: "Custom Software Development",
-    description:
-      "Innovative, scalable, and secure applications tailored to your business goals.",
-    color: "from-brand-mint to-brand-stone",
-    details: (
-      <>
-        <p className="mb-4">
-          Our team builds scalable and future-ready applications.
-        </p>
-        <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-          <li><b>Web Apps:</b> Fast, modern applications.</li>
-          <li><b>Mobile Apps:</b> iOS, Android & cross-platform.</li>
-          <li><b>Enterprise Tools:</b> Custom large-scale systems.</li>
-          <li><b>Modernization:</b> Upgrade legacy systems.</li>
-          <li><b>Agile:</b> Iterative development process.</li>
-        </ul>
-      </>
-    ),
+    value: "3×",
+    label: "faster deployments",
+    context: "with automated delivery",
+  },
+  {
+    value: "0",
+    label: "migration downtime",
+    context: "for 2M+ daily users",
+  },
+  {
+    value: "95%",
+    label: "platform uptime",
+    context: "after re-architecture",
   },
 ];
 
 export default function Solutions() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
   return (
-    <section id="solutions" className="py-20 px-6 bg-background">
-      <div className="max-w-5xl mx-auto text-center">
-        
-        <h2 className="text-4xl font-bold mb-4">
-          Tailored Solutions
-        </h2>
+    <section
+      id="solutions"
+      className="border-y border-brand-navy/10 bg-brand-stone px-6 py-14"
+    >
+      <div className="container">
+        <div className="mb-9 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-navy">
+              Selected engagement outcomes
+            </p>
+            <h2 className="mt-2 text-2xl font-bold tracking-tight text-brand-navy md:text-3xl">
+              Engineering measured by business impact.
+            </h2>
+          </div>
+          <p className="max-w-md text-sm leading-relaxed text-brand-navy/75">
+            We connect infrastructure work to the numbers your engineering and
+            leadership teams actually care about.
+          </p>
+        </div>
 
-        <p className="text-muted-foreground mb-12">
-          Explore our core services designed to meet your business needs.
-        </p>
-
-        <div className="flex justify-center gap-6 flex-wrap">
-          {solutions.map((item, index) => (
+        <div className="grid gap-px overflow-hidden rounded-3xl border border-brand-navy/10 bg-brand-navy/10 sm:grid-cols-2 lg:grid-cols-4">
+          {outcomes.map((outcome, index) => (
             <motion.div
-              key={index}
-              className="w-full max-w-md bg-card border rounded-2xl p-6 shadow-lg transition duration-300"
+              key={outcome.label}
+              className="bg-brand-off-white p-6 md:p-7"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: index * 0.06 }}
             >
-              {/* NORMAL VIEW */}
-              {activeIndex !== index && (
-                <>
-                  <h3 className="text-xl font-semibold mb-4">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-muted-foreground mb-6">
-                    {item.description}
-                  </p>
-
-                  <button
-                    onClick={() => setActiveIndex(index)}
-                    className={`w-full py-2 rounded-lg bg-gradient-to-r ${item.color} text-brand-navy font-semibold`}
-                  >
-                    Learn More →
-                  </button>
-                </>
-              )}
-
-              {/* EXPANDED VIEW */}
-              {activeIndex === index && (
-                <>
-                  <h3 className="text-xl font-semibold mb-4">
-                    {item.title}
-                  </h3>
-
-                  <div className="text-left mb-6">
-                    {item.details}
-                  </div>
-
-                  <button
-                    onClick={() => setActiveIndex(null)}
-                    className="px-4 py-2 rounded-lg bg-muted"
-                  >
-                    Close
-                  </button>
-                </>
-              )}
+              <p className="text-4xl font-bold tracking-[-0.04em] text-brand-navy">
+                {outcome.value}
+              </p>
+              <p className="mt-3 font-semibold text-brand-navy">{outcome.label}</p>
+              <p className="mt-1 text-sm text-brand-teal">{outcome.context}</p>
             </motion.div>
           ))}
         </div>
-
       </div>
     </section>
   );

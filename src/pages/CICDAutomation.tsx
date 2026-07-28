@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
+import { serviceSchema } from "@/lib/seo";
 import { useState } from "react";
 
 export default function CICDAutomation() {
@@ -11,6 +13,18 @@ export default function CICDAutomation() {
 
   return (
     <>
+      <SEO
+        title="CI/CD Pipeline Automation Services | Anrotex"
+        description="Build faster, safer deployment pipelines with Anrotex. Automate testing, delivery, rollbacks, security, and releases across GitHub, GitLab, and Jenkins."
+        path="/ci-cd-automation"
+        structuredData={serviceSchema({
+          name: "CI/CD Pipeline Automation Services",
+          description:
+            "CI/CD consulting and implementation for faster, safer, and more reliable software delivery.",
+          path: "/ci-cd-automation",
+          serviceType: "CI/CD pipeline automation",
+        })}
+      />
       <Navbar />
 
       <main className="bg-background text-foreground pt-20">

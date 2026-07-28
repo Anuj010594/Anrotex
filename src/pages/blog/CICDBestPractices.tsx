@@ -1,36 +1,32 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Helmet } from "react-helmet";
+import SEO from "@/components/SEO";
+import { articleSchema, breadcrumbSchema } from "@/lib/seo";
 
 export default function CICDBestPractices() {
   return (
     <>
-   
-    <Helmet>
-
-      <meta property="og:image" content="https://www.anrotex.com/Anrotex-preview.png" />  
-      <title>CI/CD Best Practices for Faster and Safer Deployments | Anrotex</title>
-
-      <meta
-        name="description"
-        content="Learn CI/CD best practices for faster, safer deployments including testing, rollback strategies, and infrastructure automation."
-    />
-
-      <link
-        rel="canonical"
-        href="https://www.anrotex.com/blog/cicd-best-practices"
-    />
-
-      <meta property="og:title" content="CI/CD Best Practices for Faster and Safer Deployments" />
-      <meta
-        property="og:description"
-        content="Improve deployment speed, reliability, and security with proven CI/CD best practices."
-    />
-      <meta property="og:url" content="https://www.anrotex.com/blog/cicd-best-practices" />
-      <meta property="og:type" content="article" />
-    </Helmet>
-
-
+      <SEO
+        title="CI/CD Best Practices for Safer Deployments | Anrotex"
+        description="Learn CI/CD best practices for faster, safer deployments, including automated testing, small releases, Infrastructure as Code, and rollback strategies."
+        path="/blog/cicd-best-practices"
+        type="article"
+        structuredData={[
+          articleSchema({
+            headline: "CI/CD Best Practices for Faster and Safer Deployments",
+            description:
+              "Learn CI/CD best practices for faster, safer deployments including testing, rollback strategies, and infrastructure automation.",
+            path: "/blog/cicd-best-practices",
+            datePublished: "2026-06-17",
+            dateModified: "2026-06-17",
+          }),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+            { name: "CI/CD Best Practices", path: "/blog/cicd-best-practices" },
+          ]),
+        ]}
+      />
       <Navbar />
 
       <main className="bg-background text-foreground max-w-4xl mx-auto px-6 py-24">
@@ -124,68 +120,6 @@ export default function CICDBestPractices() {
 
       </main>
       
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-         "@context": "https://schema.org",
-         "@type": "BreadcrumbList",
-         itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: "https://www.anrotex.com/"
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Blog",
-          item: "https://www.anrotex.com/blog"
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "CI/CD Best Practices",
-          item: "https://www.anrotex.com/blog/cicd-best-practices"
-        }
-      ]
-    })
-  }}
-/>
-
-
-<script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      headline: "CI/CD Best Practices for Faster and Safer Deployments",
-      description:
-        "Learn CI/CD best practices for faster, safer deployments including testing, rollback strategies, and infrastructure automation.",
-      author: {
-        "@type": "Organization",
-        name: "Anrotex"
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "Anrotex",
-        logo: {
-          "@type": "ImageObject",
-          url: "https://www.anrotex.com/Anrotex.png"
-        }
-      },
-      datePublished: "2026-06-17",
-      dateModified: "2026-06-17",
-      mainEntityOfPage: {
-        "@type": "WebPage",
-        "@id": "https://www.anrotex.com/blog/cicd-best-practices"
-      }
-    })
-  }}
-/>
-
       <Footer />
     </>
   );

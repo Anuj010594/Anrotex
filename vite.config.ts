@@ -6,7 +6,7 @@ import { sites } from "./build/sites-vite-plugin";
 import { staticWorker } from "./build/static-worker-vite-plugin";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode, isSsrBuild }) => ({
   server: {
     host: "::",
     port: 8080,
@@ -17,8 +17,8 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     mode === "development" && componentTagger(),
-    sites(),
-    staticWorker(),
+    !isSsrBuild && sites(),
+    !isSsrBuild && staticWorker(),
   ].filter(Boolean),
   resolve: {
     alias: {

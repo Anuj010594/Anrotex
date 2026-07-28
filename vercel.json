@@ -2,6 +2,18 @@
   "rewrites": [
     { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
     { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/services", "destination": "/services/index.html" },
+    { "source": "/solutions", "destination": "/solutions/index.html" },
+    { "source": "/case-studies", "destination": "/case-studies/index.html" },
+    { "source": "/contact", "destination": "/contact/index.html" },
+    { "source": "/aws-cost-optimization", "destination": "/aws-cost-optimization/index.html" },
+    { "source": "/kubernetes-scaling", "destination": "/kubernetes-scaling/index.html" },
+    { "source": "/ci-cd-automation", "destination": "/ci-cd-automation/index.html" },
+    { "source": "/devops-consulting", "destination": "/devops-consulting/index.html" },
+    { "source": "/blog", "destination": "/blog/index.html" },
+    { "source": "/blog/reduce-aws-costs", "destination": "/blog/reduce-aws-costs/index.html" },
+    { "source": "/blog/cicd-best-practices", "destination": "/blog/cicd-best-practices/index.html" },
+    { "source": "/blog/kubernetes-scaling-best-practices", "destination": "/blog/kubernetes-scaling-best-practices/index.html" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }

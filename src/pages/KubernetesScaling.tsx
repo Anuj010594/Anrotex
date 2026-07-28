@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
+import { serviceSchema } from "@/lib/seo";
 import { useState } from "react";
 
 export default function KubernetesScaling() {
@@ -11,6 +13,18 @@ export default function KubernetesScaling() {
 
      return (
     <>
+      <SEO
+        title="Kubernetes Consulting & Scaling Services | Anrotex"
+        description="Improve Kubernetes reliability, autoscaling, performance, and cost efficiency. Anrotex helps teams optimize EKS and production clusters across major clouds."
+        path="/kubernetes-scaling"
+        structuredData={serviceSchema({
+          name: "Kubernetes Consulting and Scaling Services",
+          description:
+            "Production Kubernetes consulting for autoscaling, reliability, observability, workload performance, and cloud cost efficiency.",
+          path: "/kubernetes-scaling",
+          serviceType: "Kubernetes consulting and optimization",
+        })}
+      />
       <Navbar />
 
       <main className="bg-background text-foreground pt-20">
