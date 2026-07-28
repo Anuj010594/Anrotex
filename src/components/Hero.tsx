@@ -1,4 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { track } from "@vercel/analytics";
 import {
   ArrowLeft,
   ArrowRight,
@@ -330,6 +331,12 @@ const Hero = () => {
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a
                 href="#contact"
+                onClick={() =>
+                  track("CTA Click", {
+                    source: "homepage-hero",
+                    destination: "#contact",
+                  })
+                }
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-navy px-7 py-4 font-semibold text-brand-off-white transition hover:-translate-y-0.5 hover:bg-brand-teal"
               >
                 Book a free strategy call

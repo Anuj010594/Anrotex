@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import TrackedLink from "@/components/TrackedLink";
 
 const links = [
   { label: "Services", path: "/services", section: "#services" },
@@ -52,13 +53,14 @@ const Navbar = () => {
 
         <div className="hidden items-center gap-8 md:flex">
           {links.map((link) => navItem(link))}
-          <Link
+          <TrackedLink
             to="/contact"
+            eventSource="desktop-navigation"
             className="inline-flex items-center gap-2 rounded-full bg-brand-navy px-5 py-2.5 text-sm font-semibold text-brand-off-white transition hover:-translate-y-0.5 hover:bg-brand-teal"
           >
             Book a consultation
             <ArrowUpRight className="h-4 w-4" />
-          </Link>
+          </TrackedLink>
         </div>
 
         <button
@@ -77,14 +79,15 @@ const Navbar = () => {
           <div className="divide-y divide-brand-navy/10">
             {links.map((link) => navItem(link, true))}
           </div>
-          <Link
+          <TrackedLink
             to="/contact"
+            eventSource="mobile-navigation"
             onClick={() => setOpen(false)}
             className="mt-5 flex items-center justify-center gap-2 rounded-full bg-brand-navy px-5 py-3.5 text-sm font-semibold text-brand-off-white"
           >
             Book a consultation
             <ArrowUpRight className="h-4 w-4" />
-          </Link>
+          </TrackedLink>
         </div>
       )}
     </nav>

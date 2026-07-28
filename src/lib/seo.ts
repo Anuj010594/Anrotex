@@ -10,6 +10,7 @@ export const organizationSchema: JsonLd = {
   "@id": `${SITE_URL}/#organization`,
   name: SITE_NAME,
   url: SITE_URL,
+  sameAs: ["https://www.linkedin.com/company/anrotex-solutions/"],
   logo: {
     "@type": "ImageObject",
     url: `${SITE_URL}/Anrotex.png`,

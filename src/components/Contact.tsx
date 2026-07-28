@@ -1,11 +1,24 @@
 import { motion } from "framer-motion";
+import { track } from "@vercel/analytics";
 import { ArrowRight, CheckCircle2, Mail } from "lucide-react";
 import { FormEvent, useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [started, setStarted] = useState(false);
+  const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const defaultProjectType =
+    searchParams.get("focus") === "aws-cost" ? "Reduce cloud costs" : "";
+
+  const handleFormStart = () => {
+    if (started) return;
+    setStarted(true);
+    track("Lead Form Started", { page: location.pathname });
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -37,9 +50,14 @@ const Contact = () => {
       }
 
       setSubmitted(true);
+      track("Lead Form Submitted", {
+        page: location.pathname,
+        focus: projectType || "Not specified",
+      });
       form.reset();
     } catch (submitError) {
       console.error(submitError);
+      track("Lead Form Error", { page: location.pathname });
       setError("We could not send that message. Please email rohan@anrotex.com instead.");
     } finally {
       setLoading(false);
@@ -112,7 +130,7 @@ const Contact = () => {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit}>
+              <form name="lead-form" onFocus={handleFormStart} onSubmit={handleSubmit}>
                 <div className="mb-7">
                   <h3 className="text-2xl font-bold text-brand-navy">
                     Request a free consultation
@@ -157,7 +175,11 @@ const Contact = () => {
                   </label>
                   <label className="text-sm font-bold text-brand-navy">
                     Main priority
-                    <select name="projectType" defaultValue="" className={fieldClass}>
+                    <select
+                      name="projectType"
+                      defaultValue={defaultProjectType}
+                      className={fieldClass}
+                    >
                       <option value="" disabled>
                         Choose one
                       </option>

@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const serviceLinks = [
@@ -26,6 +26,16 @@ const Footer = () => (
             Anrotex
             <span className="h-2.5 w-2.5 rounded-full bg-brand-yellow" />
           </Link>
+          <a
+            href="https://www.linkedin.com/company/anrotex-solutions/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 flex w-fit items-center gap-2 text-sm text-brand-stone transition hover:text-brand-off-white"
+            aria-label="Follow Anrotex Solutions on LinkedIn"
+          >
+            <Linkedin className="h-4 w-4" aria-hidden="true" />
+            LinkedIn
+          </a>
           <p className="mt-5 max-w-md leading-relaxed text-brand-stone">
             Founder-led cloud, DevOps, and platform engineering for teams that
             need to ship faster, run reliably, and spend less.
