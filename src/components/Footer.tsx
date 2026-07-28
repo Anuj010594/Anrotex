@@ -24,17 +24,15 @@ const Footer = () => (
             className="group inline-flex items-center gap-3 text-3xl font-bold tracking-[-0.04em]"
             aria-label="Anrotex home"
           >
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-brand-off-white shadow-sm">
-              <img
-                src="/Anrotex.png"
-                alt=""
-                width="48"
-                height="48"
-                loading="lazy"
-                className="h-full w-full scale-[1.35] object-cover"
-                aria-hidden="true"
-              />
-            </span>
+            <img
+              src="/Anrotex.png"
+              alt=""
+              width="48"
+              height="48"
+              loading="lazy"
+              className="h-12 w-12 shrink-0 object-contain"
+              aria-hidden="true"
+            />
             <span className="inline-flex items-center gap-2">
               Anrotex
               <span className="h-2.5 w-2.5 rounded-full bg-brand-yellow transition-transform group-hover:scale-125" />

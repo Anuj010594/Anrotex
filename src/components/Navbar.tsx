@@ -47,16 +47,14 @@ const Navbar = () => {
           className="group inline-flex items-center gap-2.5 font-heading text-2xl font-bold tracking-[-0.04em] text-brand-navy"
           aria-label="Anrotex home"
         >
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-brand-navy/10 bg-brand-off-white shadow-sm">
-            <img
-              src="/Anrotex.png"
-              alt=""
-              width="40"
-              height="40"
-              className="h-full w-full scale-[1.35] object-cover"
-              aria-hidden="true"
-            />
-          </span>
+          <img
+            src="/Anrotex.png"
+            alt=""
+            width="40"
+            height="40"
+            className="h-10 w-10 shrink-0 object-contain"
+            aria-hidden="true"
+          />
           <span className="inline-flex items-center gap-2">
             Anrotex
             <span className="h-2.5 w-2.5 rounded-full bg-brand-yellow transition-transform group-hover:scale-125" />
