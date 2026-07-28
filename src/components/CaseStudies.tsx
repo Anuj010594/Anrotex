@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import TrackedLink from "@/components/TrackedLink";
 
 const cases = [
   {
@@ -9,9 +10,10 @@ const cases = [
     title: "A Series B payments platform cut cloud costs without slowing growth.",
     metric: "42%",
     metricLabel: "lower cloud spend",
-    supporting: ["95% uptime", "3× faster releases"],
+    supporting: ["3× faster releases", "Terraform-managed"],
     details:
       "We re-architected the platform around containerized services, improved autoscaling, tuned RDS and caching, and introduced Terraform plus safer blue-green delivery.",
+    href: "/case-studies/fintech-aws-cost-reduction",
   },
   {
     tag: "SaaS · Platform migration",
@@ -21,6 +23,7 @@ const cases = [
     supporting: ["2M+ daily users", "<200ms p99 latency"],
     details:
       "Rolling deployments, canary releases, workload right-sizing, and end-to-end observability created a safer path from monolith to Kubernetes.",
+    href: "",
   },
   {
     tag: "Healthcare · Security",
@@ -30,6 +33,7 @@ const cases = [
     supporting: ["HIPAA aligned", "SOC 2 ready"],
     details:
       "We strengthened network isolation, encryption, least-privilege access, centralized logging, and automated compliance checks across the delivery workflow.",
+    href: "",
   },
 ];
 
@@ -123,6 +127,17 @@ const CaseStudies = () => {
                     {isOpen ? "Show less" : "How we did it"}
                     {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
                   </button>
+                  {caseStudy.href && (
+                    <TrackedLink
+                      to={caseStudy.href}
+                      eventName="Case Study Click"
+                      eventSource="case-studies-grid"
+                      className="ml-5 mt-6 inline-flex items-center gap-2 text-sm font-bold text-brand-teal"
+                    >
+                      Read the full case study
+                      <ArrowUpRight className="h-4 w-4" />
+                    </TrackedLink>
+                  )}
                 </div>
               </motion.article>
             );

@@ -7,6 +7,7 @@ const routes = [
   "/services",
   "/solutions",
   "/case-studies",
+  "/case-studies/fintech-aws-cost-reduction",
   "/contact",
   "/aws-cost-optimization",
   "/kubernetes-scaling",

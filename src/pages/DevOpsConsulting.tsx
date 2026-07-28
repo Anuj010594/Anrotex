@@ -103,23 +103,23 @@ export default function DevOpsConsulting() {
 
           <div className="grid md:grid-cols-3 gap-6">
             <div className="p-6 border rounded-xl">
-              <h3 className="text-xl font-semibold mb-2">50%</h3>
+              <h3 className="text-xl font-semibold mb-2">3×</h3>
               <p className="text-muted-foreground">
                 Faster deployments
               </p>
             </div>
 
             <div className="p-6 border rounded-xl">
-              <h3 className="text-xl font-semibold mb-2">40%</h3>
+              <h3 className="text-xl font-semibold mb-2">42%</h3>
               <p className="text-muted-foreground">
                 Lower infrastructure costs
               </p>
             </div>
 
             <div className="p-6 border rounded-xl">
-              <h3 className="text-xl font-semibold mb-2">95%</h3>
+              <h3 className="text-xl font-semibold mb-2">0</h3>
               <p className="text-muted-foreground">
-                Infrastructure uptime
+                Migration downtime
               </p>
             </div>
           </div>

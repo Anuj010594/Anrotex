@@ -1,18 +1,31 @@
 import { motion } from "framer-motion";
 import { track } from "@vercel/analytics";
-import { ArrowRight, CheckCircle2, Mail } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { ArrowRight, CheckCircle2, LockKeyhole, Mail } from "lucide-react";
+import { FormEvent, useCallback, useRef, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
+import TurnstileWidget from "@/components/TurnstileWidget";
+import { TURNSTILE_SITE_KEY } from "@/lib/turnstile";
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [started, setStarted] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileKey, setTurnstileKey] = useState(0);
+  const startedAt = useRef(Date.now());
   const [searchParams] = useSearchParams();
   const location = useLocation();
+  const focus = searchParams.get("focus");
   const defaultProjectType =
-    searchParams.get("focus") === "aws-cost" ? "Reduce cloud costs" : "";
+    focus === "aws-audit"
+      ? "AWS Cost Optimization Audit"
+      : focus === "aws-cost"
+        ? "Reduce cloud costs"
+        : "";
+  const handleTurnstileToken = useCallback((token: string) => {
+    setTurnstileToken(token);
+  }, []);
 
   const handleFormStart = () => {
     if (started) return;
@@ -28,13 +41,17 @@ const Contact = () => {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const projectType = String(formData.get("projectType") || "");
-    const message = String(formData.get("message") || "");
 
     const data = {
       name: String(formData.get("name") || ""),
       email: String(formData.get("email") || ""),
       company: String(formData.get("company") || ""),
-      message: `${projectType ? `Area of focus: ${projectType}\n\n` : ""}${message}`,
+      projectType,
+      message: String(formData.get("message") || ""),
+      source: `${location.pathname}${location.search}`,
+      website: String(formData.get("website") || ""),
+      startedAt: startedAt.current,
+      turnstileToken,
     };
 
     try {
@@ -43,10 +60,21 @@ const Contact = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      const result = await response.json();
+      const result = await response.json().catch(() => ({
+        success: false,
+        error: "The enquiry service returned an invalid response.",
+      }));
 
       if (!response.ok || !result.success) {
-        throw new Error(result.error || "Something went wrong.");
+        if (response.status === 429) {
+          throw new Error(
+            "Too many requests were received. Please wait a few minutes or email us directly.",
+          );
+        }
+        throw new Error(
+          result.error ||
+            "We could not securely send your message. Please email us directly.",
+        );
       }
 
       setSubmitted(true);
@@ -55,10 +83,15 @@ const Contact = () => {
         focus: projectType || "Not specified",
       });
       form.reset();
+      setTurnstileToken("");
+      setTurnstileKey((key) => key + 1);
     } catch (submitError) {
-      console.error(submitError);
       track("Lead Form Error", { page: location.pathname });
-      setError("We could not send that message. Please email rohan@anrotex.com instead.");
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : "We could not send that message. Please email rohan@anrotex.com instead.",
+      );
     } finally {
       setLoading(false);
     }
@@ -148,6 +181,7 @@ const Contact = () => {
                       type="text"
                       autoComplete="name"
                       placeholder="Your name"
+                      maxLength={80}
                       required
                       className={fieldClass}
                     />
@@ -159,6 +193,7 @@ const Contact = () => {
                       type="email"
                       autoComplete="email"
                       placeholder="you@company.com"
+                      maxLength={254}
                       required
                       className={fieldClass}
                     />
@@ -170,6 +205,7 @@ const Contact = () => {
                       type="text"
                       autoComplete="organization"
                       placeholder="Company name"
+                      maxLength={120}
                       className={fieldClass}
                     />
                   </label>
@@ -183,6 +219,7 @@ const Contact = () => {
                       <option value="" disabled>
                         Choose one
                       </option>
+                      <option>AWS Cost Optimization Audit</option>
                       <option>Reduce cloud costs</option>
                       <option>Improve deployment speed</option>
                       <option>Scale Kubernetes reliably</option>
@@ -199,10 +236,31 @@ const Contact = () => {
                     name="message"
                     placeholder="A short description of the challenge, timeline, or outcome you need..."
                     rows={5}
+                    minLength={10}
+                    maxLength={3000}
                     required
                     className={`${fieldClass} resize-none`}
                   />
                 </label>
+
+                <label
+                  className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden"
+                  aria-hidden="true"
+                >
+                  Website
+                  <input
+                    name="website"
+                    type="text"
+                    autoComplete="off"
+                    tabIndex={-1}
+                    maxLength={200}
+                  />
+                </label>
+
+                <TurnstileWidget
+                  key={turnstileKey}
+                  onTokenChange={handleTurnstileToken}
+                />
 
                 {error && (
                   <p
@@ -215,14 +273,17 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  disabled={loading}
+                  disabled={
+                    loading || Boolean(TURNSTILE_SITE_KEY && !turnstileToken)
+                  }
                   className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-brand-navy px-8 py-4 font-bold text-brand-off-white transition hover:-translate-y-0.5 hover:bg-brand-teal disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {loading ? "Sending..." : "Request my consultation"}
                   {!loading && <ArrowRight className="h-4 w-4" />}
                 </button>
-                <p className="mt-4 text-center text-xs text-brand-teal">
-                  No obligation. We reply within one business day.
+                <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-xs text-brand-teal">
+                  <LockKeyhole className="h-3.5 w-3.5" aria-hidden="true" />
+                  Secure submission · No obligation · One business day response
                 </p>
               </form>
             )}

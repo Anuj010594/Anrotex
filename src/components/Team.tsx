@@ -3,14 +3,14 @@ import { CheckCircle2 } from "lucide-react";
 
 const team = [
   {
-    initials: "RK",
+    initials: "RD",
     name: "Rohan",
     role: "Founder · DevOps Engineer",
     description:
       "Cloud architecture, CI/CD, Kubernetes, reliability, and cost optimization.",
   },
   {
-    initials: "AK",
+    initials: "AD",
     name: "Anuj",
     role: "Co-Founder · Solution Architect",
     description:

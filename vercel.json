@@ -16,6 +16,7 @@
     { "source": "/services", "destination": "/services/index.html" },
     { "source": "/solutions", "destination": "/solutions/index.html" },
     { "source": "/case-studies", "destination": "/case-studies/index.html" },
+    { "source": "/case-studies/fintech-aws-cost-reduction", "destination": "/case-studies/fintech-aws-cost-reduction/index.html" },
     { "source": "/contact", "destination": "/contact/index.html" },
     { "source": "/aws-cost-optimization", "destination": "/aws-cost-optimization/index.html" },
     { "source": "/kubernetes-scaling", "destination": "/kubernetes-scaling/index.html" },

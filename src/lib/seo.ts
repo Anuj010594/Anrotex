@@ -118,3 +118,44 @@ export function articleSchema({
     inLanguage: "en",
   };
 }
+
+export function caseStudyArticleSchema({
+  headline,
+  description,
+  path,
+  datePublished,
+  dateModified,
+}: {
+  headline: string;
+  description: string;
+  path: string;
+  datePublished: string;
+  dateModified: string;
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${SITE_URL}${path}#case-study`,
+    headline,
+    description,
+    image: DEFAULT_OG_IMAGE,
+    datePublished,
+    dateModified,
+    author: {
+      "@id": `${SITE_URL}/#organization`,
+    },
+    publisher: {
+      "@id": `${SITE_URL}/#organization`,
+    },
+    about: [
+      "AWS cost optimization",
+      "Kubernetes",
+      "CI/CD automation",
+      "FinTech infrastructure",
+    ],
+    mainEntityOfPage: {
+      "@id": `${SITE_URL}${path}#webpage`,
+    },
+    inLanguage: "en",
+  };
+}

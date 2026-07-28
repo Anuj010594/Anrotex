@@ -3,13 +3,16 @@ import {
   Check,
   ChevronDown,
   CircleDollarSign,
+  Clock3,
   CloudCog,
   Database,
+  Eye,
   FileCheck2,
   Gauge,
+  ListChecks,
   Network,
-  SearchCheck,
   ShieldCheck,
+  Users,
 } from "lucide-react";
 import { useState } from "react";
 import Footer from "@/components/Footer";
@@ -69,27 +72,66 @@ const deliverables = [
 const process = [
   {
     step: "01",
-    title: "Understand the environment",
+    title: "Confirm fit and scope",
     description:
-      "We review architecture, workload criticality, growth plans, current spend, and the changes your team can safely support.",
+      "A short founder-led call confirms the accounts, cost pressure, engineering constraints, and the decision the audit needs to support.",
   },
   {
     step: "02",
+    title: "Open read-only discovery",
+    description:
+      "We agree the minimum billing, utilization, configuration, and architecture context needed. The audit does not require write access.",
+  },
+  {
+    step: "03",
     title: "Verify the opportunities",
     description:
       "Recommendations are checked against utilisation, performance, reliability, and ownership—not accepted blindly.",
   },
   {
-    step: "03",
-    title: "Prioritise and implement",
+    step: "04",
+    title: "Deliver the decision pack",
     description:
-      "Low-risk savings move first. Higher-impact changes are tested, rolled out safely, and measured after implementation.",
+      "Your team receives the savings register, 30/60/90-day roadmap, implementation sequence, and an executive readout.",
+  },
+];
+
+const fitSignals = [
+  "AWS spend is rising faster than product or customer growth",
+  "Engineering sees recommendations but lacks time to validate risk",
+  "Multiple accounts, teams, tags, or commitments obscure ownership",
+  "A finance or leadership decision needs defensible savings evidence",
+];
+
+const accessPrinciples = [
+  {
+    icon: Eye,
+    title: "Read-only by default",
+    description:
+      "Billing, utilization, and configuration evidence are reviewed without changing production resources.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Minimum necessary access",
+    description:
+      "The access plan is agreed before discovery and scoped to the accounts and services included in the audit.",
+  },
+  {
+    icon: Users,
+    title: "Your team keeps control",
+    description:
+      "No recommendation is implemented during the audit. Changes require a separate approval and rollout plan.",
   },
 ];
 
 const faqs = [
   {
-    question: "How much can an AWS cost review save?",
+    question: "Is the AWS Cost Optimization Audit free?",
+    answer:
+      "The initial fit call is free. If the audit is a good fit, we provide a fixed-scope proposal based on the accounts, services, and decision your team needs to make.",
+  },
+  {
+    question: "How much can the audit save?",
     answer:
       "Savings depend on workload shape, existing commitments, architecture, and how actively the environment has already been optimized. We estimate each opportunity only after reviewing the supporting usage and risk data.",
   },
@@ -99,14 +141,14 @@ const faqs = [
       "The review can begin with read-only billing, configuration, and utilization data. We agree the minimum access required before work starts and do not make production changes without approval.",
   },
   {
-    question: "How long does the initial review take?",
+    question: "How long does the audit take?",
     answer:
-      "A focused initial review typically takes 3–7 business days after the required access and context are available. Larger multi-account estates may need a broader discovery phase.",
+      "A focused audit typically takes 3–7 business days after the required access and context are available. Larger multi-account estates are scoped separately before work begins.",
   },
   {
-    question: "Can you implement the recommendations too?",
+    question: "What happens after the audit?",
     answer:
-      "Yes. We can work with your engineers to implement and validate the prioritized changes, including Infrastructure as Code, autoscaling, observability, and cost guardrails.",
+      "Your team can implement the roadmap independently, or Anrotex can provide a separate implementation engagement covering Infrastructure as Code, autoscaling, observability, and cost guardrails.",
   },
 ];
 
@@ -129,16 +171,16 @@ export default function AwsCostOptimization() {
   return (
     <>
       <SEO
-        title="AWS Cost Optimization Services | Anrotex"
-        description="Find and remove AWS waste safely. Get a prioritized review of EC2, EKS, RDS, EBS, S3, network costs, commitments, and cloud cost guardrails."
+        title="AWS Cost Optimization Audit | Anrotex"
+        description="Get a fixed-scope AWS cost audit with verified EC2, EKS, RDS, EBS, S3, network, commitment, and guardrail opportunities plus a 30/60/90-day plan."
         path="/aws-cost-optimization"
         structuredData={[
           serviceSchema({
-            name: "AWS Cost Optimization Services",
+            name: "AWS Cost Optimization Audit",
             description:
-              "AWS cost reviews and implementation support for engineering teams that need to reduce cloud waste without sacrificing reliability.",
+              "A fixed-scope AWS cost audit for engineering teams that need verified savings opportunities and a practical implementation roadmap without sacrificing reliability.",
             path: "/aws-cost-optimization",
-            serviceType: "AWS cost optimization",
+            serviceType: "AWS cost optimization audit",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -157,36 +199,36 @@ export default function AwsCostOptimization() {
           <div className="container relative grid items-center gap-14 lg:grid-cols-[1.08fr_0.92fr] lg:gap-20">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-teal">
-                AWS cost optimization
+                Fixed-scope AWS Cost Optimization Audit
               </p>
               <h1 className="mt-5 max-w-4xl text-5xl font-bold leading-[1] tracking-[-0.055em] sm:text-6xl lg:text-7xl">
-                Find and remove AWS waste—without putting production at risk.
+                Find the AWS waste worth fixing—and leave with a plan.
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-relaxed text-brand-teal md:text-xl">
-                Get a technically verified cost review that connects every
-                recommendation to workload behaviour, operational risk, and a
-                practical implementation sequence.
+                In 3–7 business days, get technically verified savings
+                opportunities, the evidence behind them, and a 30/60/90-day
+                implementation roadmap your engineers can use.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <TrackedLink
-                  to="/contact?focus=aws-cost"
-                  eventSource="aws-service-hero"
+                  to="/contact?focus=aws-audit"
+                  eventSource="aws-audit-hero"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-navy px-7 py-4 font-bold text-brand-off-white transition hover:-translate-y-0.5 hover:bg-brand-teal"
                 >
-                  Request a free AWS cost review
+                  Request the audit
                   <ArrowRight className="h-4 w-4" />
                 </TrackedLink>
                 <TrackedLink
                   to="/blog/reduce-aws-costs"
                   eventName="Article Click"
-                  eventSource="aws-service-hero"
+                  eventSource="aws-audit-hero"
                   className="inline-flex items-center justify-center rounded-full border border-brand-navy/15 px-7 py-4 font-bold text-brand-navy transition hover:bg-brand-stone"
                 >
                   Read the AWS cost guide
                 </TrackedLink>
               </div>
               <p className="mt-5 text-sm font-semibold text-brand-navy/60">
-                Founder-led · Read-only discovery · Reply within one business day
+                Free fit call · Fixed-scope proposal · Read-only discovery
               </p>
             </div>
 
@@ -194,17 +236,17 @@ export default function AwsCostOptimization() {
               <div className="absolute -inset-4 rotate-3 rounded-[2rem] bg-brand-yellow" />
               <div className="relative rounded-[2rem] bg-brand-navy p-7 text-brand-off-white shadow-lift md:p-9">
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-mint">
-                  Your first output
+                  The audit at a glance
                 </p>
                 <h2 className="mt-4 text-3xl font-bold">
-                  A prioritised opportunity map—not a recommendation dump.
+                  One decision-ready package, not a recommendation dump.
                 </h2>
                 <div className="mt-7 space-y-4">
                   {[
-                    "Where the money is going",
-                    "What can change safely",
-                    "What should happen first",
-                    "How savings will be verified",
+                    "3–7 business day assessment",
+                    "Read-only billing and utilization review",
+                    "Prioritized savings register",
+                    "30/60/90-day implementation roadmap",
                   ].map((item) => (
                     <p
                       key={item}
@@ -225,21 +267,21 @@ export default function AwsCostOptimization() {
         <section className="border-y border-brand-navy/10 bg-brand-stone px-6 py-14">
           <div className="container grid gap-8 md:grid-cols-3">
             <div>
-              <p className="text-4xl font-bold tracking-[-0.04em]">42%</p>
-              <p className="mt-2 font-semibold text-brand-teal">
-                lower cloud spend in a selected fintech engagement
-              </p>
-            </div>
-            <div>
-              <p className="text-4xl font-bold tracking-[-0.04em]">0</p>
-              <p className="mt-2 font-semibold text-brand-teal">
-                downtime while the optimization work was implemented
-              </p>
-            </div>
-            <div>
               <p className="text-4xl font-bold tracking-[-0.04em]">3–7 days</p>
               <p className="mt-2 font-semibold text-brand-teal">
-                typical focused review after access is available
+                typical delivery after access is ready
+              </p>
+            </div>
+            <div>
+              <p className="text-4xl font-bold tracking-[-0.04em]">6 areas</p>
+              <p className="mt-2 font-semibold text-brand-teal">
+                reviewed across cost, compute, data, network, EKS, and guardrails
+              </p>
+            </div>
+            <div>
+              <p className="text-4xl font-bold tracking-[-0.04em]">30/60/90</p>
+              <p className="mt-2 font-semibold text-brand-teal">
+                day implementation sequence included
               </p>
             </div>
           </div>
@@ -275,6 +317,35 @@ export default function AwsCostOptimization() {
                   </article>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-brand-stone px-6 py-24 md:py-32">
+          <div className="container grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-teal">
+                When this audit is useful
+              </p>
+              <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] md:text-6xl">
+                Built for a real cost decision.
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed text-brand-teal">
+                The audit works best when leadership needs a defensible view of
+                savings and engineering needs a sequence that protects
+                reliability.
+              </p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {fitSignals.map((signal) => (
+                <p
+                  key={signal}
+                  className="flex items-start gap-3 rounded-[1.5rem] bg-brand-off-white p-6 font-semibold leading-relaxed"
+                >
+                  <ListChecks className="mt-0.5 h-5 w-5 shrink-0 text-brand-teal" />
+                  {signal}
+                </p>
+              ))}
             </div>
           </div>
         </section>
@@ -317,7 +388,7 @@ export default function AwsCostOptimization() {
                 Savings without reckless changes.
               </h2>
             </div>
-            <div className="mt-14 grid gap-5 lg:grid-cols-3">
+            <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
               {process.map((item) => (
                 <article
                   key={item.step}
@@ -331,6 +402,66 @@ export default function AwsCostOptimization() {
                 </article>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="border-y border-brand-navy/10 bg-brand-off-white px-6 py-24 md:py-32">
+          <div className="container">
+            <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-teal">
+                  Access and change control
+                </p>
+                <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] md:text-6xl">
+                  Evidence in. No surprise changes out.
+                </h2>
+                <p className="mt-6 text-lg leading-relaxed text-brand-teal">
+                  This is an audit, not an unapproved production optimization
+                  sprint.
+                </p>
+              </div>
+              <div className="grid gap-4 md:grid-cols-3">
+                {accessPrinciples.map((principle) => (
+                  <article
+                    key={principle.title}
+                    className="rounded-[1.5rem] border border-brand-navy/10 bg-brand-stone/45 p-6"
+                  >
+                    <principle.icon className="h-6 w-6 text-brand-teal" />
+                    <h3 className="mt-7 text-xl font-bold">{principle.title}</h3>
+                    <p className="mt-3 leading-relaxed text-brand-teal">
+                      {principle.description}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-brand-yellow px-6 py-20">
+          <div className="container grid items-center gap-10 lg:grid-cols-[1fr_auto]">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em]">
+                Selected engagement outcome
+              </p>
+              <h2 className="mt-4 max-w-4xl text-4xl font-bold leading-tight tracking-[-0.04em] md:text-5xl">
+                42% lower AWS spend and 3× faster releases for a growing
+                fintech platform.
+              </h2>
+              <p className="mt-5 max-w-3xl text-lg leading-relaxed text-brand-navy/75">
+                See the cost, infrastructure, and delivery changes behind the
+                result in the full anonymized engagement story.
+              </p>
+            </div>
+            <TrackedLink
+              to="/case-studies/fintech-aws-cost-reduction"
+              eventName="Case Study Click"
+              eventSource="aws-audit-proof"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-navy px-7 py-4 font-bold text-brand-off-white transition hover:-translate-y-0.5 hover:bg-brand-teal"
+            >
+              Read the case study
+              <ArrowRight className="h-4 w-4" />
+            </TrackedLink>
           </div>
         </section>
 
@@ -380,22 +511,22 @@ export default function AwsCostOptimization() {
         <section className="px-6 py-24 text-center md:py-32">
           <div className="container max-w-4xl">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-yellow">
-              <SearchCheck className="h-8 w-8" />
+              <Clock3 className="h-8 w-8" />
             </div>
             <h2 className="mt-7 text-4xl font-bold leading-tight tracking-[-0.04em] md:text-6xl">
-              Find the first safe saving opportunity.
+              Put a defensible savings plan in front of your team.
             </h2>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-brand-teal">
-              Start with a candid review of the environment, the cost pressure,
-              and the evidence already available. No generic savings estimate and
-              no hard sell.
+              Start with a free fit call. If the audit is right for your
+              environment, you receive a fixed-scope proposal before any access
+              is requested.
             </p>
             <TrackedLink
-              to="/contact?focus=aws-cost"
-              eventSource="aws-service-bottom"
+              to="/contact?focus=aws-audit"
+              eventSource="aws-audit-bottom"
               className="mt-9 inline-flex items-center gap-2 rounded-full bg-brand-navy px-7 py-4 font-bold text-brand-off-white transition hover:-translate-y-0.5 hover:bg-brand-teal"
             >
-              Request the free review
+              Request the AWS audit
               <ArrowRight className="h-4 w-4" />
             </TrackedLink>
           </div>

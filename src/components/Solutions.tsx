@@ -17,9 +17,9 @@ const outcomes = [
     context: "for 2M+ daily users",
   },
   {
-    value: "95%",
-    label: "platform uptime",
-    context: "after re-architecture",
+    value: "2M+",
+    label: "daily users supported",
+    context: "during Kubernetes migration",
   },
 ];
 

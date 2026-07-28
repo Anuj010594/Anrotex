@@ -50,7 +50,7 @@ const slides = [
 const platformMetrics = [
   { icon: CircleDollarSign, value: "42%", label: "lower cloud spend" },
   { icon: GitPullRequestArrow, value: "3×", label: "faster deployments" },
-  { icon: Gauge, value: "95%", label: "platform uptime" },
+  { icon: Gauge, value: "0", label: "migration downtime" },
 ];
 
 const PlatformSlide = () => (
