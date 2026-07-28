@@ -21,10 +21,24 @@ const Footer = () => (
         <div>
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-3xl font-bold tracking-[-0.04em]"
+            className="group inline-flex items-center gap-3 text-3xl font-bold tracking-[-0.04em]"
+            aria-label="Anrotex home"
           >
-            Anrotex
-            <span className="h-2.5 w-2.5 rounded-full bg-brand-yellow" />
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-brand-off-white shadow-sm">
+              <img
+                src="/Anrotex.png"
+                alt=""
+                width="48"
+                height="48"
+                loading="lazy"
+                className="h-full w-full scale-[1.35] object-cover"
+                aria-hidden="true"
+              />
+            </span>
+            <span className="inline-flex items-center gap-2">
+              Anrotex
+              <span className="h-2.5 w-2.5 rounded-full bg-brand-yellow transition-transform group-hover:scale-125" />
+            </span>
           </Link>
           <a
             href="https://www.linkedin.com/company/anrotex-solutions/"

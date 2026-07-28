@@ -14,6 +14,9 @@ export const organizationSchema: JsonLd = {
   logo: {
     "@type": "ImageObject",
     url: `${SITE_URL}/Anrotex.png`,
+    contentUrl: `${SITE_URL}/Anrotex.png`,
+    width: 1024,
+    height: 1024,
   },
   identifier: {
     "@type": "PropertyValue",
