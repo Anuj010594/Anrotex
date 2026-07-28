@@ -30,7 +30,7 @@ const Footer = () => (
               width="48"
               height="48"
               loading="lazy"
-              className="h-12 w-12 shrink-0 object-contain"
+              className="h-12 w-12 shrink-0 object-contain brightness-0 invert"
               aria-hidden="true"
             />
             <span className="inline-flex items-center gap-2">
