@@ -117,7 +117,7 @@ const Contact = () => {
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-brand-navy/75">
               Tell us where your platform is slowing down. We will reply with
-              useful next steps, even if we are not the right fit.
+              useful next steps.
             </p>
 
             <div className="mt-9 space-y-4">
