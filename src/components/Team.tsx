@@ -7,14 +7,14 @@ const team = [
     name: "Rohan",
     role: "Founder · DevOps Engineer",
     description:
-      "Cloud architecture, CI/CD, Kubernetes, reliability, and cost optimization.",
+      "Cloud architecture, CI/CD, Kubernetes, reliability, and product  delivery.",
   },
   {
     initials: "AD",
     name: "Anuj",
-    role: "Co-Founder · Solution Architect",
+    role: "Co-Founder · DevOps Engineer",
     description:
-      "Scalable application architecture, platform engineering, and product delivery.",
+      "Scalable application architecture and cost optimization.",
   },
 ];
 
