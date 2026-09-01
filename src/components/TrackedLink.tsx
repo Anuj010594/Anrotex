@@ -1,5 +1,5 @@
-import { track } from "@vercel/analytics";
 import { Link, LinkProps } from "react-router-dom";
+import { trackEvent } from "@/lib/analytics";
 
 type TrackedLinkProps = LinkProps & {
   eventName?: string;
@@ -17,7 +17,7 @@ const TrackedLink = ({
     {...props}
     to={to}
     onClick={(event) => {
-      track(eventName, {
+      trackEvent(eventName, {
         source: eventSource,
         destination: typeof to === "string" ? to : to.pathname,
       });

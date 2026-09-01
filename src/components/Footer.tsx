@@ -25,11 +25,12 @@ const Footer = () => (
             aria-label="Anrotex home"
           >
             <img
-              src="/Anrotex.png"
+              src="/Anrotex-mark.png"
               alt=""
               width="48"
               height="48"
               loading="lazy"
+              decoding="async"
               className="h-12 w-12 shrink-0 object-contain brightness-0 invert"
               aria-hidden="true"
             />
@@ -94,8 +95,8 @@ const Footer = () => (
             ))}
           </div>
           <div className="mt-7 space-y-2 text-sm text-brand-stone">
-            <a href="mailto:rohan@anrotex.com" className="block hover:text-brand-off-white">
-              rohan@anrotex.com
+            <a href="mailto:sales@anrotex.com" className="block hover:text-brand-off-white">
+              sales@anrotex.com
             </a>
             <a href="tel:+917972702722" className="block hover:text-brand-off-white">
               +91 79727 02722

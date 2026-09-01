@@ -1,5 +1,4 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { track } from "@vercel/analytics";
 import {
   ArrowLeft,
   ArrowRight,
@@ -19,6 +18,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 const slides = [
   {
@@ -332,7 +332,7 @@ const Hero = () => {
               <a
                 href="#contact"
                 onClick={() =>
-                  track("CTA Click", {
+                  trackEvent("CTA Click", {
                     source: "homepage-hero",
                     destination: "#contact",
                   })

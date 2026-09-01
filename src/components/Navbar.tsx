@@ -48,10 +48,11 @@ const Navbar = () => {
           aria-label="Anrotex home"
         >
           <img
-            src="/Anrotex.png"
+            src="/Anrotex-mark.png"
             alt=""
             width="40"
             height="40"
+            decoding="async"
             className="h-10 w-10 shrink-0 object-contain"
             aria-hidden="true"
           />

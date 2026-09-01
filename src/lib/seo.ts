@@ -31,7 +31,7 @@ export const organizationSchema: JsonLd = {
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "sales",
-    email: "rohan@anrotex.com",
+    email: "sales@anrotex.com",
     telephone: "+91-79727-02722",
   },
 };

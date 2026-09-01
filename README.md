@@ -25,7 +25,8 @@ production hosting environment. Never commit `.env` or real credentials.
 
 The production form uses:
 
-- Zoho SMTP credentials for delivery.
+- Google Workspace SMTP for delivery.
+- `sales@anrotex.com` as both the authenticated sender and enquiry recipient.
 - Origin validation and strict server-side field validation.
 - A honeypot and rate limiting for automated abuse.
 - Cloudflare Turnstile when `VITE_TURNSTILE_SITE_KEY` and
@@ -35,6 +36,6 @@ Set `FORM_REQUIRE_TURNSTILE=true` only after both Turnstile values are present.
 The server validates every Turnstile token, its `lead_form` action, and the
 approved hostname before delivering an enquiry.
 
-Because an earlier `.env` was committed, rotate the SMTP app password before
+Because an earlier `.env` was committed, rotate the SMTP credential before
 the next production deployment. Removing the file in a new commit prevents
 future tracking but does not erase old repository history.

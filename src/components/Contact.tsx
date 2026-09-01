@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { track } from "@vercel/analytics";
 import { ArrowRight, CheckCircle2, LockKeyhole, Mail } from "lucide-react";
 import { FormEvent, useCallback, useRef, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import TurnstileWidget from "@/components/TurnstileWidget";
+import { trackEvent } from "@/lib/analytics";
 import { TURNSTILE_SITE_KEY } from "@/lib/turnstile";
 
 const Contact = () => {
@@ -30,7 +30,7 @@ const Contact = () => {
   const handleFormStart = () => {
     if (started) return;
     setStarted(true);
-    track("Lead Form Started", { page: location.pathname });
+    trackEvent("Lead Form Started", { page: location.pathname });
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -78,7 +78,7 @@ const Contact = () => {
       }
 
       setSubmitted(true);
-      track("Lead Form Submitted", {
+      trackEvent("Lead Form Submitted", {
         page: location.pathname,
         focus: projectType || "Not specified",
       });
@@ -86,11 +86,11 @@ const Contact = () => {
       setTurnstileToken("");
       setTurnstileKey((key) => key + 1);
     } catch (submitError) {
-      track("Lead Form Error", { page: location.pathname });
+      trackEvent("Lead Form Error", { page: location.pathname });
       setError(
         submitError instanceof Error
           ? submitError.message
-          : "We could not send that message. Please email rohan@anrotex.com instead.",
+          : "We could not send that message. Please email sales@anrotex.com instead.",
       );
     } finally {
       setLoading(false);
@@ -134,13 +134,13 @@ const Contact = () => {
             </div>
 
             <a
-              href="mailto:rohan@anrotex.com"
+              href="mailto:sales@anrotex.com"
               className="mt-10 inline-flex items-center gap-3 font-bold text-brand-navy"
             >
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-navy text-brand-off-white">
                 <Mail className="h-5 w-5" />
               </span>
-              rohan@anrotex.com
+              sales@anrotex.com
             </a>
           </motion.div>
 

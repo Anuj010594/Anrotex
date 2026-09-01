@@ -12,7 +12,6 @@ export default tseslint.config(
       "node_modules",
       "coverage",
       "**/._*",
-      "src/tailwind.config.lov.json",
     ],
   },
   js.configs.recommended,
@@ -40,12 +39,6 @@ export default tseslint.config(
       "@typescript-eslint/no-empty-object-type": "off",
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-require-imports": "off",
-    },
-  },
-  {
-    files: ["src/components/ui/**/*.tsx"],
-    rules: {
-      "react-refresh/only-export-components": "off",
     },
   },
 );

@@ -1,3 +1,4 @@
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import ServicesPage from "./pages/ServicesPage";
@@ -15,8 +16,48 @@ import KubernetesScalingBestPractices from "./pages/blog/KubernetesScalingBestPr
 import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
+
+const Analytics = lazy(() =>
+  import("@vercel/analytics/react").then(({ Analytics: component }) => ({
+    default: component,
+  })),
+);
+const SpeedInsights = lazy(() =>
+  import("@vercel/speed-insights/react").then(
+    ({ SpeedInsights: component }) => ({ default: component }),
+  ),
+);
+
+const DeferredTelemetry = () => {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let timeoutId: number | undefined;
+    const schedule = () => {
+      timeoutId = window.setTimeout(() => setReady(true), 600);
+    };
+
+    if (document.readyState === "complete") {
+      schedule();
+    } else {
+      window.addEventListener("load", schedule, { once: true });
+    }
+
+    return () => {
+      window.removeEventListener("load", schedule);
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+    };
+  }, []);
+
+  if (!ready) return null;
+
+  return (
+    <Suspense fallback={null}>
+      <Analytics />
+      <SpeedInsights />
+    </Suspense>
+  );
+};
 
 function App() {
   return (
@@ -46,8 +87,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      <Analytics />
-      <SpeedInsights />
+      <DeferredTelemetry />
     </>
   );
 }
