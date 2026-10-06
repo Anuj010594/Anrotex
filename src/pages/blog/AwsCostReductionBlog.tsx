@@ -8,9 +8,11 @@ const toc = [
   { id: "baseline", label: "Build a trustworthy cost baseline" },
   { id: "idle-resources", label: "Remove idle and orphaned resources" },
   { id: "ec2", label: "Reduce EC2 costs safely" },
+  { id: "rightsizing-example", label: "A worked EC2 savings example" },
   { id: "storage-databases", label: "Optimize storage and databases" },
   { id: "commitments", label: "Use commitments at the right time" },
   { id: "guardrails", label: "Prevent costs from returning" },
+  { id: "measure-savings", label: "Measure savings after the change" },
   { id: "plan", label: "A practical 30-day plan" },
 ];
 
@@ -27,18 +29,18 @@ export default function AwsCostReductionBlog() {
   return (
     <>
       <SEO
-        title="How to Reduce AWS Costs and Lower Your Bill | Anrotex"
-        description="A practical guide to reduce your AWS bill through EC2 rightsizing, idle-resource cleanup, storage optimization, autoscaling, and better cost controls."
+        title="How to Reduce AWS Costs: A Practical Checklist | Anrotex"
+        description="Reduce AWS costs with a step-by-step checklist, an EC2 rightsizing example, risk checks, and a method to measure savings after changes."
         path="/blog/reduce-aws-costs"
         type="article"
         structuredData={[
           articleSchema({
-            headline: "How to Reduce AWS Costs Without Hurting Performance",
+            headline: "How to reduce AWS costs: a practical checklist",
             description:
-              "A practical AWS cost reduction guide covering EC2 rightsizing, idle resources, storage, commitments, and cost governance.",
+              "An AWS cost reduction checklist with a worked EC2 example, operational risk checks, and a method for verifying savings.",
             path: "/blog/reduce-aws-costs",
             datePublished: "2026-06-16",
-            dateModified: "2026-07-28",
+            dateModified: "2026-10-06",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -50,11 +52,11 @@ export default function AwsCostReductionBlog() {
 
       <InsightArticle
         eyebrow="AWS cost optimization"
-        title="How to reduce AWS costs without hurting performance"
+        title="How to reduce AWS costs: a practical checklist"
         description="The safest way to lower an AWS bill is to remove waste first, right-size from real utilization data, and buy commitments only after demand is understood."
         published="16 June 2026"
-        updated="28 July 2026"
-        readTime="11 minute read"
+        updated="6 October 2026"
+        readTime="14 minute read"
         toc={toc}
         ctaTitle="Find the waste in your AWS estate."
         ctaDescription="Get a focused review of the highest-value cost opportunities, their operational risk, and the order in which to address them."
@@ -101,10 +103,24 @@ export default function AwsCostReductionBlog() {
         <h2 id="baseline">1. Build a trustworthy AWS cost baseline</h2>
 
         <p>
-          Before changing infrastructure, identify where spend is coming from and
-          who owns it. Review at least several weeks of cost and utilization data
-          so that monthly workloads, traffic peaks, deployments, and scheduled
-          jobs are not mistaken for permanent demand.
+          Start with the last three complete billing months, then inspect recent
+          daily spend for changes hidden by monthly totals. Break down the largest
+          services before reviewing individual resources. Include month-end jobs,
+          traffic peaks, deployments, and seasonal events when choosing the
+          utilization window; three months alone may not capture an annual peak.
+        </p>
+
+        <p>
+          Save the dates, account and region filters, currency, and cost basis
+          alongside the report. AWS Cost Explorer offers{" "}
+          <a href="https://docs.aws.amazon.com/cost-management/latest/userguide/ce-exploring-data.html" rel="noreferrer" target="_blank">
+            different cost views
+          </a>
+          : amortized cost spreads commitment fees over their term, while net
+          amortized cost also reflects applicable discounts. Use the same basis
+          before and after a change, and account separately for credits, refunds,
+          tax, and one-off charges. A lower invoice after a credit does not establish
+          a lower recurring run rate.
         </p>
 
         <p>
@@ -146,7 +162,7 @@ export default function AwsCostReductionBlog() {
         <p>
           AWS documents how activated{" "}
           <a
-            href="https://docs.aws.amazon.com/solutions/tagging-on-aws/"
+            href="https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/custom-tags.html"
             rel="noreferrer"
             target="_blank"
           >
@@ -182,6 +198,28 @@ export default function AwsCostReductionBlog() {
           without turning cost optimization into an outage exercise.
         </p>
 
+        <div className="mt-8 rounded-2xl border border-brand-navy/10 bg-brand-stone/55 p-6">
+          <h3 className="!mt-0">Stopping a resource does not stop every charge</h3>
+          <p>
+            A stopped EC2 instance no longer incurs instance usage charges, but
+            retained EBS volumes and Elastic IP addresses can still cost money.
+            Check the{" "}
+            <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html" rel="noreferrer" target="_blank">
+              EC2 billing rules by instance state
+            </a>{" "}
+            before forecasting savings; commitments also need a separate review.
+          </p>
+          <p>
+            For supported RDS instances, stopping leaves storage and other
+            retained-resource charges in place, and RDS automatically starts the
+            instance again after seven consecutive days. Use the{" "}
+            <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_StopInstance.html" rel="noreferrer" target="_blank">
+              RDS stopping limitations and billing guidance
+            </a>{" "}
+            when planning a non-production schedule.
+          </p>
+        </div>
+
         <h2 id="ec2">3. How to reduce EC2 costs safely</h2>
 
         <p>
@@ -189,6 +227,17 @@ export default function AwsCostReductionBlog() {
           application-level performance data. CPU alone is not enough for
           memory-heavy databases, network appliances, or workloads with bursty
           latency requirements.
+        </p>
+
+        <p>
+          Verify that memory data actually exists. Compute Optimizer can use
+          memory metrics collected through the CloudWatch agent or supported
+          external observability integrations; see its{" "}
+          <a href="https://docs.aws.amazon.com/compute-optimizer/latest/ug/ec2-metrics-analyzed.html" rel="noreferrer" target="_blank">
+            EC2 metrics requirements
+          </a>
+          . Missing memory data is a reason to collect more evidence before
+          approving a smaller instance.
         </p>
 
         <h3>Rightsize from observed demand</h3>
@@ -231,41 +280,101 @@ export default function AwsCostReductionBlog() {
           </li>
         </ul>
 
-        <div className="mt-8 overflow-x-auto rounded-2xl border border-brand-navy/10">
+        <h3>Rank opportunities by benefit, risk, and proof</h3>
+        <p className="text-sm">On small screens, scroll the table horizontally to see all four columns.</p>
+        <div role="region" aria-label="AWS cost opportunities and verification" tabIndex={0} className="mt-8 overflow-x-auto rounded-2xl border border-brand-navy/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-teal">
           <table>
             <thead>
               <tr>
                 <th>Opportunity</th>
-                <th>Evidence to inspect</th>
-                <th>Primary risk check</th>
+                <th>Potential benefit</th>
+                <th>Risk to check</th>
+                <th>How to verify</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Downsize an EC2 instance</td>
-                <td>CPU, memory, network, disk and peak latency</td>
-                <td>Headroom during bursts and deployments</td>
+                <td>Lower hourly compute cost</td>
+                <td>Memory, throughput, and headroom during peaks or failover</td>
+                <td>Compare billed usage and peak latency, errors, and saturation</td>
               </tr>
               <tr>
                 <td>Schedule non-production</td>
-                <td>Working hours and automation dependencies</td>
-                <td>Overnight jobs and developer access</td>
+                <td>Fewer paid instance hours</td>
+                <td>Overnight jobs, restart dependencies, and access requirements</td>
+                <td>Check the schedule, billed hours, and retained storage charges</td>
               </tr>
               <tr>
-                <td>Adopt Spot capacity</td>
-                <td>Interruption tolerance and queue depth</td>
-                <td>Graceful termination and fallback capacity</td>
+                <td>Remove an orphaned volume</td>
+                <td>Eliminate unnecessary storage charges</td>
+                <td>Unknown owner, recovery dependency, or retention requirement</td>
+                <td>Confirm approval and recovery policy, then check storage usage</td>
               </tr>
               <tr>
-                <td>Move instance family</td>
-                <td>Architecture, libraries and benchmark results</td>
-                <td>Compatibility and performance regression</td>
+                <td>Change an S3 lifecycle rule</td>
+                <td>Lower cost for older or temporary data</td>
+                <td>Retrieval, transition fees, minimum durations, and recovery time</td>
+                <td>Compare total storage and access cost after the transition</td>
+              </tr>
+              <tr>
+                <td>Review NAT and transfer paths</td>
+                <td>Reduce avoidable processing or transfer charges</td>
+                <td>Connectivity, routing, and endpoint costs</td>
+                <td>Check gateway hours, processed bytes, and related transfer charges</td>
+              </tr>
+              <tr>
+                <td>Buy a commitment</td>
+                <td>Discount eligible, stable usage</td>
+                <td>Unused commitment after migrations or demand changes</td>
+                <td>Track utilization and total effective cost, not coverage alone</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <h2 id="storage-databases">4. Optimize EBS, S3, RDS, and EKS together</h2>
+        <h2 id="rightsizing-example">4. Worked example: test a smaller EC2 instance</h2>
+        <p>
+          Suppose a service has three replicas, each with 4 vCPUs and 8 GiB of
+          memory. Across 28 representative days, including scheduled jobs and a
+          known traffic peak, the highest observed five-minute CPU value is 30%
+          and memory reaches 2.5 GiB per instance. This makes a 2-vCPU, 4-GiB
+          instance in the same architecture a candidate for testing. Those
+          observations alone do not prove it can handle shorter bursts or failover.
+        </p>
+        <div className="mt-6 rounded-2xl border border-brand-navy/10 bg-brand-stone/55 p-6">
+          <p className="!mt-0 font-bold">Illustrative calculation — not an AWS quote or a client result</p>
+          <p>
+            Assume hypothetical rates of $0.20/hour before and $0.12/hour after,
+            730 hours per month, three replicas in both configurations, and no
+            Savings Plans or Reserved Instances covering the usage.
+          </p>
+          <ul>
+            <li>Current compute: 3 × 730 × $0.20 = <strong>$438.00/month</strong>.</li>
+            <li>Candidate compute: 3 × 730 × $0.12 = <strong>$262.80/month</strong>.</li>
+            <li>Potential reduction: <strong>$175.20/month, or 40% of this compute cost</strong>.</li>
+          </ul>
+          <p className="!mb-0">
+            This excludes storage, data transfer, support, tax, and testing costs.
+            Replace the sample rates with those for your region, operating system,
+            instance type, and purchase arrangement. It is not a forecast of a
+            40% reduction in the whole AWS bill.
+          </p>
+        </div>
+        <ol>
+          <li>Check the candidate&apos;s network and EBS throughput, CPU credits where relevant, memory headroom, and application compatibility.</li>
+          <li>Test representative peaks and failure scenarios against agreed latency, error-rate, queue, and saturation limits.</li>
+          <li>Keep the previous configuration ready for rollback, then use an approved staged rollout with an owner watching the metrics.</li>
+          <li>Compare actual usage and effective cost after a representative observation period; record any extra capacity or costs needed to maintain performance.</li>
+        </ol>
+        <p>
+          See how this evidence becomes an actionable recommendation in the{" "}
+          <TrackedLink to="/aws-cost-optimization#sample-finding" eventName="Service Click" eventSource="aws-guide-example">
+            sample AWS audit finding
+          </TrackedLink>.
+        </p>
+
+        <h2 id="storage-databases">5. Optimize EBS, S3, RDS, and EKS together</h2>
 
         <h3>EBS and snapshot hygiene</h3>
 
@@ -289,7 +398,8 @@ export default function AwsCostReductionBlog() {
             AWS S3 cost-optimization guidance
           </a>{" "}
           describes lifecycle rules, Intelligent-Tiering, and purpose-built
-          storage classes. Add expiry rules for temporary objects, incomplete
+          storage classes. Include retrieval and transition fees, minimum storage
+          durations, and recovery requirements in the comparison. Add expiry rules for temporary objects, incomplete
           multipart uploads, and logs that exceed their required retention.
         </p>
 
@@ -306,12 +416,34 @@ export default function AwsCostReductionBlog() {
 
         <p>
           For EKS, connect pod requests to actual workload usage, then review node
-          utilization and autoscaling. Oversized pod requests create artificial
-          node demand; undersized requests create throttling, evictions, and
-          instability. Optimize workload and node layers as one system.
+          utilization and autoscaling. Requests influence scheduling and capacity
+          allocation; CPU limits can cause throttling, while exceeding memory
+          limits can cause a container to be killed. Review{" "}
+          <a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/" rel="noreferrer" target="_blank">
+            Kubernetes requests and limits
+          </a>{" "}
+          separately, then optimize workload and node capacity together.
         </p>
 
-        <h2 id="commitments">5. Buy Savings Plans and reservations last</h2>
+        <h3>NAT Gateways and data transfer</h3>
+        <p>
+          Separate gateway hours, processed data, and transfer charges before
+          changing routes. The{" "}
+          <a href="https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-pricing.html" rel="noreferrer" target="_blank">
+            AWS NAT Gateway pricing guidance
+          </a>{" "}
+          helps identify which charges a change could affect. For suitable
+          VPC-to-S3 traffic, an{" "}
+          <a href="https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html" rel="noreferrer" target="_blank">
+            S3 gateway endpoint
+          </a>{" "}
+          has no additional endpoint charge and can avoid routing that traffic
+          through NAT. Interface endpoints have different pricing. Check routing
+          and connectivity requirements, and include any remaining gateway hours
+          and transfer costs in the estimate.
+        </p>
+
+        <h2 id="commitments">6. Buy Savings Plans and reservations last</h2>
 
         <p>
           Commitment discounts can be valuable for stable baseline usage, but
@@ -328,13 +460,17 @@ export default function AwsCostReductionBlog() {
         </ol>
 
         <p>
-          AWS Cost Optimization Hub accounts for eligible existing commercial
-          terms when comparing recommendations. Still review business forecasts,
-          migrations, and architectural changes before accepting a long-term
-          commitment.
+          <a href="https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html" rel="noreferrer" target="_blank">
+            Savings Plans
+          </a>{" "}
+          involve a spending commitment per hour for one or three years. Reducing
+          covered usage does not automatically reduce that payment. Check whether
+          freed coverage can serve other eligible usage, and avoid adding a
+          rightsizing estimate to a commitment estimate that assumes the old
+          resource size. Model the combined final configuration once.
         </p>
 
-        <h2 id="guardrails">6. Prevent the AWS bill from growing back</h2>
+        <h2 id="guardrails">7. Prevent the AWS bill from growing back</h2>
 
         <p>
           Savings decay when optimization remains a quarterly clean-up exercise.
@@ -350,15 +486,38 @@ export default function AwsCostReductionBlog() {
           <li>A visible backlog ranked by saving, effort, and operational risk.</li>
         </ul>
 
+        <h2 id="measure-savings">8. Verify savings after implementation</h2>
         <p>
-          Measure realised savings after implementation. Estimated savings are
-          useful for prioritisation; realised savings confirm that usage actually
-          changed and that the cost did not reappear elsewhere.
+          Keep three numbers separate: the estimated opportunity, the change in
+          recurring effective cost, and the impact on the cash bill. A rightsizing
+          change can release committed capacity without immediately reducing cash
+          payments. Label the result accordingly.
+        </p>
+        <ol>
+          <li><strong>Record the baseline.</strong> Save the reporting dates, resource scope, cost basis, commitment assumptions, traffic volume, and performance targets before making the change.</li>
+          <li><strong>Log the rollout.</strong> Record what changed, its owner, deployment date, testing costs, and any rollback or replacement capacity.</li>
+          <li><strong>Compare like-for-like periods.</strong> Include the same business cycles, use a complete observation window, and check cost per useful unit alongside total spend. Separate demand changes, credits, pricing changes, and unrelated releases.</li>
+          <li><strong>Accept or revise the result.</strong> Verify reliability targets and costs across affected services. Record recurring savings separately from one-off implementation costs, and revisit the estimate if costs moved elsewhere.</li>
+        </ol>
+        <p>
+          For example, cost per 1,000 successful transactions equals the scoped
+          cost divided by successful transactions, multiplied by 1,000. Use a unit
+          that reflects the workload: reduced spend during a traffic drop is not
+          by itself evidence of improved efficiency.
+        </p>
+        <p>
+          Our{" "}
+          <TrackedLink to="/case-studies/fintech-aws-cost-reduction" eventName="Case Study Click" eventSource="aws-guide-measurement">
+            fintech AWS cost-reduction case study
+          </TrackedLink>{" "}
+          describes changes across infrastructure and delivery. Its published
+          outcome is specific to that engagement; use your own baseline to assess
+          what a similar review could achieve.
         </p>
 
-        <h2 id="plan">7. A practical 30-day AWS cost-reduction plan</h2>
+        <h2 id="plan">9. A practical 30-day AWS cost-reduction plan</h2>
 
-        <div className="mt-8 overflow-x-auto rounded-2xl border border-brand-navy/10">
+        <div role="region" aria-label="30-day AWS cost reduction plan" tabIndex={0} className="mt-8 overflow-x-auto rounded-2xl border border-brand-navy/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-teal">
           <table>
             <thead>
               <tr>
@@ -381,7 +540,7 @@ export default function AwsCostReductionBlog() {
               <tr>
                 <td>Days 13–21</td>
                 <td>Implement low-risk cleanup and test rightsizing changes</td>
-                <td>Measured savings and performance evidence</td>
+                <td>Initial cost and performance evidence; longer observation where needed</td>
               </tr>
               <tr>
                 <td>Days 22–30</td>

@@ -21,10 +21,16 @@ for (const url of urls) {
   for (const [, json] of html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>(.*?)<\/script>/gs)) {
     assert(JSON.parse(json)["@type"], `Invalid structured data: ${url.pathname}`);
   }
-  for (const [, href] of html.matchAll(/href="(\/[^"#]*)"/g)) {
-    const pathname = new URL(href, url).pathname;
+  for (const [, href] of html.matchAll(/href="((?:\/|#)[^"]*)"/g)) {
+    const { pathname, hash } = new URL(href, url);
     if (pathname.includes(".")) await readFile(`dist${pathname}`);
-    else assert(urls.some((page) => page.pathname === pathname), `Broken internal link: ${url.pathname} -> ${href}`);
+    else {
+      assert(urls.some((page) => page.pathname === pathname), `Broken internal link: ${url.pathname} -> ${href}`);
+      if (hash) {
+        const target = pathname === url.pathname ? html : await readFile(`dist${pathname.replace(/\/$/, "")}/index.html`, "utf8");
+        assert(target.includes(`id="${decodeURIComponent(hash.slice(1))}"`), `Missing anchor: ${url.pathname} -> ${href}`);
+      }
+    }
   }
 }
 
@@ -34,6 +40,12 @@ assert(cicd.includes("A previous application artifact is only useful"), "Missing
 assert(cicd.includes('href="/contact?focus=cicd"'), "Missing focused CI/CD enquiry link");
 const { html: contact } = render("/contact?focus=cicd");
 assert.match(contact, /<option[^>]*selected=""[^>]*>Improve deployment speed<\/option>/);
+
+const aws = await readFile("dist/aws-cost-optimization/index.html", "utf8");
+assert.equal([...aws.matchAll(/<details\b/g)].length, 6, "AWS FAQs must be in the initial HTML");
+assert(aws.includes("Reducing covered usage can release capacity"), "Missing AWS FAQ answer in prerendered content");
+assert(aws.includes('href="/contact?focus=aws-audit"'), "Missing focused AWS enquiry link");
+assert.match(render("/contact?focus=aws-audit").html, /<option[^>]*selected=""[^>]*>AWS Cost Optimization Audit<\/option>/);
 
 const notFound = await readFile("dist/404.html", "utf8");
 assert.match(notFound, /<h1\b[^>]*>404<\/h1>/);

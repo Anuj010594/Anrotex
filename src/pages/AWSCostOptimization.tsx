@@ -1,7 +1,6 @@
 import {
   ArrowRight,
   Check,
-  ChevronDown,
   CircleDollarSign,
   Clock3,
   CloudCog,
@@ -14,7 +13,6 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
-import { useState } from "react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
@@ -62,11 +60,11 @@ const reviewAreas = [
 
 const deliverables = [
   "Cost baseline mapped to accounts, workloads, environments, and owners",
-  "Prioritised savings register with expected value, effort, and operational risk",
+  "Prioritised savings register with evidence, cost assumptions, confidence, effort, and operational risk",
   "EC2, EBS, RDS, S3, EKS, and network findings relevant to your environment",
   "30/60/90-day implementation roadmap with quick wins clearly separated",
   "Commitment coverage review after waste and rightsizing opportunities",
-  "Budget, anomaly, tagging, and ownership guardrails to prevent cost regression",
+  "Budget, anomaly, tagging, and ownership guardrails with a plan to measure savings",
 ];
 
 const process = [
@@ -114,7 +112,7 @@ const accessPrinciples = [
     icon: ShieldCheck,
     title: "Minimum necessary access",
     description:
-      "The access plan is agreed before discovery and scoped to the accounts and services included in the audit.",
+      "The access plan is agreed before discovery and scoped to the accounts and services included in the audit. We do not request root credentials.",
   },
   {
     icon: Users,
@@ -136,6 +134,11 @@ const faqs = [
       "Savings depend on workload shape, existing commitments, architecture, and how actively the environment has already been optimized. We estimate each opportunity only after reviewing the supporting usage and risk data.",
   },
   {
+    question: "Are estimated savings the same as a lower AWS invoice?",
+    answer:
+      "No. Each estimate states its billing basis, usage window, and commitment assumptions. Reducing covered usage can release capacity without reducing an existing commitment payment. After an approved implementation, compare actual costs and workload volume over agreed periods to establish the realized result.",
+  },
+  {
     question: "Will you need access to our production account?",
     answer:
       "The review can begin with read-only billing, configuration, and utilization data. We agree the minimum access required before work starts and do not make production changes without approval.",
@@ -152,27 +155,12 @@ const faqs = [
   },
 ];
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((faq) => ({
-    "@type": "Question",
-    name: faq.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: faq.answer,
-    },
-  })),
-};
-
 export default function AwsCostOptimization() {
-  const [openFAQ, setOpenFAQ] = useState<number | null>(0);
-
   return (
     <>
       <SEO
         title="AWS Cost Optimization Audit | Anrotex"
-        description="Get a fixed-scope AWS cost audit with verified EC2, EKS, RDS, EBS, S3, network, commitment, and guardrail opportunities plus a 30/60/90-day plan."
+        description="Get a read-only AWS cost optimization audit with evidence-backed findings, savings assumptions, risk checks, and a 30/60/90-day implementation plan."
         path="/aws-cost-optimization"
         structuredData={[
           serviceSchema({
@@ -187,7 +175,6 @@ export default function AwsCostOptimization() {
             { name: "Services", path: "/services" },
             { name: "AWS Cost Optimization", path: "/aws-cost-optimization" },
           ]),
-          faqSchema,
         ]}
       />
       <Navbar />
@@ -205,9 +192,10 @@ export default function AwsCostOptimization() {
                 Find the AWS waste worth fixing—and leave with a plan.
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-relaxed text-brand-teal md:text-xl">
-                In 3–7 business days, get technically verified savings
-                opportunities, the evidence behind them, and a 30/60/90-day
-                implementation roadmap your engineers can use.
+                Identify savings opportunities with supporting evidence, clear
+                cost assumptions, and a 30/60/90-day implementation roadmap.
+                Focused audits typically take 3–7 business days once the agreed
+                access and workload context are ready.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <TrackedLink
@@ -239,7 +227,7 @@ export default function AwsCostOptimization() {
                   The audit at a glance
                 </p>
                 <h2 className="mt-4 text-3xl font-bold">
-                  One decision-ready package, not a recommendation dump.
+                  Know what to change, why, and how to verify it.
                 </h2>
                 <div className="mt-7 space-y-4">
                   {[
@@ -284,6 +272,44 @@ export default function AwsCostOptimization() {
                 day implementation sequence included
               </p>
             </div>
+          </div>
+        </section>
+
+        <section id="sample-finding" className="scroll-mt-28 bg-brand-stone px-6 py-24 md:py-32">
+          <div className="container grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-teal">Inside the savings register</p>
+              <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] md:text-5xl">What a useful finding looks like.</h2>
+              <p className="mt-6 text-lg leading-relaxed text-brand-teal">
+                A recommendation needs an owner, evidence, assumptions, and a
+                validation plan before it belongs in an implementation backlog.
+              </p>
+              <TrackedLink to="/blog/reduce-aws-costs#rightsizing-example" eventName="Article Click" eventSource="aws-audit-sample" className="mt-7 inline-flex items-center gap-2 font-bold underline underline-offset-4">
+                Follow the worked EC2 example <ArrowRight className="h-4 w-4 shrink-0" />
+              </TrackedLink>
+            </div>
+            <article className="rounded-[2rem] border border-brand-navy/10 bg-brand-off-white p-7 md:p-9">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-brand-teal">Illustrative finding · Not a client result</p>
+              <h3 className="mt-4 text-2xl font-bold">Test a smaller EC2 size while retaining three replicas</h3>
+              <dl className="mt-7 space-y-5 text-sm leading-relaxed">
+                <div><dt className="font-bold">Evidence and confidence</dt><dd className="mt-1 text-brand-teal">In this example, 28 representative days show a highest five-minute CPU value of 30% and memory reaching 2.5 GiB on each 4-vCPU, 8-GiB instance. A 2-vCPU, 4-GiB candidate needs performance and failover testing before approval.</dd></div>
+                <div><dt className="font-bold">Estimated benefit and assumptions</dt><dd className="mt-1 text-brand-teal">At hypothetical rates of $0.20 and $0.12 per hour, three replicas running 730 hours cost $438.00 and $262.80 respectively. Potential compute reduction: $175.20/month. This assumes no existing commitment coverage and excludes storage, transfer, support, tax, and testing costs.</dd></div>
+                <div><dt className="font-bold">Risk and decision owner</dt><dd className="mt-1 text-brand-teal">The workload owner checks memory headroom, network and disk limits, peak latency, error rates, and recovery capacity. The previous configuration remains the rollback option.</dd></div>
+                <div><dt className="font-bold">Acceptance and measurement</dt><dd className="mt-1 text-brand-teal">Approve a staged rollout only after agreed performance limits pass. Compare actual billed usage, effective cost, and workload volume across representative periods, including costs that moved to other services.</dd></div>
+              </dl>
+            </article>
+          </div>
+          <div className="container mt-14 grid gap-5 md:grid-cols-3">
+            {[
+              { title: "Estimated opportunity", description: "A forecast tied to resource usage, rates, and commitment assumptions. Overlapping recommendations are reconciled before totals are presented." },
+              { title: "Approved implementation", description: "A selected change with an owner, test criteria, rollout sequence, and rollback plan. Your team can deliver it or scope implementation with Anrotex." },
+              { title: "Measured outcome", description: "A post-change comparison using the same cost basis and workload scope. Recurring cost, cash payments, and one-off implementation costs are reported separately." },
+            ].map((item) => (
+              <div key={item.title} className="rounded-2xl border border-brand-navy/10 p-6">
+                <h3 className="text-xl font-bold">{item.title}</h3>
+                <p className="mt-3 leading-relaxed text-brand-teal">{item.description}</p>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -416,8 +442,9 @@ export default function AwsCostOptimization() {
                   Evidence in. No surprise changes out.
                 </h2>
                 <p className="mt-6 text-lg leading-relaxed text-brand-teal">
-                  This is an audit, not an unapproved production optimization
-                  sprint.
+                  We agree the accounts, services, reporting period, and
+                  deliverables before discovery. Your team controls access
+                  throughout the review.
                 </p>
               </div>
               <div className="grid gap-4 md:grid-cols-3">
@@ -433,6 +460,24 @@ export default function AwsCostOptimization() {
                     </p>
                   </article>
                 ))}
+              </div>
+            </div>
+            <div className="mt-14 grid gap-6 lg:grid-cols-2">
+              <div className="rounded-2xl bg-brand-stone/55 p-7">
+                <h3 className="text-2xl font-bold">What to prepare</h3>
+                <ul className="mt-5 list-disc space-y-3 pl-5 leading-relaxed text-brand-teal">
+                  <li>The in-scope accounts, regions, services, and workload owners.</li>
+                  <li>Billing history, ideally three complete months, plus existing Savings Plans and reservations.</li>
+                  <li>Representative utilization data, including memory where needed, and known peak or batch periods.</li>
+                  <li>Performance targets, recovery requirements, maintenance windows, and planned migrations.</li>
+                </ul>
+                <p className="mt-5 leading-relaxed text-brand-teal">Discovery uses agreed read-only permissions or scoped exports. Missing evidence is recorded as a limitation on the affected finding.</p>
+              </div>
+              <div className="rounded-2xl bg-brand-stone/55 p-7">
+                <h3 className="text-2xl font-bold">Where the audit ends</h3>
+                <p className="mt-5 leading-relaxed text-brand-teal">The audit includes the baseline, prioritized findings, measurement plan, roadmap, and readout for the agreed scope.</p>
+                <p className="mt-4 leading-relaxed text-brand-teal">Production changes, commitment purchases, application rewrites, ongoing incident support, and post-implementation measurement are scoped separately. Accounts or services added later may change the proposal and timeline.</p>
+                <p className="mt-4 leading-relaxed text-brand-teal">Your engineers can implement the roadmap independently. If you need delivery support, we agree the changes, access, validation period, and handover before work begins.</p>
               </div>
             </div>
           </div>
@@ -476,34 +521,20 @@ export default function AwsCostOptimization() {
               </h2>
             </div>
             <div className="space-y-3">
-              {faqs.map((faq, index) => {
-                const isOpen = openFAQ === index;
-                return (
-                  <div
-                    key={faq.question}
-                    className="overflow-hidden rounded-2xl bg-brand-off-white"
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setOpenFAQ(isOpen ? null : index)}
-                      className="flex w-full items-center justify-between gap-5 px-6 py-5 text-left text-lg font-bold"
-                      aria-expanded={isOpen}
-                    >
-                      {faq.question}
-                      <ChevronDown
-                        className={`h-5 w-5 shrink-0 transition ${
-                          isOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                    {isOpen && (
-                      <p className="px-6 pb-6 leading-relaxed text-brand-teal">
-                        {faq.answer}
-                      </p>
-                    )}
-                  </div>
-                );
-              })}
+              {faqs.map((faq, index) => (
+                <details
+                  key={faq.question}
+                  open={index === 0}
+                  className="overflow-hidden rounded-2xl bg-brand-off-white"
+                >
+                  <summary className="cursor-pointer px-6 py-5 text-lg font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-teal">
+                    {faq.question}
+                  </summary>
+                  <p className="px-6 pb-6 leading-relaxed text-brand-teal">
+                    {faq.answer}
+                  </p>
+                </details>
+              ))}
             </div>
           </div>
         </section>

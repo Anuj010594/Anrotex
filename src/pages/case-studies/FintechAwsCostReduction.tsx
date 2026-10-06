@@ -74,7 +74,7 @@ export default function FintechAwsCostReduction() {
             description,
             path: caseStudyPath,
             datePublished: "2026-07-28",
-            dateModified: "2026-07-28",
+            dateModified: "2026-10-06",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -124,7 +124,7 @@ export default function FintechAwsCostReduction() {
               </TrackedLink>
             </div>
             <p className="mt-6 text-sm font-semibold text-brand-navy/60">
-              Reviewed by Anrotex engineering · Published 28 July 2026
+              Reviewed by Anrotex engineering · Published 28 July 2026 · Updated 6 October 2026
             </p>
           </div>
         </section>
@@ -282,6 +282,17 @@ export default function FintechAwsCostReduction() {
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-brand-teal">
               The AWS Cost Optimization Audit turns billing, utilization, and
               architecture evidence into a prioritized 30/60/90-day plan.
+            </p>
+            <p className="mx-auto mt-5 max-w-2xl leading-relaxed text-brand-teal">
+              Start with the{" "}
+              <TrackedLink to="/blog/reduce-aws-costs#measure-savings" eventName="Article Click" eventSource="fintech-case-study-measurement" className="font-semibold text-brand-navy underline underline-offset-4">
+                AWS savings measurement checklist
+              </TrackedLink>{" "}
+              to define your baseline and performance checks. Then review the{" "}
+              <TrackedLink to="/aws-cost-optimization#sample-finding" eventName="Service Click" eventSource="fintech-case-study-scope" className="font-semibold text-brand-navy underline underline-offset-4">
+                audit scope and sample finding
+              </TrackedLink>{" "}
+              to see the evidence and assumptions an actionable recommendation needs.
             </p>
             <TrackedLink
               to="/contact?focus=aws-audit"

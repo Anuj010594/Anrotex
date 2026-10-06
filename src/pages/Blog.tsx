@@ -1,12 +1,13 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import TrackedLink from "@/components/TrackedLink";
 
 const posts = [
   {
-    title: "How to Reduce AWS Costs Without Affecting Performance",
+    title: "How to Reduce AWS Costs: A Practical Checklist",
     description:
-      "Learn practical strategies to reduce AWS spending while keeping your infrastructure fast and reliable.",
+      "Follow a worked EC2 example, assess operational risks, and measure savings across compute, storage, and network costs.",
     link: "/blog/reduce-aws-costs"
   },
   {
@@ -54,19 +55,23 @@ export default function Blog() {
                 className="p-8 rounded-xl border border-border bg-card"
               >
                 <h2 className="text-xl font-semibold mb-4">
-                  {post.title}
+                  <TrackedLink to={post.link} eventName="Article Click" eventSource="blog-list-title" className="hover:underline">
+                    {post.title}
+                  </TrackedLink>
                 </h2>
 
                 <p className="text-muted-foreground mb-6">
                   {post.description}
                 </p>
 
-                <a
-                  href={post.link}
+                <TrackedLink
+                  to={post.link}
+                  eventName="Article Click"
+                  eventSource="blog-list"
                   className="text-primary font-medium"
                 >
                   Read article →
-                </a>
+                </TrackedLink>
               </div>
             ))}
           </div>
