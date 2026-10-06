@@ -22,7 +22,9 @@ const Contact = () => {
       ? "AWS Cost Optimization Audit"
       : focus === "aws-cost"
         ? "Reduce cloud costs"
-        : "";
+        : focus === "cicd"
+          ? "Improve deployment speed"
+          : "";
   const handleTurnstileToken = useCallback((token: string) => {
     setTurnstileToken(token);
   }, []);

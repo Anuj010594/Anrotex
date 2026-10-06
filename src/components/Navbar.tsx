@@ -4,8 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 import TrackedLink from "@/components/TrackedLink";
 
 const links = [
-  { label: "Services", path: "/services", section: "#services" },
-  { label: "Results", path: "/case-studies", section: "#cases" },
+  { label: "Services", path: "/services" },
+  { label: "Results", path: "/case-studies" },
   { label: "About", path: "/", section: "#team" },
   { label: "Insights", path: "/blog" },
 ];

@@ -14,9 +14,13 @@ npm run dev
 
 ```bash
 npm run build
+npm run check:seo
 npx tsc -b --pretty false
 npm test -- --exclude 'src/**/._*'
 ```
+
+See [the SEO baseline and first-batch rollout notes](docs/seo-baseline-2026-10-06.md)
+for the initial search comparison, implemented changes, and production checks.
 
 ## Lead-form configuration
 

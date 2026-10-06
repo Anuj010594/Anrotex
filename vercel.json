@@ -25,7 +25,6 @@
     { "source": "/blog", "destination": "/blog/index.html" },
     { "source": "/blog/reduce-aws-costs", "destination": "/blog/reduce-aws-costs/index.html" },
     { "source": "/blog/cicd-best-practices", "destination": "/blog/cicd-best-practices/index.html" },
-    { "source": "/blog/kubernetes-scaling-best-practices", "destination": "/blog/kubernetes-scaling-best-practices/index.html" },
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/blog/kubernetes-scaling-best-practices", "destination": "/blog/kubernetes-scaling-best-practices/index.html" }
   ]
 }

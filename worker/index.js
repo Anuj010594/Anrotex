@@ -24,8 +24,12 @@ const worker = {
       }
     }
 
-    const fallbackUrl = new URL("/", request.url);
-    return env.ASSETS.fetch(new Request(fallbackUrl, request));
+    const fallbackUrl = new URL("/404.html", request.url);
+    const fallback = await env.ASSETS.fetch(new Request(fallbackUrl, request));
+    return new Response(fallback.body, {
+      status: 404,
+      headers: fallback.headers,
+    });
   },
 };
 

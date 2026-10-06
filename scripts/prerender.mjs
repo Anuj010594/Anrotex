@@ -27,16 +27,17 @@ const serverEntry = pathToFileURL(
 ).href;
 const { render } = await import(serverEntry);
 
-for (const route of routes) {
+for (const route of [...routes, "/404"]) {
   const { html, head } = render(route);
   const document = template
     .replace("<!--seo-head-->", head)
     .replace('<div id="root"></div>', `<div id="root">${html}</div>`);
-  const outputDirectory =
-    route === "/" ? distDirectory : path.join(distDirectory, route.slice(1));
+  const outputFile = route === "/404"
+    ? path.join(distDirectory, "404.html")
+    : path.join(distDirectory, route.slice(1), "index.html");
 
-  await mkdir(outputDirectory, { recursive: true });
-  await writeFile(path.join(outputDirectory, "index.html"), document);
+  await mkdir(path.dirname(outputFile), { recursive: true });
+  await writeFile(outputFile, document);
 }
 
-console.log(`Prerendered ${routes.length} SEO-ready routes.`);
+console.log(`Prerendered ${routes.length} SEO-ready routes and a 404 page.`);

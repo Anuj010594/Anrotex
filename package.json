@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
+    "check:seo": "node scripts/check-seo.mjs",
     "typecheck:api": "tsc -p tsconfig.api.json --pretty false"
   },
   "dependencies": {
