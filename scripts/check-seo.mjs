@@ -41,6 +41,16 @@ assert(cicd.includes('href="/contact?focus=cicd"'), "Missing focused CI/CD enqui
 const { html: contact } = render("/contact?focus=cicd");
 assert.match(contact, /<option[^>]*selected=""[^>]*>Improve deployment speed<\/option>/);
 
+const cicdGuide = await readFile("dist/blog/cicd-best-practices/index.html", "utf8");
+const workflow = await readFile("src/content/node-ci.yml", "utf8");
+const escapeHtml = (text) => text.replace(/[&<>"']/g, (character) => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;",
+})[character]);
+assert(cicdGuide.includes(escapeHtml(workflow)), "The complete CI workflow must be readable in the initial HTML");
+assert(cicdGuide.includes('href="/contact?focus=cicd"'), "Missing focused enquiry link in the CI/CD guide");
+assert.match(cicdGuide, /<pre[^>]*aria-label="Node.js CI workflow"[^>]*tabindex="0"/);
+assert.doesNotMatch(cicdGuide, /illustrative|not a client result|publication boundaries|reviewed by Anrotex/i);
+
 const aws = await readFile("dist/aws-cost-optimization/index.html", "utf8");
 assert.equal([...aws.matchAll(/<details\b/g)].length, 6, "AWS FAQs must be in the initial HTML");
 assert(aws.includes("Reducing covered usage can release capacity"), "Missing AWS FAQ answer in prerendered content");

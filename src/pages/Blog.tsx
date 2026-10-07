@@ -11,9 +11,9 @@ const posts = [
     link: "/blog/reduce-aws-costs"
   },
   {
-    title: "CI/CD Best Practices for Faster and Safer Deployments",
+    title: "CI/CD Best Practices: From Pull Request to Production",
     description:
-      "Improve deployment speed and reliability with proven CI/CD automation practices.",
+      "Follow a GitHub Actions workflow, troubleshoot pipeline failures, and prepare deployment checks and a recovery plan.",
     link: "/blog/cicd-best-practices"
   },
   {
