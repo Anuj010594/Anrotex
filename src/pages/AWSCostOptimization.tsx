@@ -60,7 +60,7 @@ const reviewAreas = [
 
 const deliverables = [
   "Cost baseline mapped to accounts, workloads, environments, and owners",
-  "Prioritised savings register with evidence, cost assumptions, confidence, effort, and operational risk",
+  "Prioritized savings opportunities with estimated costs, implementation effort, and reliability checks",
   "EC2, EBS, RDS, S3, EKS, and network findings relevant to your environment",
   "30/60/90-day implementation roadmap with quick wins clearly separated",
   "Commitment coverage review after waste and rightsizing opportunities",
@@ -76,7 +76,7 @@ const process = [
   },
   {
     step: "02",
-    title: "Open read-only discovery",
+    title: "Review your AWS environment",
     description:
       "We agree the minimum billing, utilization, configuration, and architecture context needed. The audit does not require write access.",
   },
@@ -84,13 +84,13 @@ const process = [
     step: "03",
     title: "Verify the opportunities",
     description:
-      "Recommendations are checked against utilisation, performance, reliability, and ownership—not accepted blindly.",
+      "We check each recommendation against resource usage, application performance, and recovery requirements.",
   },
   {
     step: "04",
-    title: "Deliver the decision pack",
+    title: "Walk through your savings plan",
     description:
-      "Your team receives the savings register, 30/60/90-day roadmap, implementation sequence, and an executive readout.",
+      "Your team receives a prioritized list of savings opportunities, a 30/60/90-day roadmap, and a walkthrough of the recommended changes.",
   },
 ];
 
@@ -98,7 +98,7 @@ const fitSignals = [
   "AWS spend is rising faster than product or customer growth",
   "Engineering sees recommendations but lacks time to validate risk",
   "Multiple accounts, teams, tags, or commitments obscure ownership",
-  "A finance or leadership decision needs defensible savings evidence",
+  "Leadership needs a clear estimate of potential savings and the work involved",
 ];
 
 const accessPrinciples = [
@@ -106,7 +106,7 @@ const accessPrinciples = [
     icon: Eye,
     title: "Read-only by default",
     description:
-      "Billing, utilization, and configuration evidence are reviewed without changing production resources.",
+      "We review billing, resource usage, and configuration without changing production resources.",
   },
   {
     icon: ShieldCheck,
@@ -160,7 +160,7 @@ export default function AwsCostOptimization() {
     <>
       <SEO
         title="AWS Cost Optimization Audit | Anrotex"
-        description="Get a read-only AWS cost optimization audit with evidence-backed findings, savings assumptions, risk checks, and a 30/60/90-day implementation plan."
+        description="Find AWS cost savings with a read-only audit of compute, storage, and network usage. Get estimated savings and a practical 30/60/90-day implementation plan."
         path="/aws-cost-optimization"
         structuredData={[
           serviceSchema({
@@ -192,8 +192,8 @@ export default function AwsCostOptimization() {
                 Find the AWS waste worth fixing—and leave with a plan.
               </h1>
               <p className="mt-7 max-w-2xl text-lg leading-relaxed text-brand-teal md:text-xl">
-                Identify savings opportunities with supporting evidence, clear
-                cost assumptions, and a 30/60/90-day implementation roadmap.
+                Find where your AWS budget is going, which changes could lower
+                costs, and how to put them into action over 30, 60, and 90 days.
                 Focused audits typically take 3–7 business days once the agreed
                 access and workload context are ready.
               </p>
@@ -233,7 +233,7 @@ export default function AwsCostOptimization() {
                   {[
                     "3–7 business day assessment",
                     "Read-only billing and utilization review",
-                    "Prioritized savings register",
+                    "Prioritized savings opportunities",
                     "30/60/90-day implementation roadmap",
                   ].map((item) => (
                     <p
@@ -278,32 +278,32 @@ export default function AwsCostOptimization() {
         <section id="sample-finding" className="scroll-mt-28 bg-brand-stone px-6 py-24 md:py-32">
           <div className="container grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-teal">Inside the savings register</p>
-              <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] md:text-5xl">What a useful finding looks like.</h2>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-teal">EC2 cost optimization</p>
+              <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] md:text-5xl">See how a smaller instance could reduce costs.</h2>
               <p className="mt-6 text-lg leading-relaxed text-brand-teal">
-                A recommendation needs an owner, evidence, assumptions, and a
-                validation plan before it belongs in an implementation backlog.
+                Compare instance sizes, estimate the monthly difference, and
+                check performance before changing your production setup.
               </p>
               <TrackedLink to="/blog/reduce-aws-costs#rightsizing-example" eventName="Article Click" eventSource="aws-audit-sample" className="mt-7 inline-flex items-center gap-2 font-bold underline underline-offset-4">
                 Follow the worked EC2 example <ArrowRight className="h-4 w-4 shrink-0" />
               </TrackedLink>
             </div>
             <article className="rounded-[2rem] border border-brand-navy/10 bg-brand-off-white p-7 md:p-9">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-brand-teal">Illustrative finding · Not a client result</p>
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-brand-teal">EC2 rightsizing example</p>
               <h3 className="mt-4 text-2xl font-bold">Test a smaller EC2 size while retaining three replicas</h3>
               <dl className="mt-7 space-y-5 text-sm leading-relaxed">
-                <div><dt className="font-bold">Evidence and confidence</dt><dd className="mt-1 text-brand-teal">In this example, 28 representative days show a highest five-minute CPU value of 30% and memory reaching 2.5 GiB on each 4-vCPU, 8-GiB instance. A 2-vCPU, 4-GiB candidate needs performance and failover testing before approval.</dd></div>
-                <div><dt className="font-bold">Estimated benefit and assumptions</dt><dd className="mt-1 text-brand-teal">At hypothetical rates of $0.20 and $0.12 per hour, three replicas running 730 hours cost $438.00 and $262.80 respectively. Potential compute reduction: $175.20/month. This assumes no existing commitment coverage and excludes storage, transfer, support, tax, and testing costs.</dd></div>
-                <div><dt className="font-bold">Risk and decision owner</dt><dd className="mt-1 text-brand-teal">The workload owner checks memory headroom, network and disk limits, peak latency, error rates, and recovery capacity. The previous configuration remains the rollback option.</dd></div>
-                <div><dt className="font-bold">Acceptance and measurement</dt><dd className="mt-1 text-brand-teal">Approve a staged rollout only after agreed performance limits pass. Compare actual billed usage, effective cost, and workload volume across representative periods, including costs that moved to other services.</dd></div>
+                <div><dt className="font-bold">Current resource usage</dt><dd className="mt-1 text-brand-teal">Consider three 4-vCPU, 8-GiB instances whose highest five-minute CPU reading is 30% and memory usage reaches 2.5 GiB over 28 days. A 2-vCPU, 4-GiB instance could be worth testing under peak traffic and failover conditions.</dd></div>
+                <div><dt className="font-bold">Potential monthly savings</dt><dd className="mt-1 text-brand-teal">Using example rates of $0.20 and $0.12 per hour, three replicas running 730 hours would cost $438.00 and $262.80 respectively—a difference of $175.20 per month in compute charges. Use your own AWS rates and check existing commitments. Storage, transfer, support, tax, and testing costs are additional.</dd></div>
+                <div><dt className="font-bold">What to check before switching</dt><dd className="mt-1 text-brand-teal">Check memory headroom, network and disk limits, peak latency, error rates, and recovery capacity. Keep the previous configuration ready in case you need to roll back.</dd></div>
+                <div><dt className="font-bold">How to confirm the savings</dt><dd className="mt-1 text-brand-teal">Roll out gradually after performance tests pass. Compare costs and workload volume before and after the change, including any extra spend on other services.</dd></div>
               </dl>
             </article>
           </div>
           <div className="container mt-14 grid gap-5 md:grid-cols-3">
             {[
-              { title: "Estimated opportunity", description: "A forecast tied to resource usage, rates, and commitment assumptions. Overlapping recommendations are reconciled before totals are presented." },
-              { title: "Approved implementation", description: "A selected change with an owner, test criteria, rollout sequence, and rollback plan. Your team can deliver it or scope implementation with Anrotex." },
-              { title: "Measured outcome", description: "A post-change comparison using the same cost basis and workload scope. Recurring cost, cash payments, and one-off implementation costs are reported separately." },
+              { title: "Estimate your savings", description: "See the potential savings at your usage levels and AWS rates, accounting for existing commitments and avoiding double-counted savings." },
+              { title: "Make the change", description: "Give your engineers a clear testing, rollout, and rollback plan. They can implement the changes themselves or arrange delivery support with Anrotex." },
+              { title: "Track the result", description: "Compare costs for the same workloads before and after the change. See how recurring savings, commitment payments, and implementation costs affect your bill." },
             ].map((item) => (
               <div key={item.title} className="rounded-2xl border border-brand-navy/10 p-6">
                 <h3 className="text-xl font-bold">{item.title}</h3>
@@ -357,9 +357,9 @@ export default function AwsCostOptimization() {
                 Built for a real cost decision.
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-brand-teal">
-                The audit works best when leadership needs a defensible view of
-                savings and engineering needs a sequence that protects
-                reliability.
+                The audit helps leadership understand potential savings and
+                gives engineers a practical plan for reducing costs while
+                protecting reliability.
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -386,8 +386,8 @@ export default function AwsCostOptimization() {
                 A plan your engineers can actually execute.
               </h2>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-brand-stone">
-                Each finding includes the evidence behind it and the production
-                constraint that must be protected.
+                Understand why each change is recommended, what it could save,
+                and which performance and reliability checks it needs.
               </p>
             </div>
             <div className="space-y-3">
@@ -439,7 +439,7 @@ export default function AwsCostOptimization() {
                   Access and change control
                 </p>
                 <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] md:text-6xl">
-                  Evidence in. No surprise changes out.
+                  Your team stays in control.
                 </h2>
                 <p className="mt-6 text-lg leading-relaxed text-brand-teal">
                   We agree the accounts, services, reporting period, and
@@ -471,11 +471,11 @@ export default function AwsCostOptimization() {
                   <li>Representative utilization data, including memory where needed, and known peak or batch periods.</li>
                   <li>Performance targets, recovery requirements, maintenance windows, and planned migrations.</li>
                 </ul>
-                <p className="mt-5 leading-relaxed text-brand-teal">Discovery uses agreed read-only permissions or scoped exports. Missing evidence is recorded as a limitation on the affected finding.</p>
+                <p className="mt-5 leading-relaxed text-brand-teal">We can work with read-only access or reports you share. If more data is needed to assess a recommendation, we will explain what to collect and why.</p>
               </div>
               <div className="rounded-2xl bg-brand-stone/55 p-7">
-                <h3 className="text-2xl font-bold">Where the audit ends</h3>
-                <p className="mt-5 leading-relaxed text-brand-teal">The audit includes the baseline, prioritized findings, measurement plan, roadmap, and readout for the agreed scope.</p>
+                <h3 className="text-2xl font-bold">Implementation and ongoing support</h3>
+                <p className="mt-5 leading-relaxed text-brand-teal">The audit gives you a cost breakdown, prioritized recommendations, a plan for tracking savings, and a walkthrough with your team.</p>
                 <p className="mt-4 leading-relaxed text-brand-teal">Production changes, commitment purchases, application rewrites, ongoing incident support, and post-implementation measurement are scoped separately. Accounts or services added later may change the proposal and timeline.</p>
                 <p className="mt-4 leading-relaxed text-brand-teal">Your engineers can implement the roadmap independently. If you need delivery support, we agree the changes, access, validation period, and handover before work begins.</p>
               </div>
@@ -487,7 +487,7 @@ export default function AwsCostOptimization() {
           <div className="container grid items-center gap-10 lg:grid-cols-[1fr_auto]">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.2em]">
-                Selected engagement outcome
+                Client results
               </p>
               <h2 className="mt-4 max-w-4xl text-4xl font-bold leading-tight tracking-[-0.04em] md:text-5xl">
                 42% lower AWS spend and 3× faster releases for a growing
@@ -495,7 +495,7 @@ export default function AwsCostOptimization() {
               </h2>
               <p className="mt-5 max-w-3xl text-lg leading-relaxed text-brand-navy/75">
                 See the cost, infrastructure, and delivery changes behind the
-                result in the full anonymized engagement story.
+                result in the fintech case study.
               </p>
             </div>
             <TrackedLink
@@ -545,7 +545,7 @@ export default function AwsCostOptimization() {
               <Clock3 className="h-8 w-8" />
             </div>
             <h2 className="mt-7 text-4xl font-bold leading-tight tracking-[-0.04em] md:text-6xl">
-              Put a defensible savings plan in front of your team.
+              Give your team a clear plan to reduce AWS costs.
             </h2>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-brand-teal">
               Start with a free fit call. If the audit is right for your

@@ -40,7 +40,7 @@ export default function AwsCostReductionBlog() {
               "An AWS cost reduction checklist with a worked EC2 example, operational risk checks, and a method for verifying savings.",
             path: "/blog/reduce-aws-costs",
             datePublished: "2026-06-16",
-            dateModified: "2026-10-06",
+            dateModified: "2026-10-07",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -55,7 +55,7 @@ export default function AwsCostReductionBlog() {
         title="How to reduce AWS costs: a practical checklist"
         description="The safest way to lower an AWS bill is to remove waste first, right-size from real utilization data, and buy commitments only after demand is understood."
         published="16 June 2026"
-        updated="6 October 2026"
+        updated="7 October 2026"
         readTime="14 minute read"
         toc={toc}
         ctaTitle="Find the waste in your AWS estate."
@@ -280,7 +280,7 @@ export default function AwsCostReductionBlog() {
           </li>
         </ul>
 
-        <h3>Rank opportunities by benefit, risk, and proof</h3>
+        <h3>Compare potential savings and performance risks</h3>
         <p className="text-sm">On small screens, scroll the table horizontally to see all four columns.</p>
         <div role="region" aria-label="AWS cost opportunities and verification" tabIndex={0} className="mt-8 overflow-x-auto rounded-2xl border border-brand-navy/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-teal">
           <table>
@@ -343,9 +343,9 @@ export default function AwsCostReductionBlog() {
           observations alone do not prove it can handle shorter bursts or failover.
         </p>
         <div className="mt-6 rounded-2xl border border-brand-navy/10 bg-brand-stone/55 p-6">
-          <p className="!mt-0 font-bold">Illustrative calculation — not an AWS quote or a client result</p>
+          <p className="!mt-0 font-bold">Calculate the monthly compute cost</p>
           <p>
-            Assume hypothetical rates of $0.20/hour before and $0.12/hour after,
+            For this example, use $0.20/hour before and $0.12/hour after,
             730 hours per month, three replicas in both configurations, and no
             Savings Plans or Reserved Instances covering the usage.
           </p>
@@ -357,8 +357,7 @@ export default function AwsCostReductionBlog() {
           <p className="!mb-0">
             This excludes storage, data transfer, support, tax, and testing costs.
             Replace the sample rates with those for your region, operating system,
-            instance type, and purchase arrangement. It is not a forecast of a
-            40% reduction in the whole AWS bill.
+            instance type, and purchase arrangement. The 40% difference applies only to the compute charges in this example.
           </p>
         </div>
         <ol>
@@ -368,9 +367,9 @@ export default function AwsCostReductionBlog() {
           <li>Compare actual usage and effective cost after a representative observation period; record any extra capacity or costs needed to maintain performance.</li>
         </ol>
         <p>
-          See how this evidence becomes an actionable recommendation in the{" "}
+          See the checks to make before switching instance sizes in our{" "}
           <TrackedLink to="/aws-cost-optimization#sample-finding" eventName="Service Click" eventSource="aws-guide-example">
-            sample AWS audit finding
+            EC2 rightsizing example
           </TrackedLink>.
         </p>
 
@@ -510,9 +509,8 @@ export default function AwsCostReductionBlog() {
           <TrackedLink to="/case-studies/fintech-aws-cost-reduction" eventName="Case Study Click" eventSource="aws-guide-measurement">
             fintech AWS cost-reduction case study
           </TrackedLink>{" "}
-          describes changes across infrastructure and delivery. Its published
-          outcome is specific to that engagement; use your own baseline to assess
-          what a similar review could achieve.
+          shows how infrastructure improvements, Terraform, and blue-green
+          delivery helped a payments platform lower AWS costs and release faster.
         </p>
 
         <h2 id="plan">9. A practical 30-day AWS cost-reduction plan</h2>
@@ -568,9 +566,9 @@ export default function AwsCostReductionBlog() {
           </p>
           <h2 className="!pt-4">Get a focused AWS cost review.</h2>
           <p>
-            Anrotex reviews the cost drivers, operational constraints, and
-            highest-confidence opportunities in your AWS environment. You receive
-            a prioritised plan instead of a generic recommendation dump.
+            Anrotex reviews your AWS usage and costs, checks how changes could
+            affect performance, and gives your engineers a prioritized plan
+            they can put into action.
           </p>
           <TrackedLink
             to="/aws-cost-optimization"

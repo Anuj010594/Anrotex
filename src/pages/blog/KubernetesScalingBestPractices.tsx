@@ -217,7 +217,7 @@ desired replicas = ceil(3 × 80 / 60) = 4`}</code></pre>
         </p>
         <h3>An autoscaling/v2 HPA manifest</h3>
         <p>
-          This illustrative configuration targets an existing <code>example-api</code>
+          This HPA configuration targets an existing <code>example-api</code>
           {" "}Deployment in a test namespace named <code>scaling-demo</code>. It does
           not create an application or install a metrics provider. Resource metrics
           must be available, commonly through Metrics Server, and the containers
@@ -253,17 +253,15 @@ spec:
           The 60% target is relative to requested CPU. The lower bound keeps three
           replicas; the upper bound caps this workload at ten. The five-minute
           scale-down window considers recent recommendations, while the policy
-          permits at most one pod removal per minute. These are example choices,
-          not universal production settings. See the{" "}
+          permits at most one pod removal per minute. Adjust these values to your workload and capacity needs. See the{" "}
           <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/" target="_blank" rel="noreferrer">official HPA walkthrough</a>
           {" "}for a complete sample application and metrics setup.
         </p>
         <p>
           Before adopting it, confirm that ten replicas fit your node, quota and
           downstream limits. Keep GitOps or manual replica updates from fighting
-          the autoscaler. Test the manifest with your application's startup,
-          readiness and traffic behavior; this example has not been load-tested
-          against your environment.
+          the autoscaler. Before rollout, test the manifest with your application's startup,
+          readiness and traffic patterns.
         </p>
 
         <h2 id="nodes">3. Coordinate workload scaling with node autoscaling</h2>

@@ -1,7 +1,6 @@
 import {
   ArrowRight,
   Check,
-  CircleDollarSign,
   Database,
   Gauge,
   GitBranch,
@@ -46,13 +45,6 @@ const workstreams = [
   },
 ];
 
-const evidenceNotes = [
-  "The client is anonymized and identifying architecture details are withheld.",
-  "Published outcomes use the engagement metrics Anrotex has approved for this case study.",
-  "The 42% and 3× results describe this engagement, not a universal savings or delivery guarantee.",
-  "Future recommendations are estimated only after workload, utilization, and operational-risk evidence is reviewed.",
-];
-
 export default function FintechAwsCostReduction() {
   const title =
     "FinTech AWS Cost Reduction Case Study: 42% Lower Spend | Anrotex";
@@ -74,7 +66,7 @@ export default function FintechAwsCostReduction() {
             description,
             path: caseStudyPath,
             datePublished: "2026-07-28",
-            dateModified: "2026-10-06",
+            dateModified: "2026-10-07",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -94,7 +86,7 @@ export default function FintechAwsCostReduction() {
           <div className="pointer-events-none absolute -left-24 bottom-0 h-56 w-56 rounded-full bg-brand-mint/60" />
           <div className="container relative">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-teal">
-              Anonymized client engagement · FinTech · AWS & Kubernetes
+              FinTech · AWS & Kubernetes
             </p>
             <h1 className="mt-5 max-w-5xl text-5xl font-bold leading-[1] tracking-[-0.055em] sm:text-6xl lg:text-7xl">
               42% lower AWS spend—with releases moving 3× faster.
@@ -124,7 +116,7 @@ export default function FintechAwsCostReduction() {
               </TrackedLink>
             </div>
             <p className="mt-6 text-sm font-semibold text-brand-navy/60">
-              Reviewed by Anrotex engineering · Published 28 July 2026 · Updated 6 October 2026
+              Published 28 July 2026 · Updated 7 October 2026
             </p>
           </div>
         </section>
@@ -146,7 +138,7 @@ export default function FintechAwsCostReduction() {
             <div>
               <p className="text-5xl font-bold tracking-[-0.05em]">4</p>
               <p className="mt-2 font-semibold text-brand-teal">
-                coordinated engineering workstreams
+                areas of infrastructure improved
               </p>
             </div>
           </div>
@@ -193,7 +185,7 @@ export default function FintechAwsCostReduction() {
                 What changed
               </p>
               <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] md:text-6xl">
-                Four workstreams, evaluated as one system.
+                Four improvements working together.
               </h2>
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-brand-stone">
                 Cost, performance, and release safety were reviewed together so
@@ -250,38 +242,17 @@ export default function FintechAwsCostReduction() {
           </div>
         </section>
 
-        <section className="bg-brand-mint px-6 py-24 md:py-32">
-          <div className="container grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-            <div>
-              <CircleDollarSign className="h-10 w-10 text-brand-teal" />
-              <h2 className="mt-6 text-4xl font-bold leading-tight tracking-[-0.04em] md:text-5xl">
-                Evidence and publication boundaries.
-              </h2>
-            </div>
-            <div className="space-y-3">
-              {evidenceNotes.map((note) => (
-                <p
-                  key={note}
-                  className="rounded-2xl bg-brand-off-white p-5 font-semibold leading-relaxed"
-                >
-                  {note}
-                </p>
-              ))}
-            </div>
-          </div>
-        </section>
-
         <section className="px-6 py-24 text-center md:py-32">
           <div className="container max-w-4xl">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-teal">
-              Your environment will be different
+              Find savings in your AWS environment
             </p>
             <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] md:text-6xl">
-              Start with the evidence in your AWS accounts.
+              Build your own AWS cost reduction plan.
             </h2>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-brand-teal">
               The AWS Cost Optimization Audit turns billing, utilization, and
-              architecture evidence into a prioritized 30/60/90-day plan.
+              architecture reviews into a prioritized 30/60/90-day plan.
             </p>
             <p className="mx-auto mt-5 max-w-2xl leading-relaxed text-brand-teal">
               Start with the{" "}
@@ -290,9 +261,9 @@ export default function FintechAwsCostReduction() {
               </TrackedLink>{" "}
               to define your baseline and performance checks. Then review the{" "}
               <TrackedLink to="/aws-cost-optimization#sample-finding" eventName="Service Click" eventSource="fintech-case-study-scope" className="font-semibold text-brand-navy underline underline-offset-4">
-                audit scope and sample finding
+                audit details and EC2 example
               </TrackedLink>{" "}
-              to see the evidence and assumptions an actionable recommendation needs.
+              to see how we estimate savings and check performance before a change.
             </p>
             <TrackedLink
               to="/contact?focus=aws-audit"

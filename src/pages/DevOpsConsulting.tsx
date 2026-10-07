@@ -13,16 +13,16 @@ const deliverables = [
   ["Release and recovery workflows", "Version-controlled pipeline changes, deployment checks and documented recovery steps for the applications included in the engagement."],
   ["Workload and cloud efficiency", "Recommendations tied to workload demand, capacity and cloud spend. Each proposed change includes the operational tradeoffs and evidence needed to validate it."],
   ["Observability and access controls", "A review of service signals, actionable alerts, runbooks and deployment permissions, focused on the failure modes your team needs to detect and resolve."],
-  ["Validation and handover", "Agreed acceptance checks, an explanation of what changed, remaining risks and a walkthrough so your engineers can operate the result."],
+  ["Validation and handover", "Testing against your agreed requirements, clear documentation of the changes, and a walkthrough so your engineers can operate the system."],
 ];
 const process = [
   ["Understand the current system", "Walk through a recent release or incident together. Review architecture, relevant configuration and operating data to identify where assistance would help."],
-  ["Agree a bounded scope", "Choose the workstreams, repositories and environments. Confirm deliverables, permissions, pricing, timing and acceptance criteria before implementation starts."],
+  ["Plan the work together", "Choose the priorities, repositories and environments. Agree what will be delivered, how it will be tested, and the access, pricing and timeline before work starts."],
   ["Implement in controlled steps", "Review changes with your engineers, validate in an agreed test environment and plan production changes with explicit recovery steps."],
   ["Measure and transfer ownership", "Compare results with the starting baseline. Leave configuration, runbooks and next steps with the team; scope any continuing support separately."],
 ];
 const faqs = [
-  ["What does DevOps consulting include?", "The engagement can cover an assessment, CI/CD, Terraform, Kubernetes, cloud cost efficiency, observability and access controls. We select the workstreams around your bottlenecks and agree their deliverables; every engagement does not include every service."],
+  ["What does DevOps consulting include?", "The engagement can cover an assessment, CI/CD, Terraform, Kubernetes, cloud cost efficiency, observability and access controls. We build the project around your priorities and agree which services and deliverables you need."],
   ["Can we start with an assessment only?", "Yes. An assessment produces findings and a prioritized improvement plan. Implementation is separately scoped, so your team can choose which recommendations to take forward and who will deliver them."],
   ["What access will you need?", "Start with architecture context, relevant configuration and release or incident history. Redacted exports or a walkthrough can support discovery. We agree the minimum permissions needed for each stage; an assessment does not require blanket production write access."],
   ["Do you work with our existing tools and cloud provider?", "Yes. We work with AWS, Google Cloud and Azure environments, including Terraform, Kubernetes and existing CI/CD tooling. We confirm the services and tooling in scope before work begins. A platform migration is a separate decision."],
@@ -81,7 +81,7 @@ export default function DevOpsConsulting() {
         </section>
         <section className="bg-brand-mint/40 px-6 py-20">
           <div className="mx-auto max-w-6xl">
-            <h2 className="text-3xl font-bold tracking-tight">Start with a focused workstream</h2>
+            <h2 className="text-3xl font-bold tracking-tight">Choose where to start</h2>
             <div className="mt-10 grid gap-8 md:grid-cols-3">{[
               ["/ci-cd-automation", "CI/CD automation", "For slow builds, fragile releases and recovery gaps. Review pipeline deliverables and the implementation process."],
               ["/kubernetes-scaling", "Kubernetes consulting", "For pending pods, unstable autoscaling or inefficient node capacity. See the cluster review scope and evidence needed."],
@@ -93,7 +93,7 @@ export default function DevOpsConsulting() {
           <div className="mx-auto max-w-6xl">
             <h2 className="text-3xl font-bold tracking-tight">How the engagement works</h2>
             <ol className="mt-10 grid gap-8 md:grid-cols-2">{process.map(([title, text], index) => <li key={title} className="flex gap-5"><span className="text-2xl font-bold text-brand-teal">0{index + 1}</span><div><h3 className="text-xl font-bold">{title}</h3><p className="mt-3 leading-relaxed text-brand-teal">{text}</p></div></li>)}</ol>
-            <div className="mt-12 rounded-3xl bg-brand-stone/50 p-6 md:p-8"><h3 className="text-xl font-bold">Measure improvement against your baseline</h3><p className="mt-3 leading-relaxed text-brand-teal">Agree which measures matter: release lead time, failed deployments, recovery time, service reliability or cost per workload. Compare similar workloads and periods, and record tradeoffs alongside results.</p><TrackedLink to="/case-studies/fintech-aws-cost-reduction" eventName="Case Study Click" eventSource="devops-evidence" className="mt-5 inline-flex font-bold underline underline-offset-4">See the workstreams in our published fintech case study</TrackedLink></div>
+            <div className="mt-12 rounded-3xl bg-brand-stone/50 p-6 md:p-8"><h3 className="text-xl font-bold">Measure improvement against your baseline</h3><p className="mt-3 leading-relaxed text-brand-teal">Agree which measures matter: release lead time, failed deployments, recovery time, service reliability or cost per workload. Compare similar workloads and periods, and record tradeoffs alongside results.</p><TrackedLink to="/case-studies/fintech-aws-cost-reduction" eventName="Case Study Click" eventSource="devops-evidence" className="mt-5 inline-flex font-bold underline underline-offset-4">See how we improved a fintech platform</TrackedLink></div>
           </div>
         </section>
         <section className="border-y border-brand-navy/10 px-6 py-16">

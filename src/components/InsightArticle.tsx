@@ -76,7 +76,6 @@ const InsightArticle = ({
             <Clock3 className="h-4 w-4" />
             {readTime}
           </span>
-          <span>Reviewed by Anrotex engineering</span>
         </div>
       </div>
     </header>
