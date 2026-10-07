@@ -5,6 +5,15 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import TurnstileWidget from "@/components/TurnstileWidget";
 import { trackEvent } from "@/lib/analytics";
 import { TURNSTILE_SITE_KEY } from "@/lib/turnstile";
+import { PROJECT_TYPES } from "@/lib/project-types";
+
+const projectFocus = new Map<string, (typeof PROJECT_TYPES)[number]>([
+  ["aws-audit", "AWS Cost Optimization Audit"],
+  ["aws-cost", "Reduce cloud costs"],
+  ["cicd", "Improve deployment speed"],
+  ["devops", "DevOps consulting"],
+  ["kubernetes", "Scale Kubernetes reliably"],
+]);
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -17,14 +26,7 @@ const Contact = () => {
   const [searchParams] = useSearchParams();
   const location = useLocation();
   const focus = searchParams.get("focus");
-  const defaultProjectType =
-    focus === "aws-audit"
-      ? "AWS Cost Optimization Audit"
-      : focus === "aws-cost"
-        ? "Reduce cloud costs"
-        : focus === "cicd"
-          ? "Improve deployment speed"
-          : "";
+  const defaultProjectType = projectFocus.get(focus ?? "") ?? "";
   const handleTurnstileToken = useCallback((token: string) => {
     setTurnstileToken(token);
   }, []);
@@ -221,13 +223,7 @@ const Contact = () => {
                       <option value="" disabled>
                         Choose one
                       </option>
-                      <option>AWS Cost Optimization Audit</option>
-                      <option>Reduce cloud costs</option>
-                      <option>Improve deployment speed</option>
-                      <option>Scale Kubernetes reliably</option>
-                      <option>Improve observability</option>
-                      <option>Modernize infrastructure</option>
-                      <option>Something else</option>
+                      {PROJECT_TYPES.map((type) => <option key={type}>{type}</option>)}
                     </select>
                   </label>
                 </div>

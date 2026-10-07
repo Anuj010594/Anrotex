@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { PROJECT_TYPES } from "./project-types.js";
 
 const hasUnsupportedSingleLineCharacter = (value: string) =>
   Array.from(value).some((character) => {
@@ -12,16 +13,6 @@ const hasUnsupportedMessageCharacter = (value: string) =>
     const isAllowedWhitespace = code === 9 || code === 10 || code === 13;
     return (code <= 31 && !isAllowedWhitespace) || code === 127;
   });
-
-export const PROJECT_TYPES = [
-  "AWS Cost Optimization Audit",
-  "Reduce cloud costs",
-  "Improve deployment speed",
-  "Scale Kubernetes reliably",
-  "Improve observability",
-  "Modernize infrastructure",
-  "Something else",
-] as const;
 
 const singleLineText = (label: string, maximum: number) =>
   z

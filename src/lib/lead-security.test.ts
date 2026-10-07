@@ -16,6 +16,10 @@ const validLead = {
 describe("leadSubmissionSchema", () => {
   it("accepts a valid lead", () => {
     expect(leadSubmissionSchema.safeParse(validLead).success).toBe(true);
+    for (const projectType of ["DevOps consulting", "Scale Kubernetes reliably"]) {
+      expect(leadSubmissionSchema.safeParse({ ...validLead, projectType }).success).toBe(true);
+    }
+    expect(leadSubmissionSchema.safeParse({ ...validLead, projectType: "Unknown service" }).success).toBe(false);
   });
 
   it("rejects invalid email and oversized messages", () => {

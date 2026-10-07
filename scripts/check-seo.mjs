@@ -48,6 +48,21 @@ assert(aws.includes('href="/contact?focus=aws-audit"'), "Missing focused AWS enq
 assert.match(render("/contact?focus=aws-audit").html, /<option[^>]*selected=""[^>]*>AWS Cost Optimization Audit<\/option>/);
 
 const notFound = await readFile("dist/404.html", "utf8");
+for (const [route, focus, projectType] of [
+  ["devops-consulting", "devops", "DevOps consulting"],
+  ["kubernetes-scaling", "kubernetes", "Scale Kubernetes reliably"],
+]) {
+  const html = await readFile(`dist/${route}/index.html`, "utf8");
+  const faqs = [...html.matchAll(/<details\b[^>]*>(.*?)<\/details>/gs)];
+  assert.equal(faqs.length, 5, `${route}: FAQs must be in the initial HTML`);
+  for (const [, faq] of faqs) assert.match(faq, /<summary[^>]*>.+?<\/summary><p[^>]*>.+?<\/p>/s);
+  assert(html.includes(`href="/contact?focus=${focus}"`), `${route}: missing focused enquiry link`);
+  assert.match(render(`/contact?focus=${focus}`).html, new RegExp(`<option[^>]*selected=""[^>]*>${projectType}</option>`));
+}
+for (const focus of ["unknown", "constructor", "__proto__"]) {
+  assert.match(render(`/contact?focus=${focus}`).html, /<option value="" disabled="" selected=""/);
+}
+
 assert.match(notFound, /<h1\b[^>]*>404<\/h1>/);
 assert.match(notFound, /name="robots" content="noindex, nofollow"/);
 const { rewrites } = JSON.parse(await readFile("vercel.json", "utf8"));

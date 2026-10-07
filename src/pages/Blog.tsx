@@ -19,7 +19,7 @@ const posts = [
   {
     title: "Kubernetes Scaling Best Practices for Production Workloads",
     description:
-      "Optimize Kubernetes scaling to improve performance, availability, and cost efficiency.",
+      "Work through an HPA calculation and YAML example, diagnose scaling failures, and validate changes with a repeatable checklist.",
     link: "/blog/kubernetes-scaling-best-practices"
   }
 ];

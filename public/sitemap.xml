@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.anrotex.com/</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-10-07</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/services</loc>
@@ -22,7 +22,7 @@
   </url>
   <url>
     <loc>https://www.anrotex.com/contact</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-10-07</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/aws-cost-optimization</loc>
@@ -30,7 +30,7 @@
   </url>
   <url>
     <loc>https://www.anrotex.com/kubernetes-scaling</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-10-07</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/ci-cd-automation</loc>
@@ -38,11 +38,11 @@
   </url>
   <url>
     <loc>https://www.anrotex.com/devops-consulting</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-10-07</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/blog</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-10-07</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/blog/reduce-aws-costs</loc>
@@ -54,6 +54,6 @@
   </url>
   <url>
     <loc>https://www.anrotex.com/blog/kubernetes-scaling-best-practices</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-10-07</lastmod>
   </url>
 </urlset>

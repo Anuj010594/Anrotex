@@ -1,272 +1,59 @@
+import { ArrowRight, Check, Layers } from "lucide-react";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
-import { serviceSchema } from "@/lib/seo";
-import { useState } from "react";
+import TrackedLink from "@/components/TrackedLink";
+import { breadcrumbSchema, serviceSchema } from "@/lib/seo";
+
+const description = "Kubernetes consulting for HPA, resource requests, node capacity and reliability. Get a scoped cluster review, prioritized findings and a validation plan.";
+const reviewAreas = [
+  ["Workload requests and limits", "Compare configured CPU and memory with usage, throttling, restarts and peak demand. Identify changes that need workload testing before rollout."],
+  ["Autoscaling and metrics", "Review HPA targets, metric availability, replica bounds and stabilization. Check how VPA recommendations or updates interact with workload scaling where VPA is installed."],
+  ["Node capacity and placement", "Review node pools, Cluster Autoscaler or Karpenter settings where used, scheduling constraints, provisioning delays and idle requested capacity."],
+  ["Availability during change", "Review readiness and startup probes, termination, rollout settings and disruption budgets alongside application and dependency limits."],
+  ["Observability and response", "Connect scaling events to latency, errors, queue depth and pending pods. Identify missing signals and runbook steps needed to diagnose the next incident."],
+  ["Cost and validation", "Relate node and workload costs to demand. Separate potential savings from changes that could reduce reliability, and define checks for proposed adjustments."],
+];
+const outputs = [
+  ["Prioritized findings", "Each finding identifies the affected workload, supporting evidence, operational risk and recommended next action."],
+  ["A workload-specific plan", "Proposed configuration changes, dependencies, ownership and the sequence for testing them. Unknowns are recorded rather than treated as confirmed causes."],
+  ["Acceptance checks and handover", "A validation checklist covering scaling response, readiness, service health and cost, with a walkthrough for the engineers operating the cluster."],
+];
+const faqs = [
+  ["What is included in a Kubernetes cluster review?", "We agree the clusters and workloads in scope, then review resource settings, autoscaling, node capacity, availability controls, observability and relevant costs. The output is a prioritized findings report and validation plan. Production implementation is scoped separately."],
+  ["What access and evidence do you need?", "Discovery can begin with redacted manifests, architecture diagrams, incident examples and dashboard exports. A deeper review may need agreed read-only cluster, metrics and cloud billing access. Do not send kubeconfig files, tokens or secrets through the enquiry form."],
+  ["Can you fix HPA issues or reduce EKS costs?", "We investigate the connection between resource requests, metrics, replica changes, scheduling and node capacity. Recommendations may address HPA, VPA, node provisioning or workload sizing. Any savings estimate depends on measured demand and reliability constraints; there is no fixed savings guarantee."],
+  ["Do you support production clusters across different clouds?", "Yes. We work with production Kubernetes on AWS, Google Cloud and Azure. The review is scoped to the cluster version, managed services and controllers you actually run. Platform upgrades or migrations require their own agreed scope."],
+  ["How do implementation, pricing and ongoing support work?", "The initial consultation is free. Review pricing and timing depend on workload count, evidence availability and complexity. Implementation includes an agreed test and recovery plan. Ongoing monitoring, incident response and further changes are separate commitments."],
+];
 
 export default function KubernetesScaling() {
-     const [openFAQ, setOpenFAQ] = useState<number | null>(null);
-
-     const toggleFAQ = (index: number) => {
-       setOpenFAQ(openFAQ === index ? null : index);
-       };
-
-     return (
+  return (
     <>
-      <SEO
-        title="Kubernetes Consulting & Scaling Services | Anrotex"
-        description="Improve Kubernetes reliability, autoscaling, performance, and cost efficiency. Anrotex helps teams optimize EKS and production clusters across major clouds."
-        path="/kubernetes-scaling"
-        structuredData={serviceSchema({
-          name: "Kubernetes Consulting and Scaling Services",
-          description:
-            "Production Kubernetes consulting for autoscaling, reliability, observability, workload performance, and cloud cost efficiency.",
-          path: "/kubernetes-scaling",
-          serviceType: "Kubernetes consulting and optimization",
-        })}
-      />
+      <SEO title="Kubernetes Consulting & Scaling Services | Anrotex" description={description} path="/kubernetes-scaling" structuredData={[
+        serviceSchema({ name: "Kubernetes Consulting and Scaling Services", description, path: "/kubernetes-scaling", serviceType: "Kubernetes consulting and optimization" }),
+        breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Services", path: "/services" }, { name: "Kubernetes Scaling", path: "/kubernetes-scaling" }]),
+      ]} />
       <Navbar />
-
-      <main className="bg-background text-foreground pt-20">
-
-      <section className="px-6 py-6 max-w-5xl mx-auto text-sm text-muted-foreground border-b border-border">
-        <div className="flex items-center gap-2">
-          <a href="/" className="hover:text-primary transition">Home</a>
-          <span>/</span>
-          <a href="/services" className="hover:text-primary transition">Services</a>
-          <span>/</span>
-          <span className="text-foreground font medium">Kubernetes Scaling</span>
-       </div>
-    </section>
-
-      
-        {/* HERO */}
-        <section className="py-24 px-6 text-center">
-          <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
-            Scale Kubernetes Workloads
-            <br />
-            <span className="text-primary">without downtime</span>
-          </h1>
-
-          <p className="max-w-2xl mx-auto text-muted-foreground text-lg mb-8">
-            We help teams optimize Kubernetes clusters for performance, cost-efficiency,
-            and high availability across production workloads.
-          </p>
-
-          <a
-            href="/contact"
-            className="inline-block px-8 py-4 rounded-lg bg-primary text-primary-foreground font-semibold"
-          >
-            Get Cluster Audit →
-          </a>
-        </section>
-
-        {/* PROBLEMS */}
-        <section className="py-20 px-6 max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6">
-            Common Kubernetes scaling issues
-          </h2>
-
-          <ul className="space-y-4 text-muted-foreground">
-            <li>• Resource overprovisioning</li>
-            <li>• High infrastructure costs</li>
-            <li>• Pod instability under load</li>
-            <li>• Inefficient autoscaling configuration</li>
-            <li>• Cluster performance bottlenecks</li>
-          </ul>
-        </section>
-
-        {/* SOLUTIONS */}
-        <section className="py-20 px-6 bg-card border-t border-border">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6">
-              What we optimize
-            </h2>
-
-            <ul className="space-y-4 text-muted-foreground">
-              <li>• Horizontal Pod Autoscaler (HPA)</li>
-              <li>• Vertical Pod Autoscaler (VPA)</li>
-              <li>• Cluster Autoscaler tuning</li>
-              <li>• Resource requests & limits optimization</li>
-              <li>• EKS cost reduction strategies</li>
-              <li>• Observability and alerting</li>
-            </ul>
-          </div>
-        </section>
-
-        {/* RELATED READING */}
-        <section className="py-20 px-6 max-w-5xl mx-auto border-t border-border">
-          <h2 className="text-3xl font-bold mb-6">
-            Related Reading
-          </h2>
-
-          <div className="grid md:grid-cols-1 gap-6">
-            <a
-              href="/blog/kubernetes-scaling-best-practices"
-              aria-label="Read article about Kubernetes scaling best practices"
-              className="block p-6 rounded-xl border border-border hover:border-primary hover:shadow-md transition"
-            >
-              <h3 className="font-semibold mb-2">
-                Kubernetes Scaling Best Practices for Production Workloads
-              </h3>
-
-              <p className="text-sm text-muted-foreground">
-                Learn autoscaling, node optimization, and performance best practices.
-              </p>
-            </a>
-          </div>
-        </section>
-
-         {/* FAQ SECTION */}
-        <section className="py-20 px-6 max-w-5xl mx-auto border-t border-border">
-          <h2 className="text-3xl font-bold mb-8">
-            Frequently Asked Questions
-          </h2>
-
-          <div className="space-y-4">
-
-            {/* FAQ 1 */}
-            <div className="border rounded-xl p-4">
-              <button
-                onClick={() => toggleFAQ(0)}
-                className="w-full text-left text-xl font-semibold"
-              >
-                Do you optimize Kubernetes autoscaling?
-              </button>
-
-              {openFAQ === 0 && (
-                <div className="mt-3 text-muted-foreground animate-accordion-down">
-                  Yes, we optimize HPA, VPA, and Cluster Autoscaler configurations.
-                </div>
-              )}
+      <main className="bg-brand-off-white text-brand-navy">
+        <section className="px-6 pb-20 pt-32 md:pb-24 md:pt-40"><div className="mx-auto max-w-6xl">
+          <nav aria-label="Breadcrumb" className="flex flex-wrap gap-2 text-sm font-semibold text-brand-teal"><Link to="/">Home</Link><span aria-hidden="true">/</span><Link to="/services">Services</Link><span aria-hidden="true">/</span><span aria-current="page">Kubernetes scaling</span></nav>
+          <div className="mt-12 grid items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+            <div><p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-teal">Production Kubernetes consulting</p><h1 className="mt-5 text-4xl font-bold leading-[1.05] tracking-[-0.045em] sm:text-5xl lg:text-6xl">Find what is holding your Kubernetes workloads back.</h1><p className="mt-6 max-w-2xl text-lg leading-relaxed text-brand-teal">Investigate unstable autoscaling, pending pods and wasted capacity with Anrotex. Get a review that connects workload demand, cluster configuration and application health to a practical improvement plan.</p>
+              <div className="mt-8 flex flex-wrap gap-4"><TrackedLink to="/contact?focus=kubernetes" eventSource="kubernetes-hero" className="inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-4 font-bold text-brand-off-white hover:bg-brand-teal">Discuss a cluster review <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></TrackedLink><a href="#review-scope" className="inline-flex items-center rounded-full border border-brand-navy/20 px-6 py-4 font-bold hover:bg-brand-stone">See the review scope</a></div><p className="mt-5 text-sm text-brand-teal">Free initial consultation · Workloads and access agreed upfront</p>
             </div>
-
-            {/* FAQ 2 */}
-            <div className="border rounded-xl p-4">
-              <button
-                onClick={() => toggleFAQ(1)}
-                className="w-full text-left text-xl font-semibold"
-              >
-                Can you reduce EKS costs?
-              </button>
-
-              {openFAQ === 1 && (
-                <div className="mt-3 text-muted-foreground animate-accordion-down">
-                  Yes, we improve node utilization, autoscaling efficiency, and workload optimization.
-                </div>
-              )}
-            </div>
-
-            {/* FAQ 3 */}
-            <div className="border rounded-xl p-4">
-              <button
-                onClick={() => toggleFAQ(2)}
-                className="w-full text-left text-xl font-semibold"
-              >
-                Do you support production Kubernetes clusters?
-              </button>
-
-              {openFAQ === 2 && (
-                <div className="mt-3 text-muted-foreground animate-accordion-down">
-                  Yes, we work with production-grade Kubernetes clusters across AWS, GCP, and Azure.
-                </div>
-              )}
-            </div>
-
+            <aside className="rounded-[2rem] bg-brand-navy p-7 text-brand-off-white md:p-9" aria-label="Review approach"><Layers className="h-8 w-8 text-brand-yellow" aria-hidden="true" /><h2 className="mt-6 text-2xl font-bold">Review the whole scaling path.</h2><ol className="mt-6 space-y-5">{[["Demand & metrics", "Does the autoscaler see a useful signal?"], ["Pods & nodes", "Can the requested capacity run and become ready?"], ["Service health", "Does new capacity actually improve the user experience?"]].map(([title, text], index) => <li key={title} className="flex gap-4 border-t border-brand-mint/20 pt-5"><span className="text-sm font-bold text-brand-yellow">0{index + 1}</span><div><p className="font-bold">{title}</p><p className="mt-1 text-sm leading-relaxed text-brand-stone">{text}</p></div></li>)}</ol></aside>
           </div>
-        </section>
-
-        {/* CTA */}
-        <section className="py-24 px-6 text-center bg-card border-t border-border">
-          <h2 className="text-3xl font-bold mb-6">
-            Improve performance, reduce waste
-          </h2>
-
-          <p className="text-muted-foreground mb-8">
-            Build resilient Kubernetes infrastructure that scales with your business.
-          </p>
-
-          <a
-            href="/contact"
-            className="px-8 py-4 rounded-lg bg-primary text-primary-foreground font-semibold"
-          >
-            Talk to Us →
-          </a>
-        </section>
-
+        </div></section>
+        <section className="border-y border-brand-navy/10 bg-brand-stone/50 px-6 py-16"><div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2 md:gap-16"><div><h2 className="text-3xl font-bold tracking-tight">When a cluster review helps</h2><p className="mt-4 leading-relaxed text-brand-teal">For engineering teams running production workloads whose scaling behavior, reliability or infrastructure spend needs investigation.</p></div><ul className="space-y-4">{["HPA adds replicas, but new pods stay pending or unready.", "Latency or errors increase during traffic bursts or deployments.", "Nodes remain expensive while workloads use little of the reserved capacity.", "Autoscaling changes are hard to explain or keep reversing."].map(item => <li key={item} className="flex gap-3 leading-relaxed"><Check className="mt-1 h-5 w-5 shrink-0 text-brand-teal" aria-hidden="true" />{item}</li>)}</ul></div></section>
+        <section id="review-scope" className="scroll-mt-24 px-6 py-20 md:py-24"><div className="mx-auto max-w-6xl"><h2 className="text-3xl font-bold tracking-tight md:text-4xl">What we review</h2><p className="mt-5 max-w-3xl leading-relaxed text-brand-teal">The scope follows your symptoms and the controllers you operate. We agree the environments and representative workloads before collecting evidence.</p><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{reviewAreas.map(([title, text]) => <article key={title} className="rounded-3xl border border-brand-navy/10 p-6"><h3 className="text-xl font-bold">{title}</h3><p className="mt-3 leading-relaxed text-brand-teal">{text}</p></article>)}</div></div></section>
+        <section className="bg-brand-mint/40 px-6 py-20"><div className="mx-auto max-w-6xl"><h2 className="text-3xl font-bold tracking-tight md:text-4xl">What your team receives</h2><div className="mt-10 grid gap-8 md:grid-cols-3">{outputs.map(([title, text]) => <article key={title} className="border-t border-brand-navy/20 pt-6"><h3 className="text-xl font-bold">{title}</h3><p className="mt-3 leading-relaxed text-brand-teal">{text}</p></article>)}</div></div></section>
+        <section className="px-6 py-20"><div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2"><div><h2 className="text-3xl font-bold tracking-tight">Start with evidence, then agree access</h2><p className="mt-5 leading-relaxed text-brand-teal">Share the cloud provider, Kubernetes version, approximate workload count and one recurring symptom. Useful discovery material includes redacted manifests, a recent incident timeline, scaling graphs and workload cost reports.</p><p className="mt-4 leading-relaxed text-brand-teal">We agree read-only access where needed for the review. Keep credentials, tokens and kubeconfig files out of the contact form.</p></div><div className="rounded-3xl bg-brand-stone/50 p-7"><h2 className="text-2xl font-bold">Where the review ends</h2><p className="mt-4 leading-relaxed text-brand-teal">The review provides findings and a plan. Production changes, load generation, node drains, upgrades and migrations require an agreed implementation scope and recovery procedure.</p><p className="mt-4 leading-relaxed text-brand-teal">For implementation, validate representative workloads in a test environment, agree service health thresholds, and roll out changes in controlled steps. Continuous monitoring and incident response are scoped separately.</p></div></div></section>
+        <section className="border-y border-brand-navy/10 px-6 py-16"><div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2"><article><h2 className="text-2xl font-bold">Work through an autoscaling example</h2><p className="mt-4 leading-relaxed text-brand-teal">Our Kubernetes guide explains a replica calculation, an HPA manifest, troubleshooting commands and a validation checklist.</p><TrackedLink to="/blog/kubernetes-scaling-best-practices" eventName="Article Click" eventSource="kubernetes-guide" className="mt-5 inline-flex font-bold underline underline-offset-4">Read the Kubernetes scaling guide</TrackedLink></article><article><h2 className="text-2xl font-bold">Connect cluster changes with wider infrastructure</h2><p className="mt-4 leading-relaxed text-brand-teal">EKS spend may be one part of a broader cloud bill. Release workflows and Terraform may also need attention.</p><div className="mt-5 flex flex-col items-start gap-4"><TrackedLink to="/aws-cost-optimization" eventName="Service Click" eventSource="kubernetes-related" className="font-bold underline underline-offset-4">Explore the AWS cost audit</TrackedLink><TrackedLink to="/devops-consulting" eventName="Service Click" eventSource="kubernetes-related" className="font-bold underline underline-offset-4">See the broader DevOps engagement</TrackedLink></div></article></div></section>
+        <section className="px-6 py-20"><div className="mx-auto max-w-4xl"><h2 className="text-3xl font-bold tracking-tight">Questions before a cluster review</h2><div className="mt-8 divide-y divide-brand-navy/15">{faqs.map(([question, answer]) => <details key={question} className="py-5"><summary className="cursor-pointer text-lg font-bold marker:text-brand-teal">{question}</summary><p className="mt-4 leading-relaxed text-brand-teal">{answer}</p></details>)}</div></div></section>
+        <section className="bg-brand-navy px-6 py-20 text-brand-off-white"><div className="mx-auto max-w-4xl text-center"><h2 className="text-3xl font-bold tracking-tight md:text-4xl">Turn a scaling symptom into a testable plan.</h2><p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-brand-stone">Tell us what happens when demand changes, what your team has tried and what a successful outcome would look like.</p><TrackedLink to="/contact?focus=kubernetes" eventSource="kubernetes-footer" className="mt-8 inline-flex items-center gap-2 rounded-full bg-brand-yellow px-7 py-4 font-bold text-brand-navy hover:bg-brand-off-white">Discuss a cluster review <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></TrackedLink></div></section>
       </main>
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: [
-              {
-                "@type": "Question",
-                name: "Do you optimize Kubernetes autoscaling?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "Yes, we optimize HPA, VPA, and Cluster Autoscaler configurations."
-                }
-              },
-              {
-                "@type": "Question",
-                 name: "Can you reduce EKS costs?",
-                 acceptedAnswer: {
-                  "@type": "Answer",
-                   text: "Yes, we improve node utilization, autoscaling efficiency, and workload optimization."
-                }
-              },
-             {
-                "@type": "Question",
-                 name: "Do you support production Kubernetes clusters?",
-                 acceptedAnswer: {
-                 "@type": "Answer",
-                 text: "Yes, we work with production-grade Kubernetes clusters across AWS, GCP, and Azure."
-                }
-              }
-            ]
-         })
-       }}
-     />
-
-     <script
-       type="application/ld+json"
-       dangerouslySetInnerHTML={{
-         __html: JSON.stringify({
-           "@context": "https://schema.org",
-           "@type": "BreadcrumbList",
-            itemListElement: [
-          {
-            
-	   "@type": "ListItem",
-            position: 1,
-            name: "Home",
-            item: "https://www.anrotex.com/"
-          },
-          {
-            "@type": "ListItem",
-             position: 2,
-             name: "Services",
-             item: "https://www.anrotex.com/services"
-           },
-          {
-            "@type": "ListItem",
-             position: 3,
-             name: "Kubernetes Scaling",
-             item: "https://www.anrotex.com/kubernetes-scaling"
-           }
-         ]
-       })
-     }}
-  />
- 
-
-
-
-
       <Footer />
     </>
   );

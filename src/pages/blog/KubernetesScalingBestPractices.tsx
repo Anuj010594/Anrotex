@@ -6,10 +6,10 @@ import { articleSchema, breadcrumbSchema } from "@/lib/seo";
 
 const toc = [
   { id: "requests", label: "Set trustworthy resource requests" },
-  { id: "hpa", label: "Configure HPA around demand" },
+  { id: "hpa", label: "HPA calculation and YAML example" },
   { id: "nodes", label: "Coordinate pod and node scaling" },
   { id: "availability", label: "Protect availability while scaling" },
-  { id: "observability", label: "Measure scaling behaviour" },
+  { id: "observability", label: "Measure and troubleshoot scaling" },
   { id: "testing", label: "Validate with production-like load" },
   { id: "checklist", label: "Production scaling checklist" },
 ];
@@ -28,7 +28,7 @@ export default function KubernetesScalingBestPractices() {
     <>
       <SEO
         title="Kubernetes Scaling & Autoscaling Best Practices | Anrotex"
-        description="Production Kubernetes scaling best practices for resource requests, HPA, node autoscaling, probes, disruption budgets, observability, and cost control."
+        description="Kubernetes scaling best practices with a worked HPA calculation, autoscaling YAML, troubleshooting commands and a production validation checklist."
         path="/blog/kubernetes-scaling-best-practices"
         type="article"
         structuredData={[
@@ -38,7 +38,7 @@ export default function KubernetesScalingBestPractices() {
               "A practical guide to Kubernetes scaling, autoscaling, resource requests, node capacity, availability, and production validation.",
             path: "/blog/kubernetes-scaling-best-practices",
             datePublished: "2026-06-17",
-            dateModified: "2026-07-28",
+            dateModified: "2026-10-07",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -56,8 +56,8 @@ export default function KubernetesScalingBestPractices() {
         title="Kubernetes scaling best practices for production workloads"
         description="Reliable Kubernetes autoscaling depends on accurate resource requests, meaningful demand signals, coordinated node capacity, and safeguards that keep traffic healthy during change."
         published="17 June 2026"
-        updated="28 July 2026"
-        readTime="10 minute read"
+        updated="7 October 2026"
+        readTime="13 minute read"
         toc={toc}
         ctaTitle="Make your cluster scale predictably."
         ctaDescription="Get a production-focused review of workload requests, autoscaling policies, node capacity, reliability controls, and Kubernetes cost drivers."
@@ -104,11 +104,17 @@ export default function KubernetesScalingBestPractices() {
         <h2 id="requests">1. Set resource requests from measured demand</h2>
 
         <p>
-          CPU and memory requests influence scheduling, node capacity, and
-          utilisation-based autoscaling. Requests that are too high waste node
-          capacity. Requests that are too low increase throttling, evictions, and
-          the chance that the scheduler packs workloads onto nodes that cannot
-          support real demand.
+          Requests tell the scheduler how much capacity to reserve; CPU requests
+          also provide the denominator for utilisation-based HPA. Oversized requests
+          leave capacity unused. Undersized requests can pack too much real demand
+          onto a node. A low request does not itself impose a CPU throttle.
+        </p>
+        <p>
+          CPU limits constrain CPU time and can cause throttling. Memory limits can
+          lead to an out-of-memory termination when usage exceeds the boundary.
+          Node-pressure eviction is a separate mechanism. See the official{" "}
+          <a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/" target="_blank" rel="noreferrer">Kubernetes resource requests and limits documentation</a>
+          {" "}before changing either setting.
         </p>
 
         <p>
@@ -195,6 +201,71 @@ export default function KubernetesScalingBestPractices() {
           the replicas HPA requests, the workload still fails to scale.
         </p>
 
+        <h3 id="hpa-example">Worked example: three replicas become four</h3>
+        <p>
+          Consider a CPU-bound API with three ready pods, each containing one
+          container requesting <code>500m</code> CPU. If each uses <code>400m</code>,
+          observed utilisation is 80%. At a 60% target, the simplified calculation is:
+        </p>
+        <pre tabIndex={0} aria-label="HPA replica calculation" className="mt-6 overflow-x-auto rounded-2xl bg-brand-navy p-5 text-sm leading-6 text-brand-off-white"><code className="!bg-transparent !p-0 !text-inherit">{`observed utilisation = 400m / 500m × 100 = 80%
+desired replicas = ceil(3 × 80 / 60) = 4`}</code></pre>
+        <p>
+          Four pods reserve 2 vCPU instead of 1.5 vCPU. That is requested capacity,
+          not measured usage or a cloud bill. This example assumes fresh metrics,
+          ready pods and evenly distributed load; readiness, missing metrics,
+          tolerance and scaling policies can alter the controller's actual decision.
+        </p>
+        <h3>An autoscaling/v2 HPA manifest</h3>
+        <p>
+          This illustrative configuration targets an existing <code>example-api</code>
+          {" "}Deployment in a test namespace named <code>scaling-demo</code>. It does
+          not create an application or install a metrics provider. Resource metrics
+          must be available, commonly through Metrics Server, and the containers
+          need CPU requests. Choose replica bounds from your own capacity tests.
+        </p>
+        <pre tabIndex={0} aria-label="Example HPA YAML" className="mt-6 overflow-x-auto rounded-2xl bg-brand-navy p-5 text-sm leading-6 text-brand-off-white"><code className="!bg-transparent !p-0 !text-inherit">{`apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: example-api
+  namespace: scaling-demo
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: example-api
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 60`}</code></pre>
+        <p>
+          The 60% target is relative to requested CPU. The lower bound keeps three
+          replicas; the upper bound caps this workload at ten. The five-minute
+          scale-down window considers recent recommendations, while the policy
+          permits at most one pod removal per minute. These are example choices,
+          not universal production settings. See the{" "}
+          <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/" target="_blank" rel="noreferrer">official HPA walkthrough</a>
+          {" "}for a complete sample application and metrics setup.
+        </p>
+        <p>
+          Before adopting it, confirm that ten replicas fit your node, quota and
+          downstream limits. Keep GitOps or manual replica updates from fighting
+          the autoscaler. Test the manifest with your application's startup,
+          readiness and traffic behavior; this example has not been load-tested
+          against your environment.
+        </p>
+
         <h2 id="nodes">3. Coordinate workload scaling with node autoscaling</h2>
 
         <p>
@@ -217,7 +288,7 @@ export default function KubernetesScalingBestPractices() {
           low requests can create unstable bin-packing and performance.
         </p>
 
-        <div className="mt-8 overflow-x-auto rounded-2xl border border-brand-navy/10">
+        <div tabIndex={0} role="region" aria-label="Scaling layers comparison" className="mt-8 overflow-x-auto rounded-2xl border border-brand-navy/10">
           <table>
             <thead>
               <tr>
@@ -338,6 +409,29 @@ export default function KubernetesScalingBestPractices() {
           nodes.
         </p>
 
+        <h3>Read the evidence before changing replica limits</h3>
+        <p>
+          These commands inspect the example workload. Use the intended cluster
+          context and replace the namespace and resource names with your own.
+          For a pending pod, use its actual name in the last command. The official{" "}
+          <a href="https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/" target="_blank" rel="noreferrer">pod debugging guide</a>
+          {" "}explains how pod state and scheduler events narrow down a failure.
+        </p>
+        <pre tabIndex={0} aria-label="Read-only Kubernetes diagnostics" className="mt-6 overflow-x-auto rounded-2xl bg-brand-navy p-5 text-sm leading-6 text-brand-off-white"><code className="!bg-transparent !p-0 !text-inherit">{`kubectl config current-context
+kubectl -n scaling-demo get hpa example-api
+kubectl -n scaling-demo describe hpa example-api
+kubectl -n scaling-demo top pods --containers
+kubectl -n scaling-demo get pods -o wide
+kubectl -n scaling-demo describe pod <pending-pod-name>`}</code></pre>
+        <div tabIndex={0} role="region" aria-label="Autoscaling troubleshooting table" className="mt-8 overflow-x-auto rounded-2xl border border-brand-navy/10">
+          <table><thead><tr><th>Symptom</th><th>Evidence to inspect</th><th>Next decision</th></tr></thead><tbody>
+            <tr><td>HPA metric is unknown</td><td>HPA conditions and events, CPU requests, and whether top pods returns metrics</td><td>Resolve missing requests or metrics availability before tuning the target.</td></tr>
+            <tr><td>Desired replicas rise, pods stay pending</td><td>Pod scheduling events, node capacity, affinity, taints and quota</td><td>Identify the placement constraint; increasing maxReplicas alone does not create suitable nodes.</td></tr>
+            <tr><td>Replicas rise, latency does not improve</td><td>Ready pod count, startup time, per-pod traffic, database connections and queue depth</td><td>Check whether demand reaches new replicas or a shared dependency is saturated.</td></tr>
+            <tr><td>Replica count repeatedly reverses</td><td>Metric history, HPA recommendations, rollout timing and competing replica updates</td><td>Determine whether the signal, stabilization or another controller causes the change.</td></tr>
+          </tbody></table>
+        </div>
+
         <h2 id="testing">6. Validate scaling with production-like load</h2>
 
         <p>
@@ -348,12 +442,12 @@ export default function KubernetesScalingBestPractices() {
         </p>
 
         <ol>
-          <li>Reproduce normal traffic, a rapid burst, and a sustained peak.</li>
-          <li>Test when the cluster has spare capacity and when new nodes are needed.</li>
-          <li>Observe downstream dependencies such as databases and external APIs.</li>
-          <li>Verify behaviour during deployment, node drain, and zone disruption.</li>
-          <li>Confirm that scale-down does not terminate active work or connections.</li>
-          <li>Record recovery time, service-level impact, and cost after the test.</li>
+          <li><strong>Record the baseline.</strong> In an agreed test environment, capture the manifest revision, resource settings, node pool configuration and a representative traffic profile. Set acceptable p95 latency, error rate, readiness delay and dependency load before testing.</li>
+          <li><strong>Run normal demand.</strong> Record current and desired replicas, CPU usage and requests, ready pods, latency and errors. Confirm the scaling metric is available and follows demand.</li>
+          <li><strong>Apply a repeatable burst and sustained peak.</strong> Record the load rate, duration and timestamps for metric change, HPA recommendation and new ready capacity. Repeat with spare nodes and with node provisioning required.</li>
+          <li><strong>Observe dependencies and recovery.</strong> Track database connections, queue depth and API limits. Stop the test at the agreed service thresholds; use the documented recovery procedure if a change causes regression.</li>
+          <li><strong>Return to normal load.</strong> Watch scale-down through the configured stabilization period and until replicas settle. Check connection draining, active jobs and service health. Test rollout or drain scenarios separately under an approved disruption plan.</li>
+          <li><strong>Compare and document.</strong> Repeat the same load profile after one scoped change. Compare service health, time to ready capacity, pod/node time and estimated cost over equal periods. Save results, remaining risks and the rollout decision.</li>
         </ol>
 
         <p>
@@ -364,7 +458,7 @@ export default function KubernetesScalingBestPractices() {
 
         <h2 id="checklist">7. Production Kubernetes scaling checklist</h2>
 
-        <div className="mt-8 overflow-x-auto rounded-2xl border border-brand-navy/10">
+        <div tabIndex={0} role="region" aria-label="Production scaling checklist" className="mt-8 overflow-x-auto rounded-2xl border border-brand-navy/10">
           <table>
             <thead>
               <tr>
