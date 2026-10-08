@@ -8,7 +8,7 @@ import {
   GitBranch,
   ShieldCheck,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import TrackedLink from "./TrackedLink";
 
 const services = [
   {
@@ -84,13 +84,14 @@ const Services = () => (
             From one painful bottleneck to a complete platform rebuild, we focus
             on the highest-leverage work first and leave your team stronger.
           </p>
-          <Link
+          <TrackedLink
             to="/contact"
+            eventSource="services-intro"
             className="mt-6 inline-flex items-center gap-2 font-semibold text-brand-navy underline decoration-brand-yellow decoration-4 underline-offset-4"
           >
             Tell us what is slowing you down
             <ArrowUpRight className="h-4 w-4" />
-          </Link>
+          </TrackedLink>
         </div>
       </motion.div>
 
@@ -113,13 +114,15 @@ const Services = () => (
             <p className="mt-4 flex-1 leading-relaxed text-brand-teal">
               {service.description}
             </p>
-            <Link
+            <TrackedLink
               to={service.link}
+              eventName="Service Click"
+              eventSource={`services-card:${service.title}`}
               className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-brand-navy transition-all group-hover:gap-3"
             >
               {service.linkText}
               <ArrowUpRight className="h-4 w-4" />
-            </Link>
+            </TrackedLink>
           </motion.article>
         ))}
       </div>

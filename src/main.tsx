@@ -5,7 +5,7 @@ import "./index.css";
 import App from "./App";
 
 const app = (
-  <BrowserRouter>
+  <BrowserRouter future={{ v7_startTransition: true }}>
     <App />
   </BrowserRouter>
 );

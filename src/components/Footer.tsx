@@ -1,5 +1,6 @@
 import { ArrowUpRight, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
+import TrackedLink from "./TrackedLink";
 
 const serviceLinks = [
   { label: "DevOps consulting", href: "/devops-consulting" },
@@ -53,13 +54,14 @@ const Footer = () => (
             Founder-led cloud, DevOps, and platform engineering for teams that
             need to ship faster, run reliably, and spend less.
           </p>
-          <Link
+          <TrackedLink
+            eventSource="footer-consultation"
             to="/contact"
             className="mt-7 inline-flex items-center gap-2 font-bold text-brand-yellow"
           >
             Book a free strategy call
             <ArrowUpRight className="h-4 w-4" />
-          </Link>
+          </TrackedLink>
         </div>
 
         <div>
@@ -68,13 +70,15 @@ const Footer = () => (
           </h3>
           <div className="mt-5 space-y-3">
             {serviceLinks.map((link) => (
-              <Link
+              <TrackedLink
+                eventName="Service Click"
+                eventSource="footer-service"
                 key={link.href}
                 to={link.href}
                 className="block text-sm text-brand-stone transition hover:text-brand-off-white"
               >
                 {link.label}
-              </Link>
+              </TrackedLink>
             ))}
           </div>
         </div>

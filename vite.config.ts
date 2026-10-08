@@ -6,6 +6,7 @@ import { staticWorker } from "./build/static-worker-vite-plugin";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ isSsrBuild }) => ({
+  build: { manifest: !isSsrBuild },
   server: {
     host: "::",
     port: 8080,

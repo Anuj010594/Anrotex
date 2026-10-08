@@ -8,9 +8,17 @@ const sitemap = await readFile("dist/sitemap.xml", "utf8");
 const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => new URL(match[1]));
 assert(urls.length > 0, "The sitemap must contain public pages");
 const titles = new Set();
+const manifest = JSON.parse(await readFile("dist/.vite/manifest.json", "utf8"));
+const pageChunks = Object.entries(manifest)
+  .filter(([key]) => key.startsWith("src/pages/"))
+  .map(([, chunk]) => `/${chunk.file}`);
 for (const url of urls) {
   const html = await readFile(`dist${url.pathname.replace(/\/$/, "")}/index.html`, "utf8");
   assert(html.includes(`rel="canonical" href="${url.href}"`), `Wrong canonical for ${url.pathname}`);
+  assert.doesNotMatch(html, /<!--\$[!?]-->|Loading page…/, `Incomplete prerender: ${url.pathname}`);
+  const preloads = [...html.matchAll(/rel="modulepreload"[^>]*href="([^"]+)"/g)].map((match) => match[1]);
+  assert.equal(pageChunks.filter((file) => preloads.includes(file)).length, 1, `Preload only the current page: ${url.pathname}`);
+  assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/, `External font request: ${url.pathname}`);
   assert.match(html, /<h1\b/, `Missing prerendered heading for ${url.pathname}`);
   assert(!html.includes("noindex"), `Public page is noindex: ${url.pathname}`);
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1, `Expected one main heading: ${url.pathname}`);
@@ -38,7 +46,7 @@ const cicd = await readFile("dist/ci-cd-automation/index.html", "utf8");
 assert.equal([...cicd.matchAll(/<details\b/g)].length, 5, "CI/CD FAQs must be in the initial HTML");
 assert(cicd.includes("A previous application artifact is only useful"), "Missing FAQ answer in prerendered content");
 assert(cicd.includes('href="/contact?focus=cicd"'), "Missing focused CI/CD enquiry link");
-const { html: contact } = render("/contact?focus=cicd");
+const { html: contact } = await render("/contact?focus=cicd");
 assert.match(contact, /<option[^>]*selected=""[^>]*>Improve deployment speed<\/option>/);
 
 const cicdGuide = await readFile("dist/blog/cicd-best-practices/index.html", "utf8");
@@ -55,7 +63,7 @@ const aws = await readFile("dist/aws-cost-optimization/index.html", "utf8");
 assert.equal([...aws.matchAll(/<details\b/g)].length, 6, "AWS FAQs must be in the initial HTML");
 assert(aws.includes("Reducing covered usage can release capacity"), "Missing AWS FAQ answer in prerendered content");
 assert(aws.includes('href="/contact?focus=aws-audit"'), "Missing focused AWS enquiry link");
-assert.match(render("/contact?focus=aws-audit").html, /<option[^>]*selected=""[^>]*>AWS Cost Optimization Audit<\/option>/);
+assert.match((await render("/contact?focus=aws-audit")).html, /<option[^>]*selected=""[^>]*>AWS Cost Optimization Audit<\/option>/);
 
 const notFound = await readFile("dist/404.html", "utf8");
 for (const [route, focus, projectType] of [
@@ -67,10 +75,10 @@ for (const [route, focus, projectType] of [
   assert.equal(faqs.length, 5, `${route}: FAQs must be in the initial HTML`);
   for (const [, faq] of faqs) assert.match(faq, /<summary[^>]*>.+?<\/summary><p[^>]*>.+?<\/p>/s);
   assert(html.includes(`href="/contact?focus=${focus}"`), `${route}: missing focused enquiry link`);
-  assert.match(render(`/contact?focus=${focus}`).html, new RegExp(`<option[^>]*selected=""[^>]*>${projectType}</option>`));
+  assert.match((await render(`/contact?focus=${focus}`)).html, new RegExp(`<option[^>]*selected=""[^>]*>${projectType}</option>`));
 }
 for (const focus of ["unknown", "constructor", "__proto__"]) {
-  assert.match(render(`/contact?focus=${focus}`).html, /<option value="" disabled="" selected=""/);
+  assert.match((await render(`/contact?focus=${focus}`)).html, /<option value="" disabled="" selected=""/);
 }
 
 assert.match(notFound, /<h1\b[^>]*>404<\/h1>/);
