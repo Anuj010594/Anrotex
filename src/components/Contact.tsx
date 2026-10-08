@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2, LockKeyhole, Mail } from "lucide-react";
-import { FormEvent, useCallback, useRef, useState } from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import TurnstileWidget from "@/components/TurnstileWidget";
 import { trackEvent } from "@/lib/analytics";
@@ -27,6 +27,13 @@ const Contact = () => {
   const location = useLocation();
   const focus = searchParams.get("focus");
   const defaultProjectType = projectFocus.get(focus ?? "") ?? "";
+  const projectTypeRef = useRef<HTMLSelectElement>(null);
+
+  // The static contact HTML has no query string; apply its focus after hydration.
+  useEffect(() => {
+    if (projectTypeRef.current) projectTypeRef.current.value = defaultProjectType;
+  }, [defaultProjectType]);
+
   const handleTurnstileToken = useCallback((token: string) => {
     setTurnstileToken(token);
   }, []);
@@ -216,6 +223,7 @@ const Contact = () => {
                   <label className="text-sm font-bold text-brand-navy">
                     Main priority
                     <select
+                      ref={projectTypeRef}
                       name="projectType"
                       defaultValue={defaultProjectType}
                       className={fieldClass}
