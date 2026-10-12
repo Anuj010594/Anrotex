@@ -1,6 +1,15 @@
 # AWS and CI/CD guide distribution — 12 October 2026
 
-Prepared posts, not published. These excerpts point to existing guides; no new article or client-result claim is needed. Intended readers are engineering leaders and platform teams at buyers in the US, Germany, Poland, Australia, UAE and Canada. Organic posts cannot guarantee those locations. Any direct outreach needs a separate authorization and a check against `docs/linkedin-outreach.md`.
+Post 1 was published on Anuj Dhadge's personal profile on 12 October 2026 with explicit owner authorization. Posts 2–4 remain prepared and unpublished. These excerpts point to existing guides; no new article or client-result claim is needed. Intended readers are engineering leaders and platform teams at buyers in the US, Germany, Poland, Australia, UAE and Canada. Organic posts cannot guarantee those locations. Any direct outreach needs a separate authorization and a check against `docs/linkedin-outreach.md`.
+
+## Publication record
+
+- Account: [Anuj Dhadge](https://www.linkedin.com/in/anuj-dhadge-929963408/), personal profile; identity and Anrotex co-founder affiliation checked in the signed-in LinkedIn UI.
+- Published: 12 October 2026, approximately 19:50 IST.
+- [AWS cost-baseline post](https://www.linkedin.com/feed/update/urn:li:activity:7515415933289508864/).
+- LinkedIn displayed “Post successful”; the published text was verified on its permalink.
+- The shortened text link `https://lnkd.in/daTVRJzx` was checked and resolves to the exact tagged URL in Post 1, including `#baseline`. The generated preview card links to the canonical guide URL without campaign tags, so its clicks may not appear under this campaign.
+- No other post, comment, direct message or follow-up was sent in this batch.
 
 ## Post 1 — AWS cost baseline
 
@@ -73,7 +82,7 @@ https://www.anrotex.com/blog/cicd-best-practices?utm_source=linkedin&utm_medium=
 
 ## Publishing and measurement notes
 
-- Publish only after the owner approves the destination account and final text. Nothing has been posted or sent by this batch.
+- Publish remaining posts only after the owner authorizes their destination account and final text. Post 1 is complete as recorded above.
 - Use one excerpt at a time; adapt it to the audience's actual problem. For communities, check their rules and add the link only where it helps answer a relevant question. Do not bulk-post or buy links.
 - Keep the tagged external link intact. Do not add campaign tags to internal site links, or use recipient names, email addresses or individual IDs in tags.
 - All four links use the allowlisted UTM characters. The fragment opens a useful section but is not sent to analytics. Use Session campaign and Session source / medium to assess referral traffic.

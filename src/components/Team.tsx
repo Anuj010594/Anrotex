@@ -11,8 +11,9 @@ const team = [
   },
   {
     initials: "AD",
-    name: "Anuj",
+    name: "Anuj Dhadge",
     role: "Co-Founder · DevOps Engineer",
+    profile: "https://www.linkedin.com/in/anuj-dhadge-929963408/",
     description:
       "Scalable application architecture and cost optimization.",
   },
@@ -72,6 +73,11 @@ export default function Team() {
                 <p className="mt-5 leading-relaxed text-brand-navy/75">
                   {member.description}
                 </p>
+                {member.profile && (
+                  <a href={member.profile} className="mt-5 inline-block font-semibold text-brand-navy underline underline-offset-4">
+                    Connect with {member.name} on LinkedIn
+                  </a>
+                )}
               </motion.article>
             ))}
           </div>

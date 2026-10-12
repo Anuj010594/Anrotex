@@ -1,7 +1,9 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import AnalyticsPreferences from "./components/AnalyticsPreferences";
+import ErrorBoundary from "./components/ErrorBoundary";
+import PageLoadError from "./components/PageLoadError";
 import { analyticsUrl, isAnalyticsExcluded } from "./lib/analytics";
 
 const Index = lazy(() => import("./pages/Index"));
@@ -64,36 +66,43 @@ const DeferredTelemetry = () => {
 };
 
 function App() {
+  const { pathname, search, hash } = useLocation();
+
   return (
     <>
-      <Suspense fallback={<p role="status" className="p-8 text-brand-navy">Loading page…</p>}>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/case-studies" element={<CaseStudiesPage />} />
-          <Route
-            path="/case-studies/fintech-aws-cost-reduction"
-            element={<FintechAwsCostReduction />}
-          />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/solutions" element={<SolutionsPage />} />
-          <Route path="/aws-cost-optimization" element={<AWSCostOptimization />} />
-          <Route path="/kubernetes-scaling" element={<KubernetesScaling />} />
-          <Route path="/ci-cd-automation" element={<CICDAutomation />} />
-          <Route path="/devops-consulting" element={<DevOpsConsulting />} />
-          <Route path="/blog/reduce-aws-costs" element={<AwsCostReductionBlog />} />
-          <Route path="/blog/cicd-best-practices" element={<CICDBestPractices />} />
-          <Route
-            path="/blog/kubernetes-scaling-best-practices"
-            element={<KubernetesScalingBestPractices />}
-          />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
+      <ErrorBoundary key={pathname} fallback={<PageLoadError retryUrl={`${pathname}${search}${hash}`} />}>
+        <Suspense fallback={<p role="status" className="p-8 text-brand-navy">Loading page…</p>}>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/case-studies" element={<CaseStudiesPage />} />
+            <Route
+              path="/case-studies/fintech-aws-cost-reduction"
+              element={<FintechAwsCostReduction />}
+            />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/solutions" element={<SolutionsPage />} />
+            <Route path="/aws-cost-optimization" element={<AWSCostOptimization />} />
+            <Route path="/kubernetes-scaling" element={<KubernetesScaling />} />
+            <Route path="/ci-cd-automation" element={<CICDAutomation />} />
+            <Route path="/devops-consulting" element={<DevOpsConsulting />} />
+            <Route path="/blog/reduce-aws-costs" element={<AwsCostReductionBlog />} />
+            <Route path="/blog/cicd-best-practices" element={<CICDBestPractices />} />
+            <Route
+              path="/blog/kubernetes-scaling-best-practices"
+              element={<KubernetesScalingBestPractices />}
+            />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
 
-      <DeferredTelemetry />
+      {/* Optional analytics must not unmount a visitor's enquiry form on failure. */}
+      <ErrorBoundary fallback={null}>
+        <DeferredTelemetry />
+      </ErrorBoundary>
       <AnalyticsPreferences />
     </>
   );
