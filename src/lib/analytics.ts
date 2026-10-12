@@ -107,12 +107,15 @@ export function startGoogleAnalytics() {
       analytics_storage: "granted", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied",
     });
     window.gtag("js", new Date());
+    // Keep route fields at the same scope so later navigation can replace them.
+    window.gtag("set", {
+      page_location: analyticsUrl(window.location.href),
+      page_referrer: initialReferrer(),
+    });
     window.gtag("config", GA4_ID, {
       send_page_view: false,
       allow_google_signals: false,
       allow_ad_personalization_signals: false,
-      page_location: analyticsUrl(window.location.href),
-      page_referrer: initialReferrer(),
     });
     const script = document.createElement("script");
     script.async = true;

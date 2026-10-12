@@ -69,6 +69,30 @@ it("counts each committed route once, including back navigation, with the right 
   expect(pageViews()[2][2]).toMatchObject({ page_referrer: "https://www.anrotex.com/contact?focus=cicd" });
 });
 
+it("attributes form events to the current route under Google's parameter precedence", async () => {
+  const analytics = await import("./analytics");
+  analytics.trackPageView("/services", "Services");
+  analytics.setAnalyticsConsent("granted");
+  window.location.href = "https://www.anrotex.com/contact?focus=cicd";
+  analytics.trackPageView("/contact", "Contact");
+  analytics.trackEvent("Lead Form Started", { page: "/contact" });
+  let globalParameters = {};
+  let configParameters = {};
+  let formParameters = {};
+  for (const [command, name, parameters] of commands()) {
+    if (command === "set") globalParameters = { ...globalParameters, ...name as object };
+    if (command === "config") configParameters = { ...configParameters, ...parameters as object };
+    if (command === "event" && name === "form_start") {
+      formParameters = { ...globalParameters, ...configParameters, ...parameters as object };
+    }
+  }
+  expect(formParameters).toMatchObject({
+    page_title: "Contact",
+    page_location: "https://www.anrotex.com/contact?focus=cicd",
+    page_referrer: "https://www.anrotex.com/services?utm_source=linkedin&utm_medium=social",
+  });
+});
+
 it("maps confirmed submissions and sends only permitted event parameters to Google", async () => {
   const { setAnalyticsConsent, trackEvent } = await import("./analytics");
   setAnalyticsConsent("granted");
