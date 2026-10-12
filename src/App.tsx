@@ -1,6 +1,8 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
+import AnalyticsPreferences from "./components/AnalyticsPreferences";
+import { analyticsUrl, isAnalyticsExcluded } from "./lib/analytics";
 
 const Index = lazy(() => import("./pages/Index"));
 const ServicesPage = lazy(() => import("./pages/ServicesPage"));
@@ -33,6 +35,7 @@ const DeferredTelemetry = () => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    if (isAnalyticsExcluded()) return;
     let timeoutId: number | undefined;
     const schedule = () => {
       timeoutId = window.setTimeout(() => setReady(true), 600);
@@ -54,8 +57,8 @@ const DeferredTelemetry = () => {
 
   return (
     <Suspense fallback={null}>
-      <Analytics />
-      <SpeedInsights />
+      <Analytics beforeSend={(event) => isAnalyticsExcluded() ? null : { ...event, url: analyticsUrl(event.url) }} />
+      <SpeedInsights beforeSend={(event) => isAnalyticsExcluded() ? null : { ...event, url: analyticsUrl(event.url) }} />
     </Suspense>
   );
 };
@@ -91,6 +94,7 @@ function App() {
       </Suspense>
 
       <DeferredTelemetry />
+      <AnalyticsPreferences />
     </>
   );
 }

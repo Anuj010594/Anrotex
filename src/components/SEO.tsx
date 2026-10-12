@@ -1,4 +1,6 @@
 import { Helmet } from "react-helmet";
+import { useEffect } from "react";
+import { trackPageView } from "@/lib/analytics";
 import {
   DEFAULT_OG_IMAGE,
   JsonLd,
@@ -29,6 +31,7 @@ const SEO = ({
   noIndex = false,
   structuredData = [],
 }: SEOProps) => {
+  useEffect(() => { trackPageView(path, title); }, [path, title]);
   const canonical = path === "/" ? `${SITE_URL}/` : `${SITE_URL}${path}`;
   const schemas = Array.isArray(structuredData) ? structuredData : [structuredData];
   const pageSchema: JsonLd = {

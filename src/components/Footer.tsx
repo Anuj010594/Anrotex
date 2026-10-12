@@ -1,6 +1,7 @@
 import { ArrowUpRight, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
 import TrackedLink from "./TrackedLink";
+import { ANALYTICS_PREFERENCES_EVENT, GA4_CONFIGURED } from "@/lib/analytics";
 
 const serviceLinks = [
   { label: "DevOps consulting", href: "/devops-consulting" },
@@ -113,6 +114,7 @@ const Footer = () => (
 
       <div className="flex flex-col gap-3 pt-7 text-xs text-brand-stone sm:flex-row sm:items-center sm:justify-between">
         <p>© {new Date().getFullYear()} Anrotex. All rights reserved.</p>
+        {GA4_CONFIGURED && <button type="button" className="w-fit underline underline-offset-2 hover:text-brand-off-white" onClick={() => window.dispatchEvent(new Event(ANALYTICS_PREFERENCES_EVENT))}>Cookie preferences</button>}
         <p>Cloud engineering with measurable outcomes.</p>
       </div>
     </div>
