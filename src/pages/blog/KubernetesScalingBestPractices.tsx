@@ -520,12 +520,19 @@ kubectl -n scaling-demo describe pod <pending-pod-name>`}</code></pre>
           </p>
           <TrackedLink
             to="/kubernetes-scaling"
+            eventName="Service Click"
             eventSource="kubernetes-guide-bottom"
             className="mt-7 inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 text-sm font-bold text-brand-off-white"
           >
             See the Kubernetes review
             <ArrowRight className="h-4 w-4" />
           </TrackedLink>
+          <p className="!mb-0">
+            Need help with an unstable workload or a traffic spike?{" "}
+            <TrackedLink to="/contact?focus=kubernetes" eventSource="kubernetes-guide-enquiry">
+              Discuss your cluster
+            </TrackedLink>.
+          </p>
         </div>
       </InsightArticle>
     </>

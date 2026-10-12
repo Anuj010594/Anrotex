@@ -70,6 +70,12 @@ const InsightArticle = ({
           {description}
         </p>
         <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-semibold text-brand-navy/65">
+          <span>
+            By{" "}
+            <Link to="/#team" rel="author" className="text-brand-navy underline underline-offset-4 hover:text-brand-teal">
+              Anrotex
+            </Link>
+          </span>
           <span>Published {published}</span>
           <span>Updated {updated}</span>
           <span className="inline-flex items-center gap-2">

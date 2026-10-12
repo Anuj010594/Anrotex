@@ -572,12 +572,19 @@ export default function AwsCostReductionBlog() {
           </p>
           <TrackedLink
             to="/aws-cost-optimization"
+            eventName="Service Click"
             eventSource="aws-guide-bottom"
             className="mt-7 inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 text-sm font-bold text-brand-off-white"
           >
             See what the review includes
             <ArrowRight className="h-4 w-4" />
           </TrackedLink>
+          <p className="!mb-0">
+            Ready to discuss your AWS bill?{" "}
+            <TrackedLink to="/contact?focus=aws-audit" eventSource="aws-guide-enquiry">
+              Book a free audit fit call
+            </TrackedLink>.
+          </p>
         </div>
       </InsightArticle>
     </>
