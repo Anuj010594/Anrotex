@@ -96,8 +96,13 @@ it("attributes form events to the current route under Google's parameter precede
 it("maps confirmed submissions and sends only permitted event parameters to Google", async () => {
   const { setAnalyticsConsent, trackEvent } = await import("./analytics");
   setAnalyticsConsent("granted");
-  trackEvent("Lead Form Started", { page: "/contact" });
-  trackEvent("Lead Form Error", { page: "/contact", message: "Private message" });
+  trackEvent("Lead Form Started", { page: "/contact", focus: "Improve deployment speed" });
+  trackEvent("Lead Form Error", { page: "/contact", focus: "Improve deployment speed", message: "Private message" });
+  for (const name of ["form_start", "form_error"]) {
+    expect(commands().filter(([, event]) => event === name)).toEqual([
+      ["event", name, { form_name: "enquiry", service_interest: "Improve deployment speed" }],
+    ]);
+  }
   expect(commands().some(([, name]) => name === "generate_lead")).toBe(false);
   trackEvent("Lead Form Submitted", { focus: "Improve deployment speed", email: "private@example.com", message: "Private message" });
   expect(commands().filter(([, name]) => name === "generate_lead")).toEqual([
@@ -107,6 +112,8 @@ it("maps confirmed submissions and sends only permitted event parameters to Goog
   expect(commands().at(-1)).toEqual(["event", "service_click", { event_source: "services-comparison", link_url: "https://www.anrotex.com/contact?focus=cicd" }]);
   expect(JSON.stringify(commands())).not.toMatch(/private@example|Private message/);
   expect(JSON.stringify(window.vaq)).not.toMatch(/private@example|Private message/);
+  trackEvent("Lead Form Started", { focus: "private@example.com" });
+  expect(commands().at(-1)).toEqual(["event", "form_start", { form_name: "enquiry" }]);
 });
 
 it("stops measurement after withdrawal, even when persisting the choice fails", async () => {

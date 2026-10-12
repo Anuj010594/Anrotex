@@ -77,6 +77,27 @@ const InsightArticle = ({
             {readTime}
           </span>
         </div>
+        <div className="mt-8 space-y-5 lg:hidden">
+          <details className="rounded-2xl border border-brand-navy/10 bg-brand-stone/55 p-5">
+            <summary className="cursor-pointer font-bold text-brand-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-teal">
+              Jump to a section
+            </summary>
+            <nav aria-label="Article contents" className="mt-4">
+              <ol className="space-y-3">
+                {toc.map((item) => (
+                  <li key={item.id}>
+                    <a href={`#${item.id}`} className="block py-1 text-sm font-semibold text-brand-navy underline decoration-brand-teal/40 underline-offset-4 hover:decoration-brand-teal">
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          </details>
+          <TrackedLink to={ctaHref} eventSource={`article-intro:${eyebrow}`} eventName={ctaHref.startsWith("/contact") ? "CTA Click" : "Service Click"} className="inline-flex items-center gap-2 font-bold text-brand-navy underline underline-offset-4">
+            {ctaLabel}<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+          </TrackedLink>
+        </div>
       </div>
     </header>
 
@@ -87,7 +108,7 @@ const InsightArticle = ({
         <aside className="lg:pt-2">
           <div className="space-y-5 lg:sticky lg:top-28">
             <nav
-              className="rounded-[1.5rem] border border-brand-navy/10 bg-brand-stone/55 p-6"
+              className="hidden rounded-[1.5rem] border border-brand-navy/10 bg-brand-stone/55 p-6 lg:block"
               aria-label="Article contents"
             >
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-teal">
@@ -121,6 +142,7 @@ const InsightArticle = ({
               <TrackedLink
                 to={ctaHref}
                 eventSource={`article-sidebar:${eyebrow}`}
+                eventName={ctaHref.startsWith("/contact") ? "CTA Click" : "Service Click"}
                 className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-yellow px-5 py-3 text-sm font-bold text-brand-navy"
               >
                 {ctaLabel}

@@ -41,7 +41,10 @@ const Contact = () => {
   const handleFormStart = () => {
     if (started) return;
     setStarted(true);
-    trackEvent("Lead Form Started", { page: location.pathname });
+    trackEvent("Lead Form Started", {
+      page: location.pathname,
+      focus: projectTypeRef.current?.value || "Not specified",
+    });
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -97,7 +100,10 @@ const Contact = () => {
       setTurnstileToken("");
       setTurnstileKey((key) => key + 1);
     } catch (submitError) {
-      trackEvent("Lead Form Error", { page: location.pathname });
+      trackEvent("Lead Form Error", {
+        page: location.pathname,
+        focus: projectType || "Not specified",
+      });
       setError(
         submitError instanceof Error
           ? submitError.message
