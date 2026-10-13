@@ -16,6 +16,8 @@ type SEOProps = {
   path: string;
   image?: string;
   imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   type?: "website" | "article";
   noIndex?: boolean;
   structuredData?: JsonLd | JsonLd[];
@@ -27,6 +29,8 @@ const SEO = ({
   path,
   image = DEFAULT_OG_IMAGE,
   imageAlt,
+  imageWidth = 1200,
+  imageHeight = 630,
   type = "website",
   noIndex = false,
   structuredData = [],
@@ -70,8 +74,8 @@ const SEO = ({
       <meta property="og:url" content={canonical} />
       <meta property="og:image" content={image} />
       <meta property="og:image:secure_url" content={image} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
+      <meta property="og:image:width" content={String(imageWidth)} />
+      <meta property="og:image:height" content={String(imageHeight)} />
       <meta
         property="og:image:alt"
         content={imageAlt ?? `${SITE_NAME} cloud and DevOps consulting`}

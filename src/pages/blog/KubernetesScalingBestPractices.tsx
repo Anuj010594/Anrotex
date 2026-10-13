@@ -2,7 +2,9 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import InsightArticle from "@/components/InsightArticle";
 import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
-import { articleSchema, breadcrumbSchema } from "@/lib/seo";
+import { articleSchema, breadcrumbSchema, SITE_URL } from "@/lib/seo";
+
+const sharingImage = `${SITE_URL}/images/og/kubernetes-scaling-guide.png`;
 
 const toc = [
   { id: "requests", label: "Set trustworthy resource requests" },
@@ -31,8 +33,13 @@ export default function KubernetesScalingBestPractices() {
         description="Kubernetes scaling best practices with a worked HPA calculation, autoscaling YAML, troubleshooting commands and a production validation checklist."
         path="/blog/kubernetes-scaling-best-practices"
         type="article"
+        image={sharingImage}
+        imageAlt="Kubernetes scaling for production — workload requests, autoscaling and availability. Connected groups of servers, by Anrotex."
+        imageWidth={1731}
+        imageHeight={909}
         structuredData={[
           articleSchema({
+            image: sharingImage,
             headline: "Kubernetes Scaling Best Practices for Production Workloads",
             description:
               "A practical guide to Kubernetes scaling, autoscaling, resource requests, node capacity, availability, and production validation.",

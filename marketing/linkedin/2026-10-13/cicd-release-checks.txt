@@ -1,0 +1,17 @@
+A green CI/CD pipeline should mean more than “the build passed.”
+
+Before the next release, ask four questions:
+
+• Did the checks run against the intended commit?
+• Can you identify the exact build being deployed?
+• Does deployment use only the access it needs?
+• Do checks after deployment cover a critical user journey?
+
+Build speed matters. So does knowing what passed, what reached production and how you will recover if something breaks.
+
+Our CI/CD guide includes a Node.js GitHub Actions workflow, deployment checks and recovery guidance:
+https://www.anrotex.com/blog/cicd-best-practices?utm_source=linkedin&utm_medium=social&utm_campaign=cicd-guide-oct2026&utm_content=release-checks#github-actions
+
+Which of these checks is hardest to verify in your pipeline?
+
+#CICD #GitHubActions #PlatformEngineering

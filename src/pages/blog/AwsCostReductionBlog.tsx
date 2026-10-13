@@ -2,7 +2,9 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import InsightArticle from "@/components/InsightArticle";
 import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
-import { articleSchema, breadcrumbSchema } from "@/lib/seo";
+import { articleSchema, breadcrumbSchema, SITE_URL } from "@/lib/seo";
+
+const sharingImage = `${SITE_URL}/images/og/aws-cost-guide.png`;
 
 const toc = [
   { id: "baseline", label: "Build a trustworthy cost baseline" },
@@ -33,8 +35,13 @@ export default function AwsCostReductionBlog() {
         description="Reduce AWS costs with a step-by-step checklist, an EC2 rightsizing example, risk checks, and a method to measure savings after changes."
         path="/blog/reduce-aws-costs"
         type="article"
+        image={sharingImage}
+        imageAlt="Reduce AWS costs with confidence — a practical checklist for safer cost decisions. Cloud resources and a checklist, by Anrotex."
+        imageWidth={1730}
+        imageHeight={909}
         structuredData={[
           articleSchema({
+            image: sharingImage,
             headline: "How to reduce AWS costs: a practical checklist",
             description:
               "An AWS cost reduction checklist with a worked EC2 example, operational risk checks, and a method for verifying savings.",

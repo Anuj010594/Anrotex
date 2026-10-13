@@ -93,12 +93,14 @@ export function articleSchema({
   path,
   datePublished,
   dateModified,
+  image = DEFAULT_OG_IMAGE,
 }: {
   headline: string;
   description: string;
   path: string;
   datePublished: string;
   dateModified: string;
+  image?: string;
 }): JsonLd {
   return {
     "@context": "https://schema.org",
@@ -106,7 +108,7 @@ export function articleSchema({
     "@id": `${SITE_URL}${path}#article`,
     headline,
     description,
-    image: DEFAULT_OG_IMAGE,
+    image,
     datePublished,
     dateModified,
     author: {

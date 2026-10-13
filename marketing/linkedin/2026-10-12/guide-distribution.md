@@ -44,21 +44,12 @@ https://www.anrotex.com/blog/reduce-aws-costs?utm_source=linkedin&utm_medium=soc
 
 ## Post 3 — CI/CD checks
 
-A green pipeline should tell you something useful about the version you are about to release.
+Updated on 13 October 2026 as the next prepared post. [Copy-ready text](../2026-10-13/cicd-release-checks.txt) is the single source for publication. It retains the `cicd-guide-oct2026` campaign and `release-checks` content tag.
 
-Start with four questions:
-
-• Did the checks run against the intended commit?
-• Can you identify the artifact produced by that run?
-• Does deployment use only the access it needs?
-• Do the checks after deployment cover a critical user journey?
-
-Build speed matters, but so does knowing what passed and what actually reached production.
-
-Our CI/CD guide includes a Node.js GitHub Actions workflow, deployment checks and troubleshooting steps:
-https://www.anrotex.com/blog/cicd-best-practices?utm_source=linkedin&utm_medium=social&utm_campaign=cicd-guide-oct2026&utm_content=release-checks#github-actions
-
-#CICD #GitHubActions #PlatformEngineering
+- [Matching sharing image](../../../public/images/og/cicd-guide.png).
+- Image description: CI/CD from pull request to production — build, test and release with confidence. A release pipeline with a recovery path, by Anrotex.
+- Prepared for review; not published or scheduled. Publication on the personal profile needs the owner's authorization for this post.
+- Keep the tagged URL in the post text. After the website deployment, check the guide's LinkedIn preview before publishing and record the final permalink here.
 
 ## Post 4 — Recovery planning
 

@@ -8,6 +8,11 @@ const sitemap = await readFile("dist/sitemap.xml", "utf8");
 const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => new URL(match[1]));
 assert(urls.length > 0, "The sitemap must contain public pages");
 const titles = new Set();
+const guideImages = new Map([
+  ["/blog/reduce-aws-costs", "/images/og/aws-cost-guide.png"],
+  ["/blog/cicd-best-practices", "/images/og/cicd-guide.png"],
+  ["/blog/kubernetes-scaling-best-practices", "/images/og/kubernetes-scaling-guide.png"],
+]);
 const manifest = JSON.parse(await readFile("dist/.vite/manifest.json", "utf8"));
 const pageChunks = Object.entries(manifest)
   .filter(([key]) => key.startsWith("src/pages/"))
@@ -26,8 +31,23 @@ for (const url of urls) {
   assert(title && !titles.has(title), `Missing or duplicate title: ${url.pathname}`);
   titles.add(title);
   assert.match(html, /name="description" content="[^"]+"/, `Missing description: ${url.pathname}`);
+  const image = html.match(/property="og:image" content="([^"]+)"/)?.[1];
+  const expectedImage = new URL(guideImages.get(url.pathname) ?? "/og.png", url).href;
+  assert.equal(image, expectedImage, `Wrong sharing image: ${url.pathname}`);
+  assert(html.includes(`name="twitter:image" content="${image}"`), `Mismatched Twitter image: ${url.pathname}`);
+  const imageAlt = html.match(/property="og:image:alt" content="([^"]+)"/)?.[1];
+  assert(imageAlt, `Missing image description: ${url.pathname}`);
+  assert(html.includes(`name="twitter:image:alt" content="${imageAlt}"`), `Mismatched image descriptions: ${url.pathname}`);
+  const png = await readFile(`dist${new URL(image).pathname}`);
+  assert.equal(png.subarray(0, 8).toString("hex"), "89504e470d0a1a0a", `Invalid PNG: ${image}`);
+  assert(html.includes(`property="og:image:width" content="${png.readUInt32BE(16)}"`), `Wrong image width: ${url.pathname}`);
+  assert(html.includes(`property="og:image:height" content="${png.readUInt32BE(20)}"`), `Wrong image height: ${url.pathname}`);
   for (const [, json] of html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>(.*?)<\/script>/gs)) {
-    assert(JSON.parse(json)["@type"], `Invalid structured data: ${url.pathname}`);
+    const schema = JSON.parse(json);
+    assert(schema["@type"], `Invalid structured data: ${url.pathname}`);
+    if (schema["@type"] === "BlogPosting") {
+      assert.equal(schema.image, image, `Mismatched article image: ${url.pathname}`);
+    }
   }
   for (const [, href] of html.matchAll(/href="((?:\/|#)[^"]*)"/g)) {
     const { pathname, hash } = new URL(href, url);

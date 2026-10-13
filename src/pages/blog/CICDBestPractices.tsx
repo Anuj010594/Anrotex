@@ -3,7 +3,9 @@ import InsightArticle from "@/components/InsightArticle";
 import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
 import workflow from "@/content/node-ci.yml?raw";
-import { articleSchema, breadcrumbSchema } from "@/lib/seo";
+import { articleSchema, breadcrumbSchema, SITE_URL } from "@/lib/seo";
+
+const sharingImage = `${SITE_URL}/images/og/cicd-guide.png`;
 
 const toc = [
   { id: "stages", label: "Choose the right pipeline stages" },
@@ -24,8 +26,13 @@ export default function CICDBestPractices() {
         description="Build a dependable CI/CD pipeline with a GitHub Actions example, practical testing steps, deployment approvals, rollback guidance, and a release checklist."
         path="/blog/cicd-best-practices"
         type="article"
+        image={sharingImage}
+        imageAlt="CI/CD from pull request to production — build, test and release with confidence. A release pipeline with a recovery path, by Anrotex."
+        imageWidth={1731}
+        imageHeight={909}
         structuredData={[
           articleSchema({
+            image: sharingImage,
             headline: "CI/CD best practices: from pull request to production",
             description:
               "A practical CI/CD guide with a Node.js workflow, deployment controls, recovery steps, and troubleshooting advice.",
