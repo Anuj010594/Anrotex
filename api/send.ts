@@ -249,7 +249,8 @@ export default async function handler(req: any, res: any) {
     );
     return res.status(400).json({
       success: false,
-      error: "Security verification failed. Please refresh and try again.",
+      code: "verification_failed",
+      error: "Please complete the security check and try again.",
     });
   }
 

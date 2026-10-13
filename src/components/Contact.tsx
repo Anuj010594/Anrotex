@@ -15,24 +15,62 @@ const projectFocus = new Map<string, (typeof PROJECT_TYPES)[number]>([
   ["kubernetes", "Scale Kubernetes reliably"],
 ]);
 
-const Contact = () => {
+const awsCopy = {
+  title: "Discuss your AWS costs.",
+  description: "Tell us where your AWS bill is growing and what you want to improve. We will help you decide whether a cost review is the right next step.",
+  prompt: "Which AWS costs concern you most, and what would you like to change? Include your main services and timeline if you know them.",
+};
+const serviceCopy = new Map([
+  ["AWS Cost Optimization Audit", awsCopy],
+  ["Reduce cloud costs", awsCopy],
+  ["Improve deployment speed", {
+    title: "Discuss your deployment pipeline.",
+    description: "Tell us what makes releases slow or unreliable. We will help you identify a practical first step for your team.",
+    prompt: "How do you deploy today, where do releases get delayed or fail, and what would a better release process look like?",
+  }],
+  ["Scale Kubernetes reliably", {
+    title: "Discuss your Kubernetes reliability.",
+    description: "Tell us how your workloads respond to demand and where reliability needs to improve. We will help you decide what to review first.",
+    prompt: "What happens when demand changes? Share your main scaling or reliability concern, what you have tried, and the outcome you need.",
+  }],
+  ["DevOps consulting", {
+    title: "Discuss your DevOps needs.",
+    description: "Tell us where infrastructure or delivery is slowing your team down. We will help you define a focused next step.",
+    prompt: "What does your team run today, what keeps getting in the way, and what would you like to improve first?",
+  }],
+]);
+
+const Contact = ({ standalone = false }: { standalone?: boolean }) => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [started, setStarted] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
   const [turnstileKey, setTurnstileKey] = useState(0);
+  const [projectType, setProjectType] = useState("");
+  const submitting = useRef(false);
+  const feedbackRef = useRef<HTMLDivElement>(null);
+  const successRef = useRef<HTMLHeadingElement>(null);
   const startedAt = useRef(Date.now());
   const [searchParams] = useSearchParams();
   const location = useLocation();
   const focus = searchParams.get("focus");
   const defaultProjectType = projectFocus.get(focus ?? "") ?? "";
   const projectTypeRef = useRef<HTMLSelectElement>(null);
+  const copy = serviceCopy.get(projectType);
+  const Heading = standalone ? "h1" : "h2";
+  const Subheading = standalone ? "h2" : "h3";
 
-  // The static contact HTML has no query string; apply its focus after hydration.
+  // The static contact HTML has no query string; apply service copy after hydration.
   useEffect(() => {
     if (projectTypeRef.current) projectTypeRef.current.value = defaultProjectType;
+    setProjectType(defaultProjectType);
   }, [defaultProjectType]);
+
+  useEffect(() => {
+    if (submitted) successRef.current?.focus();
+    else if (error) feedbackRef.current?.focus();
+  }, [submitted, error]);
 
   const handleTurnstileToken = useCallback((token: string) => {
     setTurnstileToken(token);
@@ -49,6 +87,8 @@ const Contact = () => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (submitting.current || (TURNSTILE_SITE_KEY && !turnstileToken)) return;
+    submitting.current = true;
     setLoading(true);
     setError("");
 
@@ -68,49 +108,48 @@ const Contact = () => {
       turnstileToken,
     };
 
+    let failureMessage = "";
     try {
       const response = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      const result = await response.json().catch(() => ({
-        success: false,
-        error: "The enquiry service returned an invalid response.",
-      }));
+      const result = await response.json().catch(() => null);
 
-      if (!response.ok || !result.success) {
+      if (!response.ok || result?.success !== true) {
         if (response.status === 429) {
-          throw new Error(
-            "Too many requests were received. Please wait a few minutes or email us directly.",
-          );
+          failureMessage = "Please wait a few minutes before trying again.";
+        } else if (response.status === 400 && result?.code === "verification_failed") {
+          failureMessage = "Please complete the security check below, then try again. Your details are still here.";
+        } else if (response.status === 400) {
+          failureMessage = "Please check your name, email and message, then try again. Your details are still here.";
+        } else {
+          failureMessage = "We couldn’t confirm your message was received. Please try again in a moment, or email us directly.";
         }
-        throw new Error(
-          result.error ||
-            "We could not securely send your message. Please email us directly.",
-        );
+      } else {
+        setSubmitted(true);
+        trackEvent("Lead Form Submitted", {
+          page: location.pathname,
+          focus: projectType || "Not specified",
+        });
+        form.reset();
       }
-
-      setSubmitted(true);
-      trackEvent("Lead Form Submitted", {
-        page: location.pathname,
-        focus: projectType || "Not specified",
-      });
-      form.reset();
+    } catch {
+      failureMessage = "We couldn’t confirm your message was received. Check your connection and try again, or email us directly.";
+    } finally {
+      // Verification tokens are single-use, including when delivery fails afterwards.
       setTurnstileToken("");
       setTurnstileKey((key) => key + 1);
-    } catch (submitError) {
+      setLoading(false);
+      submitting.current = false;
+    }
+    if (failureMessage) {
+      setError(failureMessage);
       trackEvent("Lead Form Error", {
         page: location.pathname,
         focus: projectType || "Not specified",
       });
-      setError(
-        submitError instanceof Error
-          ? submitError.message
-          : "We could not send that message. Please email sales@anrotex.com instead.",
-      );
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -118,9 +157,9 @@ const Contact = () => {
     "mt-2 w-full rounded-xl border border-brand-navy/15 bg-brand-off-white px-4 py-3.5 text-brand-navy outline-none transition placeholder:text-brand-teal/60 focus:border-brand-teal focus:ring-2 focus:ring-brand-mint";
 
   return (
-    <section id="contact" className="scroll-mt-24 bg-brand-mint px-6 py-24 md:py-32">
+    <section id="contact" className={`scroll-mt-24 bg-brand-mint px-6 ${standalone ? "pb-16 pt-28 md:pb-24 md:pt-36" : "py-24 md:py-32"}`}>
       <div className="container">
-        <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
+        <div className="grid items-start gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-x-20 lg:gap-y-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -129,40 +168,16 @@ const Contact = () => {
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-navy">
               Start a conversation
             </span>
-            <h2 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] text-brand-navy md:text-6xl">
-              What is getting in the way of growth?
-            </h2>
+            <Heading className="mt-4 text-4xl font-bold leading-tight tracking-[-0.04em] text-brand-navy md:text-6xl">
+              {copy?.title ?? (standalone ? "Talk with a DevOps and cloud engineer." : "What is getting in the way of growth?")}
+            </Heading>
             <p className="mt-6 text-lg leading-relaxed text-brand-navy/75">
-              Tell us where your platform is slowing down. We will reply with
-              useful next steps.
+              {copy?.description ?? "Tell us where your platform is slowing down. We will reply with useful next steps."}
             </p>
-
-            <div className="mt-9 space-y-4">
-              {[
-                "A focused 30-minute discovery call",
-                "A candid view of the highest-leverage next step",
-                "No hard sell and no obligation",
-              ].map((item) => (
-                <p key={item} className="flex items-start gap-3 font-semibold text-brand-navy">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-brand-teal" />
-                  {item}
-                </p>
-              ))}
-            </div>
-
-            <a
-              href="mailto:sales@anrotex.com"
-              className="mt-10 inline-flex items-center gap-3 font-bold text-brand-navy"
-            >
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-navy text-brand-off-white">
-                <Mail className="h-5 w-5" />
-              </span>
-              sales@anrotex.com
-            </a>
           </motion.div>
 
           <motion.div
-            className="shadow-soft rounded-[2rem] bg-brand-off-white p-6 md:p-9"
+            className="shadow-soft rounded-[2rem] bg-brand-off-white p-6 md:p-9 lg:col-start-2 lg:row-span-2 lg:row-start-1"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -172,19 +187,19 @@ const Contact = () => {
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-navy text-brand-yellow">
                   <CheckCircle2 className="h-8 w-8" />
                 </div>
-                <h3 className="mt-6 text-3xl font-bold text-brand-navy">
+                <Subheading ref={successRef} tabIndex={-1} className="mt-6 text-3xl font-bold text-brand-navy">
                   Thanks — we received it.
-                </h3>
+                </Subheading>
                 <p className="mt-3 max-w-md text-brand-teal">
                   We will review the details and get back to you within one business day.
                 </p>
               </div>
             ) : (
-              <form name="lead-form" onFocus={handleFormStart} onSubmit={handleSubmit}>
+              <form name="lead-form" onFocus={handleFormStart} onSubmit={handleSubmit} aria-busy={loading}>
                 <div className="mb-7">
-                  <h3 className="text-2xl font-bold text-brand-navy">
+                  <Subheading className="text-2xl font-bold text-brand-navy">
                     Request a free consultation
-                  </h3>
+                  </Subheading>
                   <p className="mt-2 text-sm text-brand-teal">
                     A few details help us make the first conversation useful.
                   </p>
@@ -198,6 +213,7 @@ const Contact = () => {
                       type="text"
                       autoComplete="name"
                       placeholder="Your name"
+                      minLength={2}
                       maxLength={80}
                       required
                       className={fieldClass}
@@ -216,7 +232,7 @@ const Contact = () => {
                     />
                   </label>
                   <label className="text-sm font-bold text-brand-navy">
-                    Company
+                    Company (optional)
                     <input
                       name="company"
                       type="text"
@@ -227,11 +243,12 @@ const Contact = () => {
                     />
                   </label>
                   <label className="text-sm font-bold text-brand-navy">
-                    Main priority
+                    Main priority (optional)
                     <select
                       ref={projectTypeRef}
                       name="projectType"
                       defaultValue={defaultProjectType}
+                      onChange={(event) => setProjectType(event.target.value)}
                       className={fieldClass}
                     >
                       <option value="" disabled>
@@ -242,18 +259,23 @@ const Contact = () => {
                   </label>
                 </div>
 
-                <label className="mt-5 block text-sm font-bold text-brand-navy">
-                  What is happening today?
+                <div className="mt-5 text-sm font-bold text-brand-navy">
+                  <label htmlFor="enquiry-message">What is happening today?</label>
+                  <p id="enquiry-guidance" className="mt-2 font-normal leading-relaxed text-brand-teal">
+                    {copy?.prompt ?? "Share the challenge, the outcome you need and your timeline, if you have one."}
+                  </p>
                   <textarea
+                    id="enquiry-message"
                     name="message"
-                    placeholder="A short description of the challenge, timeline, or outcome you need..."
+                    aria-describedby="enquiry-guidance"
+                    placeholder="A short description is enough to start."
                     rows={5}
                     minLength={10}
                     maxLength={3000}
                     required
                     className={`${fieldClass} resize-none`}
                   />
-                </label>
+                </div>
 
                 <label
                   className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden"
@@ -269,19 +291,22 @@ const Contact = () => {
                   />
                 </label>
 
+                {error && (
+                  <div
+                    ref={feedbackRef}
+                    tabIndex={-1}
+                    className="mt-4 rounded-xl bg-brand-yellow/30 p-3 text-sm font-semibold text-brand-navy"
+                    role="alert"
+                  >
+                    <p>{error}</p>
+                    <a href="mailto:sales@anrotex.com" className="mt-2 inline-block underline underline-offset-4">Email sales@anrotex.com</a>
+                  </div>
+                )}
+
                 <TurnstileWidget
                   key={turnstileKey}
                   onTokenChange={handleTurnstileToken}
                 />
-
-                {error && (
-                  <p
-                    className="mt-4 rounded-xl bg-brand-yellow/30 p-3 text-sm font-semibold text-brand-navy"
-                    role="alert"
-                  >
-                    {error}
-                  </p>
-                )}
 
                 <button
                   type="submit"
@@ -300,6 +325,25 @@ const Contact = () => {
               </form>
             )}
           </motion.div>
+          <div className="lg:col-start-1 lg:row-start-2">
+            <Subheading className="text-xl font-bold text-brand-navy">What happens next</Subheading>
+            <div className="mt-5 space-y-4">
+              {[
+                "An engineer will review your enquiry and reply within one business day.",
+                "We will arrange a free 30-minute call to understand your priorities.",
+                "You can decide on the next step after discussing the scope. No obligation.",
+              ].map((item) => (
+                <p key={item} className="flex items-start gap-3 text-brand-navy">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-brand-teal" aria-hidden="true" />
+                  {item}
+                </p>
+              ))}
+            </div>
+            <a href="mailto:sales@anrotex.com" className="mt-8 inline-flex items-center gap-3 font-bold text-brand-navy">
+              <Mail className="h-5 w-5" aria-hidden="true" />
+              sales@anrotex.com
+            </a>
+          </div>
         </div>
       </div>
     </section>
