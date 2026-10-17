@@ -12,10 +12,10 @@ const posts = [
     problem: "Understand where your AWS budget goes.",
     title: "How to Reduce AWS Costs: A Practical Checklist",
     description:
-      "Follow a worked EC2 example, assess operational risks, and measure savings across compute, storage, and network costs.",
+      "Use the free cost-review worksheet, follow a worked EC2 example, and measure savings across compute, storage, and network costs.",
     link: "/blog/reduce-aws-costs",
     sections: [
-      { id: "baseline", label: "Build a cost baseline" },
+      { id: "worksheet", label: "Get the cost-review worksheet" },
       { id: "rightsizing-example", label: "Work through an EC2 savings example" },
     ],
   },

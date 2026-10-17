@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, Download } from "lucide-react";
 import InsightArticle from "@/components/InsightArticle";
 import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
@@ -16,6 +16,7 @@ const toc = [
   { id: "guardrails", label: "Prevent costs from returning" },
   { id: "measure-savings", label: "Measure savings after the change" },
   { id: "plan", label: "A practical 30-day plan" },
+  { id: "worksheet", label: "Download the cost-review worksheet" },
 ];
 
 const quickWins = [
@@ -32,7 +33,7 @@ export default function AwsCostReductionBlog() {
     <>
       <SEO
         title="How to Reduce AWS Costs: A Practical Checklist | Anrotex"
-        description="Reduce AWS costs with a step-by-step checklist, an EC2 rightsizing example, risk checks, and a method to measure savings after changes."
+        description="Reduce AWS costs with a practical checklist, an EC2 rightsizing example, and a free cost-review worksheet to plan changes and measure results."
         path="/blog/reduce-aws-costs"
         type="article"
         image={sharingImage}
@@ -44,10 +45,10 @@ export default function AwsCostReductionBlog() {
             image: sharingImage,
             headline: "How to reduce AWS costs: a practical checklist",
             description:
-              "An AWS cost reduction checklist with a worked EC2 example, operational risk checks, and a method for verifying savings.",
+              "An AWS cost reduction checklist with an editable cost-review worksheet, a worked EC2 example, and checks for measuring results.",
             path: "/blog/reduce-aws-costs",
             datePublished: "2026-06-16",
-            dateModified: "2026-10-07",
+            dateModified: "2026-10-17",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -62,7 +63,7 @@ export default function AwsCostReductionBlog() {
         title="How to reduce AWS costs: a practical checklist"
         description="The safest way to lower an AWS bill is to remove waste first, right-size from real utilization data, and buy commitments only after demand is understood."
         published="16 June 2026"
-        updated="7 October 2026"
+        updated="17 October 2026"
         readTime="14 minute read"
         toc={toc}
         ctaTitle="Find the waste in your AWS estate."
@@ -80,6 +81,30 @@ export default function AwsCostReductionBlog() {
             utilization data, then introduce commitments and guardrails.
           </p>
         </div>
+
+        <section aria-labelledby="worksheet" className="mt-8 rounded-[1.75rem] border border-brand-navy/10 bg-brand-mint p-6 md:p-8">
+          <h2 id="worksheet" className="!pt-0">Plan your AWS cost review</h2>
+          <p>
+            Use the free worksheet to record your cost baseline, assign an owner,
+            estimate a change, and agree performance and recovery checks. After
+            rollout, compare costs and workload volume to see what changed.
+          </p>
+          <ul>
+            <li><strong>Plan:</strong> scope, costs, commitments, effort and checks before rollout.</li>
+            <li><strong>Results:</strong> costs before and after, cost per workload unit, and the next action.</li>
+          </ul>
+          <TrackedLink
+            to="/downloads/aws-cost-review-worksheet.xlsx"
+            reloadDocument
+            download="anrotex-aws-cost-review-worksheet.xlsx"
+            eventSource="aws-guide-worksheet"
+            className="mt-6 inline-flex items-center gap-3 rounded-full bg-brand-navy px-6 py-3.5 text-sm font-bold text-brand-off-white transition hover:bg-brand-teal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-navy"
+          >
+            <Download className="h-4 w-4 shrink-0" aria-hidden="true" />
+            Download the worksheet (.xlsx)
+          </TrackedLink>
+          <p className="!mb-0 text-sm">Editable Excel workbook. No email required. Save one copy per workload and proposed change.</p>
+        </section>
 
         <p>
           AWS cost reduction is not a one-time exercise and it should not begin
@@ -493,6 +518,18 @@ export default function AwsCostReductionBlog() {
         </ul>
 
         <h2 id="measure-savings">8. Verify savings after implementation</h2>
+        <p>
+          Record the comparison in the Results sheet of the{" "}
+          <TrackedLink
+            to="/downloads/aws-cost-review-worksheet.xlsx"
+            reloadDocument
+            download="anrotex-aws-cost-review-worksheet.xlsx"
+            eventSource="aws-guide-worksheet-measurement"
+          >
+            downloadable AWS cost-review worksheet (.xlsx)
+          </TrackedLink>.
+          Keep the same scope, currency and cost basis in both periods.
+        </p>
         <p>
           Keep three numbers separate: the estimated opportunity, the change in
           recurring effective cost, and the impact on the cash bill. A rightsizing
