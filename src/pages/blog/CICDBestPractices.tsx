@@ -1,8 +1,8 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 import InsightArticle from "@/components/InsightArticle";
 import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
-import workflow from "@/content/node-ci.yml?raw";
+import workflow from "../../../public/downloads/node-ci.yml?raw";
 import { articleSchema, breadcrumbSchema, SITE_URL } from "@/lib/seo";
 
 const sharingImage = `${SITE_URL}/images/og/cicd-guide.png`;
@@ -16,6 +16,7 @@ const toc = [
   { id: "troubleshooting", label: "Troubleshoot pipeline failures" },
   { id: "measurement", label: "Measure delivery improvements" },
   { id: "checklist", label: "Before your next release" },
+  { id: "release-kit", label: "Download the release checklist" },
 ];
 
 export default function CICDBestPractices() {
@@ -23,7 +24,7 @@ export default function CICDBestPractices() {
     <>
       <SEO
         title="CI/CD Best Practices & GitHub Actions Example | Anrotex"
-        description="Build a dependable CI/CD pipeline with a GitHub Actions example, practical testing steps, deployment approvals, rollback guidance, and a release checklist."
+        description="Improve your CI/CD pipeline with a free release checklist and downloadable GitHub Actions workflow. Check testing, deployment approvals, rollback and recovery."
         path="/blog/cicd-best-practices"
         type="article"
         image={sharingImage}
@@ -35,10 +36,10 @@ export default function CICDBestPractices() {
             image: sharingImage,
             headline: "CI/CD best practices: from pull request to production",
             description:
-              "A practical CI/CD guide with a Node.js workflow, deployment controls, recovery steps, and troubleshooting advice.",
+              "A practical CI/CD guide with a downloadable Node.js workflow and release checklist, deployment controls, recovery steps, and troubleshooting advice.",
             path: "/blog/cicd-best-practices",
             datePublished: "2026-06-17",
-            dateModified: "2026-10-07",
+            dateModified: "2026-10-17",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -53,7 +54,7 @@ export default function CICDBestPractices() {
         title="CI/CD best practices: from pull request to production"
         description="Build a pipeline that catches failures early, releases the version you tested, and gives your team a dependable way to recover."
         published="17 June 2026"
-        updated="7 October 2026"
+        updated="17 October 2026"
         readTime="12 minute read"
         toc={toc}
         ctaTitle="Make releases easier to trust."
@@ -68,6 +69,19 @@ export default function CICDBestPractices() {
             production, and confirm that the application works after deployment.
           </p>
         </div>
+        <section aria-labelledby="release-kit" className="mt-8 rounded-[1.75rem] bg-brand-mint p-6 md:p-8">
+          <h2 id="release-kit" className="!mt-0 !pt-0">Prepare your next release</h2>
+          <p>
+            Save the free checklist to record the release owner, tested version,
+            deployment checks, health limits and recovery steps. Use it with your
+            team before rollout, then record what happened afterwards.
+          </p>
+          <TrackedLink to="/downloads/cicd-release-checklist.txt" reloadDocument download="anrotex-cicd-release-checklist.txt" eventSource="cicd-guide-checklist" className="mt-5 inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 !text-base !font-bold !text-brand-off-white !no-underline transition hover:bg-brand-teal">
+            <Download className="h-4 w-4 shrink-0" aria-hidden="true" />Download the checklist (.txt)
+          </TrackedLink>
+          <p className="!mt-4 !text-sm">Editable text file. No email required. Open it in your text editor or paste it into a release ticket.</p>
+          <p className="!mb-0 !text-sm">Using GitHub Actions? <a href="#github-actions">Get the Node.js workflow and setup steps</a>.</p>
+        </section>
         <p>
           Continuous integration checks changes as developers combine their work.
           Continuous delivery keeps a tested version ready for release, with a
@@ -137,6 +151,10 @@ export default function CICDBestPractices() {
           named with its commit SHA. The workflow uses GitHub-hosted runners and
           public npm dependencies; private packages need separately scoped registry access.
         </p>
+        <TrackedLink to="/downloads/node-ci.yml" reloadDocument download="node-ci.yml" eventSource="cicd-guide-workflow" className="mt-5 inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 !text-base !font-bold !text-brand-off-white !no-underline transition hover:bg-brand-teal">
+          <Download className="h-4 w-4 shrink-0" aria-hidden="true" />Download the workflow (.yml)
+        </TrackedLink>
+        <p className="!text-sm">Review the scripts and output directory before adding the file to your repository. This workflow builds and tests your app; production deployment is configured separately.</p>
         <pre aria-label="Node.js CI workflow" tabIndex={0} className="mt-7 max-w-full overflow-x-auto rounded-2xl bg-brand-navy p-5 text-sm leading-7 text-brand-off-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-teal md:p-7"><code className="!bg-transparent !p-0 !text-inherit">{workflow}</code></pre>
         <p>
           The action references pin specific releases of{" "}
@@ -273,6 +291,7 @@ export default function CICDBestPractices() {
         </p>
 
         <h2 id="checklist">8. Before your next release</h2>
+        <p>Keep a record of the checks and the final decision in the <TrackedLink to="/downloads/cicd-release-checklist.txt" reloadDocument download="anrotex-cicd-release-checklist.txt" eventSource="cicd-guide-release-review">release checklist (.txt)</TrackedLink>. Add the evidence and an owner for anything still unresolved.</p>
         <ul>
           <li>Required checks pass for the commit being released.</li>
           <li>The artifact, runtime settings, and destination are identifiable.</li>

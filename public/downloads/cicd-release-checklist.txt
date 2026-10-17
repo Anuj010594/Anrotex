@@ -1,0 +1,85 @@
+CI/CD RELEASE CHECKLIST
+Anrotex | https://www.anrotex.com/blog/cicd-best-practices
+
+Save one copy per release. Fill in the details below, link to evidence, and
+mark each check when verified. For a check that does not apply, record why.
+If a required check fails, hold the release and agree the next action.
+
+RELEASE DETAILS
+Application / service:
+Repository:
+Target environment:
+Commit SHA:
+Artifact version / digest:
+Release owner:
+Reviewer:
+Planned deployment time and timezone:
+Change summary:
+Pipeline run / release record:
+
+1. VERIFY THE CHANGE
+[ ] Required checks pass for the exact commit and artifact being released.
+[ ] Critical user journeys pass in the agreed test environment.
+[ ] Runtime settings, dependencies and destination match this release.
+[ ] The artifact contains the expected files and no credentials.
+Evidence / unresolved issues:
+
+2. CHECK DEPLOYMENT ACCESS AND ORDER
+[ ] The intended branch, checks and approvals control production deployment.
+[ ] Jobs have only the permissions and credentials they need.
+[ ] Untrusted pull requests cannot access production secrets or runners.
+[ ] Overlapping runs cannot interrupt this deployment or replace it with an
+    older release. Database changes have an agreed execution order.
+Evidence / unresolved issues:
+
+3. PREPARE RECOVERY
+[ ] A known-good release is available for the agreed recovery period.
+[ ] The recovery version works with the current schema and configuration.
+[ ] Recovery steps have been rehearsed in the agreed test environment.
+[ ] Data recovery is covered separately where needed; reverting application
+    code will not undo writes or restore deleted data.
+Recovery procedure / runbook:
+Known-good artifact and configuration:
+Schema compatibility / migration plan:
+Backup and data recovery plan, where required:
+Recovery owner and contact route:
+
+4. AGREE THE HEALTH CHECKS BEFORE DEPLOYING
+[ ] A named person can stop the rollout and carry out the recovery plan.
+[ ] Baselines, limits and an observation window are agreed for this workload.
+[ ] Checks include a critical user journey and relevant background work.
+Critical journey and expected result:
+Error-rate baseline / stop threshold:
+Latency baseline / stop threshold:
+Queue, saturation or other workload signal / stop threshold:
+Dashboard / alert links:
+Observation duration and reason:
+Decision if a limit is exceeded:
+Release decision (proceed / hold), reviewer and time:
+
+5. VERIFY AFTER DEPLOYMENT
+[ ] Confirm the running commit, artifact, environment and configuration.
+[ ] Complete the smoke checks and watch health for the agreed window.
+[ ] Check migrations, background jobs and downstream dependencies.
+[ ] Record the outcome and hand over any remaining work to a named owner.
+Deployment started / finished:
+Observed health and smoke-check evidence:
+Outcome (completed / stopped / recovered / further work needed):
+Recovery action and time, if used:
+Follow-up action / owner / due date:
+Final reviewer and time:
+
+USING THE NODE.JS WORKFLOW
+Download: https://www.anrotex.com/downloads/node-ci.yml
+Setup: https://www.anrotex.com/blog/cicd-best-practices#github-actions
+
+The workflow builds and tests a Node.js 24 project. It expects a committed
+package-lock.json, npm scripts named lint, test:ci and build, and output in
+dist/. Review these settings for your application before saving it as
+.github/workflows/node-ci.yml. It does not deploy to production. Configure
+deployment checks and access separately, then verify a failing test blocks
+release before relying on the workflow.
+
+DISCUSS YOUR PIPELINE
+https://www.anrotex.com/contact?focus=cicd
+sales@anrotex.com

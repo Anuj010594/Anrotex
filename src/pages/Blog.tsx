@@ -24,11 +24,11 @@ const posts = [
     problem: "Find what slows down your releases.",
     title: "CI/CD Best Practices: From Pull Request to Production",
     description:
-      "Follow a GitHub Actions workflow, troubleshoot pipeline failures, and prepare deployment checks and a recovery plan.",
+      "Download a release checklist and GitHub Actions workflow, troubleshoot pipeline failures, and prepare a recovery plan.",
     link: "/blog/cicd-best-practices",
     sections: [
-      { id: "github-actions", label: "See a GitHub Actions workflow" },
-      { id: "troubleshooting", label: "Troubleshoot pipeline failures" },
+      { id: "release-kit", label: "Get the release checklist" },
+      { id: "github-actions", label: "Download a GitHub Actions workflow" },
     ],
   },
   {

@@ -218,6 +218,9 @@ export default function AwsCostOptimization() {
               <p className="mt-5 text-sm font-semibold text-brand-navy/60">
                 Free fit call · Fixed-scope proposal · Read-only discovery
               </p>
+              <p className="mt-6 max-w-xl leading-relaxed text-brand-teal">
+                Preparing your own review? <TrackedLink to="/blog/reduce-aws-costs#worksheet" eventName="Article Click" eventSource="aws-audit-worksheet" className="font-semibold text-brand-navy underline underline-offset-4">Get the free cost-review worksheet</TrackedLink> to record your baseline, compare a proposed change and measure the result.
+              </p>
             </div>
 
             <div className="relative">

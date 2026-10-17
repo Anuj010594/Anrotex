@@ -70,11 +70,12 @@ const { html: contact } = await render("/contact?focus=cicd");
 assert.match(contact, /<option[^>]*selected=""[^>]*>Improve deployment speed<\/option>/);
 
 const cicdGuide = await readFile("dist/blog/cicd-best-practices/index.html", "utf8");
-const workflow = await readFile("src/content/node-ci.yml", "utf8");
+const workflow = await readFile("public/downloads/node-ci.yml", "utf8");
 const escapeHtml = (text) => text.replace(/[&<>"']/g, (character) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;",
 })[character]);
 assert(cicdGuide.includes(escapeHtml(workflow)), "The complete CI workflow must be readable in the initial HTML");
+assert.equal(await readFile("dist/downloads/node-ci.yml", "utf8"), workflow, "The workflow download must match the displayed code");
 assert(cicdGuide.includes('href="/contact?focus=cicd"'), "Missing focused enquiry link in the CI/CD guide");
 assert.match(cicdGuide, /<pre[^>]*aria-label="Node.js CI workflow"[^>]*tabindex="0"/);
 assert.doesNotMatch(cicdGuide, /illustrative|not a client result|publication boundaries|reviewed by Anrotex/i);
