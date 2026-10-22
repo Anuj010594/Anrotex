@@ -21,7 +21,7 @@ const engagements = [
   {
     name: "CI/CD automation",
     problem: "Releases take too long or need too many manual steps.",
-    description: "Improve an existing pipeline or build a repeatable route from commit to deployment, with the checks and recovery steps your application needs.",
+    description: "Start with one application's release pipeline. Improve the route from commit to deployment, with the checks and recovery steps your application needs.",
     deliverables: ["A review of release bottlenecks and failure points", "Automated build, test and deployment workflows", "Release checks, recovery instructions and team handover"],
     preparation: "Your repository and pipeline tools, a recent release example, and the checks needed before production changes.",
     path: "/ci-cd-automation",
@@ -41,7 +41,7 @@ const engagements = [
   {
     name: "DevOps and cloud engineering",
     problem: "Infrastructure, monitoring and delivery need to work together.",
-    description: "Use a broader engagement when the problem spans Terraform, cloud architecture, observability or incident response, and your team needs help deciding what to tackle first.",
+    description: "Start with a defined piece of infrastructure work, such as a repeatable Terraform environment or useful monitoring and alerts. If the work spans several areas, agree what to tackle first.",
     deliverables: ["A prioritized plan across your infrastructure and delivery process", "Agreed changes to infrastructure, monitoring or operational workflows", "Documentation and handover so your team can maintain the changes"],
     preparation: "An outline of your platform, the biggest operational problems, and the outcome and timeline you have in mind.",
     path: "/devops-consulting",
@@ -55,7 +55,7 @@ export default function ServicesPage() {
     <>
       <SEO
         title="DevOps & Cloud Engineering Services | Anrotex"
-        description="Choose AWS cost optimization, CI/CD automation, Kubernetes engineering or DevOps consulting. Compare deliverables and prepare for a focused first conversation."
+        description="AWS, CI/CD, Kubernetes and Terraform help for small product teams and development agencies. Compare focused projects, deliverables and what to bring to a first call."
         path="/services"
         structuredData={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Services", path: "/services" }])}
       />
@@ -63,9 +63,28 @@ export default function ServicesPage() {
       <main className="min-h-screen">
         <PageHero
           eyebrow="Cloud and platform engineering"
-          title="The right engineering help for your next cloud challenge."
-          description="Lower AWS costs, make releases repeatable, or strengthen platform reliability. Start with the problem you need to solve, then agree a focused scope with the engineers doing the work."
+          title="DevOps help for your product or your next client project."
+          description="Work directly with the engineers doing the work. Whether you run a small product team or deliver software for clients, we help you reduce AWS costs, improve releases and build infrastructure your team can maintain."
         />
+        <section aria-labelledby="your-team" className="bg-brand-off-white px-6 pb-16 md:pb-20">
+          <div className="container">
+            <h2 id="your-team" className="max-w-3xl text-3xl font-bold tracking-tight text-brand-navy">Extra engineering help for the work ahead.</h2>
+            <div className="mt-8 grid gap-6 md:grid-cols-2">
+              <article className="flex flex-col rounded-3xl border border-brand-navy/15 bg-brand-mint/35 p-6 md:p-8">
+                <h3 className="text-2xl font-bold tracking-tight text-brand-navy">For small product teams</h3>
+                <p className="mt-4 leading-relaxed text-brand-teal">When a migration, unreliable releases or rising cloud costs need attention alongside product development, bring us a defined part of the work. We work with your founder, engineering lead or platform team.</p>
+                <p className="mt-4 leading-relaxed text-brand-teal">Start with one workload or release pipeline. Agree the checks, deliver the changes and leave your engineers with the configuration and operating instructions.</p>
+                <TrackedLink to="/contact?focus=devops" eventSource="services-product-team" className="mt-auto inline-flex items-center gap-2 pt-6 font-bold text-brand-navy underline underline-offset-4">Discuss your product's infrastructure <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></TrackedLink>
+              </article>
+              <article className="flex flex-col rounded-3xl border border-brand-navy/15 bg-brand-stone/55 p-6 md:p-8">
+                <h3 className="text-2xl font-bold tracking-tight text-brand-navy">For agencies and delivery partners</h3>
+                <p className="mt-4 leading-relaxed text-brand-teal">When a client project needs cloud setup, deployment automation or infrastructure changes, add engineering help for that part of the delivery. Work with us through your technical or delivery lead.</p>
+                <p className="mt-4 leading-relaxed text-brand-teal">Start with one client environment or deployment workflow. Agree access, review responsibilities and handover with your team before the work begins.</p>
+                <TrackedLink to="/contact?focus=devops" eventSource="services-agency" className="mt-auto inline-flex items-center gap-2 pt-6 font-bold text-brand-navy underline underline-offset-4">Discuss a client project <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></TrackedLink>
+              </article>
+            </div>
+          </div>
+        </section>
         <section aria-labelledby="choose-service" className="bg-brand-off-white px-6 pb-20 md:pb-28">
           <div className="container">
             <div className="mb-10 flex flex-col items-start justify-between gap-5 md:flex-row md:items-end">

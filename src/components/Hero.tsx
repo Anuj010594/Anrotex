@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
+import TrackedLink from "./TrackedLink";
 
 const slides = [
   {
@@ -323,9 +324,9 @@ const Hero = () => {
             </h1>
 
             <p className="mt-7 max-w-2xl text-lg leading-relaxed text-brand-teal md:text-xl">
-              Anrotex helps growing engineering teams fix slow releases,
-              unreliable infrastructure, and rising cloud bills without adding
-              another management layer.
+              We help small product teams and development agencies improve
+              releases, cloud reliability and AWS costs. Bring us the
+              infrastructure work your team needs help delivering.
             </p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -339,15 +340,16 @@ const Hero = () => {
                 }
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-navy px-7 py-4 font-semibold text-brand-off-white transition hover:-translate-y-0.5 hover:bg-brand-teal"
               >
-                Book a free strategy call
+                Discuss your project
                 <ArrowRight className="h-4 w-4" />
               </a>
-              <a
-                href="#cases"
+              <TrackedLink
+                to="/services"
+                eventSource="homepage-hero-services"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-brand-navy/20 bg-brand-off-white px-7 py-4 font-semibold text-brand-navy transition hover:-translate-y-0.5 hover:bg-brand-stone"
               >
-                See client outcomes
-              </a>
+                Explore services
+              </TrackedLink>
             </div>
 
             <p className="mt-5 flex items-center gap-2 text-sm font-medium text-brand-navy/60">
