@@ -98,6 +98,15 @@ const Footer = () => (
                 {link.label}
               </Link>
             ))}
+            <a
+              href="https://techbehemoths.com/company/anrotex-it-systems-llp"
+              target="_blank"
+              rel="noopener"
+              data-techbehemoths-verification=""
+              className="block text-sm text-brand-stone transition hover:text-brand-off-white"
+            >
+              Verified on TechBehemoths
+            </a>
           </div>
           <div className="mt-7 space-y-2 text-sm text-brand-stone">
             <a href="mailto:sales@anrotex.com" className="block hover:text-brand-off-white">
