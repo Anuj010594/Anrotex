@@ -109,6 +109,11 @@ const Footer = () => (
             </a>
           </div>
           <div className="mt-7 space-y-2 text-sm text-brand-stone">
+            <h3 className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-brand-mint">Our product</h3>
+            <a href="https://revenue.anrotex.com/?utm_source=anrotex&utm_medium=referral&utm_campaign=venpalo-product" className="block font-semibold text-brand-off-white hover:underline">
+              Venpalo — usage-based billing reconciliation <span aria-hidden="true">↗</span>
+            </a>
+            <p className="pb-4 text-sm">Compare usage, agreed terms and draft invoices. Try the guided synthetic demo.</p>
             <a href="mailto:sales@anrotex.com" className="block hover:text-brand-off-white">
               sales@anrotex.com
             </a>
