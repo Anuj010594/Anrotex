@@ -86,6 +86,22 @@ assert(aws.includes("Reducing covered usage can release capacity"), "Missing AWS
 assert(aws.includes('href="/contact?focus=aws-audit"'), "Missing focused AWS enquiry link");
 assert.match((await render("/contact?focus=aws-audit")).html, /<option[^>]*selected=""[^>]*>AWS Cost Optimization Audit<\/option>/);
 
+const services = await readFile("dist/services/index.html", "utf8");
+assert(services.includes('id="starting-projects"'), "Missing starting-projects destination");
+for (const [focus, projectType, price] of [
+  ["aws-review", "AWS Infrastructure Review", "US$500"],
+  ["cicd-setup", "CI/CD Pipeline Setup", "US$1,500"],
+  ["terraform-foundation", "Terraform AWS Foundation", "US$3,000"],
+]) {
+  assert(services.includes(`id="${focus}"`) && services.includes(price), `Missing public offer: ${projectType}`);
+  assert(services.includes(`href="/contact?focus=${focus}"`), `Missing project enquiry: ${projectType}`);
+  assert.match((await render(`/contact?focus=${focus}`)).html, new RegExp(`<option[^>]*selected=""[^>]*>${projectType}</option>`));
+}
+assert.doesNotMatch(services, /illustrative|not a client result|publication boundaries|internal use/i);
+const awsGuide = await readFile("dist/blog/reduce-aws-costs/index.html", "utf8");
+assert(awsGuide.includes('href="/services#aws-review"'), "Missing worksheet-to-review route");
+assert(awsGuide.includes('href="/downloads/aws-cost-review-worksheet.xlsx"'), "Keep the free worksheet available");
+
 const notFound = await readFile("dist/404.html", "utf8");
 for (const [route, focus, projectType] of [
   ["devops-consulting", "devops", "DevOps consulting"],

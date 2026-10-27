@@ -6,8 +6,10 @@ import TurnstileWidget from "@/components/TurnstileWidget";
 import { trackEvent } from "@/lib/analytics";
 import { TURNSTILE_SITE_KEY } from "@/lib/turnstile";
 import { PROJECT_TYPES } from "@/lib/project-types";
+import { STARTING_PROJECTS } from "@/lib/starting-projects";
 
 const projectFocus = new Map<string, (typeof PROJECT_TYPES)[number]>([
+  ...STARTING_PROJECTS.map((project) => [project.focus, project.name] as const),
   ["aws-audit", "AWS Cost Optimization Audit"],
   ["aws-cost", "Reduce cloud costs"],
   ["cicd", "Improve deployment speed"],
@@ -21,6 +23,11 @@ const awsCopy = {
   prompt: "Which AWS costs concern you most, and what would you like to change? Include your main services and timeline if you know them.",
 };
 const serviceCopy = new Map([
+  ...STARTING_PROJECTS.map((project) => [project.name, {
+    title: project.enquiryTitle,
+    description: "Tell us about your workload and timeline. We will confirm whether the project fits your needs before agreeing the scope.",
+    prompt: project.enquiryPrompt,
+  }] as const),
   ["AWS Cost Optimization Audit", awsCopy],
   ["Reduce cloud costs", awsCopy],
   ["Improve deployment speed", {
@@ -58,6 +65,7 @@ const Contact = ({ standalone = false }: { standalone?: boolean }) => {
   const defaultProjectType = projectFocus.get(focus ?? "") ?? "";
   const projectTypeRef = useRef<HTMLSelectElement>(null);
   const copy = serviceCopy.get(projectType);
+  const selectedProject = STARTING_PROJECTS.find((project) => project.name === projectType);
   const Heading = standalone ? "h1" : "h2";
   const Subheading = standalone ? "h2" : "h3";
 
@@ -174,6 +182,14 @@ const Contact = ({ standalone = false }: { standalone?: boolean }) => {
             <p className="mt-6 text-lg leading-relaxed text-brand-navy/75">
               {copy?.description ?? "Tell us where your platform is slowing down. We will reply with useful next steps."}
             </p>
+            {selectedProject && (
+              <div className="mt-6 rounded-2xl border border-brand-navy/15 bg-brand-off-white/60 p-5 text-brand-navy">
+                <p className="font-bold">{selectedProject.name} · {selectedProject.price}</p>
+                <p className="mt-2 text-sm leading-relaxed">{selectedProject.scope}</p>
+                <p className="mt-3 text-sm leading-relaxed">{selectedProject.days} business days after agreed access and inputs. Taxes, cloud and CI usage, and licenses are additional.</p>
+                <a href={`/services#${selectedProject.focus}`} className="mt-3 inline-block text-sm font-semibold underline underline-offset-4" target="_blank" rel="noopener noreferrer">Read the full scope and exclusions (opens in a new tab)</a>
+              </div>
+            )}
           </motion.div>
 
           <motion.div
@@ -243,7 +259,7 @@ const Contact = ({ standalone = false }: { standalone?: boolean }) => {
                     />
                   </label>
                   <label className="text-sm font-bold text-brand-navy">
-                    Main priority (optional)
+                    Project or priority (optional)
                     <select
                       ref={projectTypeRef}
                       name="projectType"

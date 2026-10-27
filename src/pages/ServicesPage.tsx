@@ -6,6 +6,7 @@ import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { breadcrumbSchema } from "@/lib/seo";
+import { STARTING_PROJECTS } from "@/lib/starting-projects";
 
 const engagements = [
   {
@@ -66,6 +67,43 @@ export default function ServicesPage() {
           title="DevOps help for your product or your next client project."
           description="Work directly with the engineers doing the work. Whether you run a small product team or deliver software for clients, we help you reduce AWS costs, improve releases and build infrastructure your team can maintain."
         />
+        <section id="starting-projects" aria-labelledby="starting-projects-heading" className="scroll-mt-24 bg-brand-off-white px-6 pb-20 md:pb-28">
+          <div className="container">
+            <h2 id="starting-projects-heading" className="text-3xl font-bold tracking-tight text-brand-navy md:text-4xl">Start with one project.</h2>
+            <p className="mt-4 max-w-3xl leading-relaxed text-brand-teal">Choose a focused piece of work with a clear price, scope and handover. Each option is a separate engagement. We confirm fit and agree the scope in writing before work starts.</p>
+            <div className="mt-8 grid items-start gap-6 xl:grid-cols-3">
+              {STARTING_PROJECTS.map((project) => (
+                <article id={project.focus} key={project.focus} className="scroll-mt-24 rounded-3xl border border-brand-navy/15 bg-brand-stone/45 p-6 md:p-8">
+                  <h3 className="text-2xl font-bold tracking-tight text-brand-navy">{project.name}</h3>
+                  <p className="mt-5 text-3xl font-bold text-brand-navy">{project.price}<span className="ml-2 text-sm font-normal">one-time fee</span></p>
+                  <p className="mt-2 font-semibold text-brand-teal">{project.days} business days after agreed access and inputs</p>
+                  <p className="mt-5 leading-relaxed text-brand-teal">{project.scope}</p>
+                  <h4 className="mt-6 font-bold text-brand-navy">What you receive</h4>
+                  <ul className="mt-3 space-y-3">
+                    {project.deliverables.map((deliverable) => (
+                      <li key={deliverable} className="flex gap-3 leading-relaxed text-brand-teal"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0" aria-hidden="true" /><span>{deliverable}</span></li>
+                    ))}
+                  </ul>
+                  <details className="mt-6 border-t border-brand-navy/15 pt-4">
+                    <summary className="cursor-pointer font-semibold text-brand-navy underline underline-offset-4">Inputs, exclusions and completion checks</summary>
+                    <h4 className="mt-5 font-bold text-brand-navy">What we need from you</h4>
+                    <p className="mt-2 text-sm leading-relaxed text-brand-teal">{project.inputs}</p>
+                    <h4 className="mt-5 font-bold text-brand-navy">Outside this scope</h4>
+                    <p className="mt-2 text-sm leading-relaxed text-brand-teal">{project.exclusions}</p>
+                    <h4 className="mt-5 font-bold text-brand-navy">How we confirm completion</h4>
+                    <p className="mt-2 text-sm leading-relaxed text-brand-teal">{project.acceptance}</p>
+                  </details>
+                  <TrackedLink to={`/contact?focus=${project.focus}`} eventSource={`services-project:${project.focus}`} className="mt-7 inline-flex items-center gap-2 rounded-full bg-brand-navy px-5 py-3 text-sm font-bold text-brand-off-white transition hover:bg-brand-teal">
+                    {project.action} <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  </TrackedLink>
+                </article>
+              ))}
+            </div>
+            <p className="mt-6 max-w-4xl text-sm leading-relaxed text-brand-teal">Prices are in USD for the scope shown. Applicable taxes, AWS and CI usage, and third-party licenses are additional. Delivery runs Monday–Friday from the agreed kickoff after required inputs and access are available; delays in client inputs or approvals move the delivery date. Additional work is quoted separately.</p>
+            <p className="mt-3 max-w-4xl text-sm leading-relaxed text-brand-teal">Each project includes one consolidated feedback or clarification round. Implementation projects include progress updates at least twice weekly, documentation in your team's repository and correction of reproducible defects in our delivered configuration reported within 14 calendar days of handover. Ongoing operations and new features are scoped separately.</p>
+            <p className="mt-5 max-w-3xl leading-relaxed text-brand-teal">Need a broader review across accounts or a detailed savings roadmap? <TrackedLink to="/aws-cost-optimization" eventName="Service Click" eventSource="services-project-broader-audit" className="font-semibold text-brand-navy underline underline-offset-4">Explore the separately scoped AWS cost optimization audit.</TrackedLink></p>
+          </div>
+        </section>
         <section aria-labelledby="your-team" className="bg-brand-off-white px-6 pb-16 md:pb-20">
           <div className="container">
             <h2 id="your-team" className="max-w-3xl text-3xl font-bold tracking-tight text-brand-navy">Extra engineering help for the work ahead.</h2>

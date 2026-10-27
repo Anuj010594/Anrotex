@@ -1,0 +1,23 @@
+Your team knows AWS needs attention. The harder question is what to fix first.
+
+A growing bill, unclear permissions and gaps in monitoring can compete with product work.
+
+At Anrotex, we offer a focused AWS Infrastructure Review to help teams decide their next step.
+
+We review one workload in one AWS account and primary region, covering up to 20 agreed resources.
+
+You receive:
+
+• An architecture overview
+• Prioritized cost, access and reliability findings
+• A practical action plan and a walkthrough with your team
+
+US$500. Five business days after the agreed access and inputs are available.
+
+The review uses read-only access. Implementation is scoped separately; taxes are additional.
+
+If you're a small product team or an agency managing a client's AWS environment, see the scope and tell us what needs attention:
+
+https://www.anrotex.com/services?utm_source=linkedin&utm_medium=social&utm_campaign=aws-review-launch-oct2026&utm_content=personal-offer#aws-review
+
+#AWS #DevOps #CloudEngineering

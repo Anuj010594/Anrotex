@@ -72,3 +72,21 @@ it("reports success only after delivery accepts a fresh verified attempt", async
   expect(verification.mock.calls.map(([, options]) => options.body.get("response"))).toEqual(["first-token", "fresh-token"]);
   expect(sendMail).toHaveBeenCalledTimes(2);
 });
+
+it.each(["AWS Infrastructure Review", "CI/CD Pipeline Setup", "Terraform AWS Foundation"])("delivers the selected %s project in the enquiry email", async (projectType) => {
+  vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify({
+    success: true, action: "lead_form", hostname: "www.anrotex.com",
+  }))));
+  const sendMail = vi.fn().mockResolvedValue({});
+  vi.mocked(nodemailer.createTransport).mockReturnValue({ sendMail } as never);
+  const { default: handler } = await import("../../api/send.js");
+  const req = request("project-token");
+  req.body.projectType = projectType;
+  const res = response();
+  await handler(req, res);
+  expect(res.status).toHaveBeenCalledWith(200);
+  expect(sendMail).toHaveBeenCalledWith(expect.objectContaining({
+    subject: `New ${projectType} enquiry`,
+    text: expect.stringContaining(`Area of focus: ${projectType}`),
+  }));
+});

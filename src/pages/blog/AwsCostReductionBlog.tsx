@@ -104,6 +104,11 @@ export default function AwsCostReductionBlog() {
             Download the worksheet (.xlsx)
           </TrackedLink>
           <p className="!mb-0 text-sm">Editable Excel workbook. No email required. Save one copy per workload and proposed change.</p>
+          <div className="mt-6 border-t border-brand-navy/15 pt-5">
+            <h3 className="!mt-0">Want help deciding what to fix first?</h3>
+            <p>Our US$500 AWS Infrastructure Review covers one workload in one account and primary region, with up to 20 agreed resources. Get an architecture overview, prioritized cost, access and reliability findings, and a walkthrough. The review uses read-only access; implementation is scoped separately.</p>
+            <TrackedLink to="/services#aws-review" eventName="Service Click" eventSource="aws-guide-review-offer" className="font-semibold underline underline-offset-4">See the review scope, delivery time and next step <ArrowRight className="inline h-4 w-4" aria-hidden="true" /></TrackedLink>
+          </div>
         </section>
 
         <p>

@@ -130,6 +130,18 @@ it("stops measurement after withdrawal, even when persisting the choice fails", 
   expect(document.cookie).toContain("Max-Age=0");
 });
 
+it("keeps each starting project identifiable through the enquiry funnel without sending form details", async () => {
+  const { setAnalyticsConsent, trackEvent } = await import("./analytics");
+  setAnalyticsConsent("granted");
+  for (const focus of ["AWS Infrastructure Review", "CI/CD Pipeline Setup", "Terraform AWS Foundation"]) {
+    trackEvent("Lead Form Started", { focus, email: "private@example.com" });
+    expect(commands().at(-1)).toEqual(["event", "form_start", { form_name: "enquiry", service_interest: focus }]);
+    trackEvent("Lead Form Submitted", { focus, message: "Private workload details" });
+    expect(commands().at(-1)).toEqual(["event", "generate_lead", { form_name: "enquiry", service_interest: focus }]);
+  }
+  expect(JSON.stringify(commands())).not.toMatch(/private@example|Private workload/);
+});
+
 it("excludes local, preview and opted-out visits from both analytics providers", async () => {
   const analytics = await import("./analytics");
   for (const url of ["http://localhost:8080/", "https://anrotex-preview.vercel.app/", "https://www.anrotex.com/?analytics=off"]) {
