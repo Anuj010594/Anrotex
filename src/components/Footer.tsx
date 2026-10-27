@@ -107,6 +107,14 @@ const Footer = () => (
             >
               Verified on TechBehemoths
             </a>
+            <a
+              href="https://www.goodfirms.co/company/anrotex-it-systems-llp"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-sm text-brand-stone transition hover:text-brand-off-white"
+            >
+              Listed on GoodFirms
+            </a>
           </div>
           <div className="mt-7 space-y-2 text-sm text-brand-stone">
             <a href="mailto:sales@anrotex.com" className="block hover:text-brand-off-white">
