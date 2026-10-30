@@ -9,12 +9,13 @@ import { breadcrumbSchema } from "@/lib/seo";
 const posts = [
   {
     topic: "AWS costs",
-    problem: "Understand where your AWS budget goes.",
+    problem: "Find why your AWS bill increased.",
     title: "How to Reduce AWS Costs: A Practical Checklist",
     description:
-      "Use the free cost-review worksheet, follow a worked EC2 example, and measure savings across compute, storage, and network costs.",
+      "Trace the charges that changed, choose which costs to review first, and use the free worksheet to plan changes and measure savings.",
     link: "/blog/reduce-aws-costs",
     sections: [
+      { id: "why-bill-increased", label: "Find the cause of a higher AWS bill" },
       { id: "worksheet", label: "Get the cost-review worksheet" },
       { id: "rightsizing-example", label: "Work through an EC2 savings example" },
     ],

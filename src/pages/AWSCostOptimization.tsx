@@ -207,12 +207,12 @@ export default function AwsCostOptimization() {
                   <ArrowRight className="h-4 w-4" />
                 </TrackedLink>
                 <TrackedLink
-                  to="/blog/reduce-aws-costs"
+                  to="/blog/reduce-aws-costs#why-bill-increased"
                   eventName="Article Click"
                   eventSource="aws-audit-hero"
                   className="inline-flex items-center justify-center rounded-full border border-brand-navy/15 px-7 py-4 font-bold text-brand-navy transition hover:bg-brand-stone"
                 >
-                  Read the AWS cost guide
+                  Find why your AWS bill grew
                 </TrackedLink>
               </div>
               <p className="mt-5 text-sm font-semibold text-brand-navy/60">

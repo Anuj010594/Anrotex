@@ -101,6 +101,16 @@ assert.doesNotMatch(services, /illustrative|not a client result|publication boun
 const awsGuide = await readFile("dist/blog/reduce-aws-costs/index.html", "utf8");
 assert(awsGuide.includes('href="/services#aws-review"'), "Missing worksheet-to-review route");
 assert(awsGuide.includes('href="/downloads/aws-cost-review-worksheet.xlsx"'), "Keep the free worksheet available");
+assert.doesNotMatch(awsGuide, /illustrative|not a client result|publication boundaries|internal use/i);
+const awsArticle = [...awsGuide.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>(.*?)<\/script>/gs)]
+  .map(([, json]) => JSON.parse(json)).find((schema) => schema["@type"] === "BlogPosting");
+const awsSitemapDate = sitemap.match(/<loc>https:\/\/www\.anrotex\.com\/blog\/reduce-aws-costs<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/)?.[1];
+assert(awsSitemapDate, "The AWS guide must have a sitemap update date");
+assert.equal(awsArticle?.dateModified, awsSitemapDate, "The AWS article and sitemap must agree on the update date");
+const blog = await readFile("dist/blog/index.html", "utf8");
+for (const [name, html] of [["Services", services], ["AWS service", aws], ["Insights", blog]]) {
+  assert(html.includes('href="/blog/reduce-aws-costs#why-bill-increased"'), `${name}: missing route to the AWS bill checks`);
+}
 
 const notFound = await readFile("dist/404.html", "utf8");
 for (const [route, focus, projectType] of [
