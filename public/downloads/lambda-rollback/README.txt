@@ -1,32 +1,49 @@
-Anrotex Cloud Operations: Lambda release tests
+Anrotex: test an AWS Lambda rollback on your computer
 https://www.anrotex.com/blog/aws-lambda-rollback-github-actions
 
-Run locally with Python 3.10 or later (verified with Python 3.14):
+Run the tests
+
+You need Python 3.10 or later. These tests passed with Python 3.14.
+Open a terminal in this folder and run:
+
   python3 -m unittest -v test_release
 
-Five tests exercise the real release() function using a mocked Lambda client.
-No packages, AWS account, credentials or network connection are required.
-A printed rollback event is expected during the failed-gateway test.
+The five tests simulate AWS responses. You do not need an AWS account,
+access keys, extra Python packages or a network connection.
 
-Files:
-- release.py: candidate checks, version publication, alias promotion and rollback.
-- smoke.py: the project's signed API Gateway probe; not called by these tests.
-- test_release.py: tests for success, failed candidates, failed gateway checks,
-  concurrent alias changes and weighted-alias rejection.
+You should see "Ran 5 tests" and "OK". A message containing
+"event": "rollback" is expected: one test deliberately causes a failure.
 
-Source: Anrotex Cloud Operations, verified locally on 27 October 2026.
-The release and gateway scripts are copied unchanged from that project.
-The tests are its ReleaseTests class, with standalone standard-library imports.
+What each file does
 
-The tests verify decisions and SDK arguments, not AWS behavior. They do not
-prove IAM permissions, OIDC trust, Lambda readiness or gateway propagation.
+- release.py checks the new version, switches the live alias to it and
+  tries to switch back if the application checks fail. An alias is a name
+  that points to a particular version of the Lambda function.
+- smoke.py checks the application through API Gateway. It is included so
+  you can read the checks; it is not run by these five tests.
+- test_release.py checks a successful release, failure before and after
+  the switch, changes made by someone else, and aliases that split requests
+  between versions.
 
-The command-line release path requires boto3 and the project's already
-provisioned API, live alias and packaged application. Candidate and gateway
-checks expect its /health and /requests contracts, IAM authentication and
-release identifier. Adapt those checks to your own app before any deployment.
-Do not execute a release against production as part of this local exercise.
+Try a failing test
 
-The alias rollback does not reverse database writes or migrations. A failed
-alias restoration or cancelled runner needs an operator to inspect the alias,
-restore the reviewed version and verify the endpoint. Retain previous versions.
+In test_release.py, change the expected restored FunctionVersion from "7"
+to "8" in test_gateway_failure_rolls_back_previous_version. Run the tests
+again. That test should fail because the script requests version 7.
+Change the test back afterwards.
+
+Before using the release script in AWS
+
+The code comes from Anrotex's Cloud Operations project. The tests use
+simulated AWS responses; they do not connect to AWS or deploy an application.
+Test permissions and recovery in a separate AWS environment before real use.
+
+Running release.py as a command needs the boto3 Python package, an application
+ZIP file, and the AWS resources already set up. The script expects the
+project's /health and /requests routes, AWS request authentication and a
+code-version identifier. Adapt these checks to your own application first.
+
+Switching code versions does not undo data or database changes. Keep the
+previous version available. If the script stops or cannot switch back, an
+engineer must check which version is running and restore service. Always
+check that the application works after switching back.

@@ -8,14 +8,14 @@ import { breadcrumbSchema } from "@/lib/seo";
 
 const posts = [
   {
-    topic: "AWS release engineering",
-    problem: "Prove how a failed Lambda release will recover.",
+    topic: "AWS deployments",
+    problem: "Know how to switch back when a Lambda release fails.",
     title: "AWS Lambda Deployment Rollback with GitHub Actions",
-    description: "Follow the Cloud Operations release code, inspect the deployment flow and run five failure tests locally without an AWS account.",
+    description: "Check a new version before using it and plan how to recover if it fails. Includes Python code, a diagram and tests to run on your computer.",
     link: "/blog/aws-lambda-rollback-github-actions",
     sections: [
-      { id: "release-path", label: "See the release and rollback path" },
-      { id: "promotion", label: "Inspect the Python release code" },
+      { id: "release-path", label: "See how the release works" },
+      { id: "promotion", label: "Read the Python release code" },
       { id: "test-rollback", label: "Download and run the rollback tests" },
     ],
   },

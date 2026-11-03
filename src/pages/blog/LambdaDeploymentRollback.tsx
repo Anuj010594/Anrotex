@@ -9,7 +9,7 @@ import testSource from "../../../public/downloads/lambda-rollback/test_release.p
 
 const path = "/blog/aws-lambda-rollback-github-actions";
 const title = "AWS Lambda Deployment Rollback with GitHub Actions";
-const description = "Follow Anrotex’s Lambda release code: check a candidate, promote the live alias, detect a failed release and roll back. Download five tests to run without AWS.";
+const description = "Learn how to check an AWS Lambda release and switch back when it fails. Includes Python code, GitHub Actions steps and tests you can run on your computer.";
 const sharingImage = `${SITE_URL}/images/og/cicd-guide.png`;
 const releaseCode = releaseSource.slice(releaseSource.indexOf("def release("), releaseSource.indexOf('\n\nif __name__'));
 const rollbackTest = testSource.slice(testSource.indexOf("    def test_gateway_failure"), testSource.indexOf("    def test_concurrent_alias"));
@@ -33,12 +33,12 @@ const localTest = `unzip lambda-rollback-tests.zip
 cd lambda-rollback
 python3 -m unittest -v test_release`;
 const toc = [
-  { id: "release-path", label: "The release and rollback path" },
-  { id: "candidate-checks", label: "Check the candidate version" },
-  { id: "promotion", label: "Promote and restore the alias" },
-  { id: "github-actions", label: "Connect GitHub Actions" },
-  { id: "test-rollback", label: "Reproduce a failed release locally" },
-  { id: "aws-acceptance", label: "Checks before a live AWS release" },
+  { id: "release-path", label: "Keep the working version available" },
+  { id: "candidate-checks", label: "Check the new version first" },
+  { id: "promotion", label: "Switch versions and check the app" },
+  { id: "github-actions", label: "Control releases with GitHub Actions" },
+  { id: "test-rollback", label: "Run the tests on your computer" },
+  { id: "aws-acceptance", label: "Test the setup in AWS" },
 ];
 
 function Code({ label, children }: { label: string; children: ReactNode }) {
@@ -51,78 +51,103 @@ export default function LambdaDeploymentRollback() {
       articleSchema({ headline: title, description, path, datePublished: "2026-11-03", dateModified: "2026-11-03", image: sharingImage }),
       breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Insights", path: "/blog" }, { name: "Lambda deployment rollback", path }]),
     ]} />
-    <InsightArticle eyebrow="AWS release engineering" title={title} description="Check the version you intend to release, move traffic only after it passes, and restore the previous version when the deployed API fails its checks." published="3 November 2026" updated="3 November 2026" readTime="12 minute read" toc={toc} ctaTitle="Build a pipeline your team can operate." ctaDescription="Start with one application and an existing AWS staging target. The CI/CD Pipeline Setup includes release checks, a compatible rollback test and handover." ctaHref="/services#cicd-setup" ctaLabel="See the US$1,500 pipeline setup">
-      <p>A successful upload is not enough to declare a release healthy. In our <TrackedLink to="/portfolio/cloud-operations" eventName="Case Study Click" eventSource="lambda-guide-project">Cloud Operations project</TrackedLink>, we publish a Lambda version, check it directly, point the <code>live</code> alias at it, then test the API Gateway endpoint. If those final checks fail, the release script attempts to restore the previous alias version and exits with an error.</p>
-      <p>This walkthrough uses the project's release code. Its decision paths have been tested locally with a mocked Lambda client; live AWS deployment and GitHub Actions execution remain to be verified. You can reproduce the five release tests below without an AWS account.</p>
+    <InsightArticle eyebrow="AWS deployments" title={title} description="Check that a new version works before sending users to it. If the release fails, have a clear way to switch back to the previous version." published="3 November 2026" updated="3 November 2026" readTime="12 minute read" toc={toc} ctaTitle="Make releases easier to manage." ctaDescription="Set up a release process for one application in your existing AWS test environment. Get checks, a rollback test and clear instructions for your team." ctaHref="/services#cicd-setup" ctaLabel="See the US$1,500 pipeline setup">
+      <p>A deployment can finish without errors while the application still fails for users. The new code might be running, but can it save data, read it back and allow the right people to use it?</p>
+      <p>This guide explains how to check an AWS Lambda release and switch back to the previous version when those checks fail. Switching back is called a <strong>rollback</strong>. We use Python code from Anrotex's <TrackedLink to="/portfolio/cloud-operations" eventName="Case Study Click" eventSource="lambda-guide-project">Cloud Operations project</TrackedLink> and show how it connects to GitHub Actions.</p>
+      <p>You can also <a href="#test-rollback">download five tests to run on your computer</a>. They let you try the failure checks without an AWS account.</p>
 
-      <h2 id="release-path">1. Separate publishing from moving traffic</h2>
-      <p>The API Gateway integration targets a Lambda alias, rather than <code>$LATEST</code>. Publishing new code therefore does not move the API's traffic. A published version fixes the code and most configuration; the alias selects which version receives requests. See <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html" target="_blank" rel="noreferrer">AWS's function version documentation</a> for the configuration and runtime-management details.</p>
+      <h2 id="release-path">1. Keep the working version available</h2>
+      <p>Keep the current version running while you check the new one. Lambda supports this through an <strong>alias</strong>: a name that points to a particular version of your code. In this example, that name is <code>live</code>.</p>
+      <p>API Gateway, the AWS service that receives requests for this application, sends them to <code>live</code>. Uploading a new version does not change that name's target. The application keeps using the previous version until the script switches it.</p>
+      <p>Publishing a Lambda version saves its code and most settings. For the settings AWS allows you to change later, see its <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html" target="_blank" rel="noreferrer">function version documentation</a>.</p>
       <figure aria-label="Lambda release and rollback flow" className="mt-8 rounded-3xl border border-brand-navy/15 bg-brand-stone/40 p-5 md:p-8">
-        <div className="rounded-2xl bg-brand-navy p-5 text-center font-bold text-brand-off-white">Publish a new version<br /><span className="text-sm font-normal text-brand-stone">The live alias still points to the previous version</span></div>
+        <div className="rounded-2xl bg-brand-navy p-5 text-center font-bold text-brand-off-white">Upload the new version<br /><span className="text-sm font-normal text-brand-stone">The application keeps using the previous version</span></div>
         <ArrowDown className="mx-auto my-3 h-6 w-6 text-brand-teal" aria-hidden="true" />
-        <div className="rounded-2xl border border-brand-teal/25 bg-brand-off-white p-5 text-center font-bold">Check the candidate directly<br /><span className="text-sm font-normal text-brand-teal">Failure → stop; leave the live alias unchanged</span></div>
+        <div className="rounded-2xl border border-brand-teal/25 bg-brand-off-white p-5 text-center font-bold">Test the new version<br /><span className="text-sm font-normal text-brand-teal">If a check fails, stop and keep the previous version</span></div>
         <div className="my-3 flex items-center justify-center gap-2 text-sm font-bold text-brand-teal"><ArrowDown className="h-6 w-6" aria-hidden="true" />Checks pass</div>
-        <div className="rounded-2xl bg-brand-mint p-5 text-center font-bold">Promote the live alias<br /><span className="text-sm font-normal">Then check authentication, release identity and persistence through API Gateway</span></div>
+        <div className="rounded-2xl bg-brand-mint p-5 text-center font-bold">Switch to the new version<br /><span className="text-sm font-normal">Check access, which version is running, and whether the app can save and read data</span></div>
         <ArrowDown className="mx-auto my-3 h-6 w-6 text-brand-teal" aria-hidden="true" />
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="rounded-2xl border border-brand-teal/30 bg-brand-off-white p-5"><strong>Checks pass</strong><p className="!mt-2 !text-sm">Keep the new version. Record release success.</p></div>
-          <div className="rounded-2xl border border-brand-navy/20 bg-brand-yellow/25 p-5"><strong>Checks fail</strong><p className="!mt-2 !text-sm">Attempt to restore the previous version. Mark the release failed.</p></div>
+          <div className="rounded-2xl border border-brand-teal/30 bg-brand-off-white p-5"><strong>Checks pass</strong><p className="!mt-2 !text-sm">Keep using the new version.</p></div>
+          <div className="rounded-2xl border border-brand-navy/20 bg-brand-yellow/25 p-5"><strong>Checks fail</strong><p className="!mt-2 !text-sm">Try to switch back. Report the release as failed.</p></div>
         </div>
-        <figcaption className="mt-4 text-sm leading-relaxed text-brand-teal">Revision checks guard alias changes. If restoration fails or the runner stops, an operator must inspect and recover the release.</figcaption>
+        <figcaption className="mt-4 text-sm leading-relaxed text-brand-teal">If the script stops or cannot switch back, an engineer needs to check which version is running and restore service.</figcaption>
       </figure>
-      <p>This is an immediate deployment smoke test with rollback. It is not a weighted canary or a continuous incident-recovery system. The script rejects aliases that already have additional version weights.</p>
+      <p>The script checks the app immediately after a release. It does not keep watching for problems later. It also stops if the alias is already splitting requests between multiple versions; this example expects one version to receive all requests.</p>
 
-      <h2 id="candidate-checks">2. Check the candidate before promotion</h2>
-      <p>The script remembers the current alias version and revision, uploads the ZIP with <code>Publish=True</code>, and waits for the function update. It invokes the numbered candidate directly using <code>Qualifier=version</code>. A candidate failure stops execution before the alias update.</p>
+      <h2 id="candidate-checks">2. Check the new version before using it</h2>
+      <p>First, the script records the version currently in use so it knows where to switch back. It then uploads and publishes the new code with <code>Publish=True</code> and waits for the update.</p>
+      <p>Using <code>Qualifier=version</code>, it calls that specific version directly. The application continues to use the old version while these checks run:</p>
       <ul>
-        <li><strong>Release identity:</strong> <code>GET /health</code> must return 200 and the expected commit identifier.</li>
-        <li><strong>A real write:</strong> <code>POST /requests</code> must create or retrieve the release's verification record.</li>
-        <li><strong>A real read:</strong> the stored record must be retrievable with the expected content.</li>
+        <li><strong>Is this the right version?</strong> <code>GET /health</code> must return HTTP 200, the success response, and the code version we expect.</li>
+        <li><strong>Can it save data?</strong> <code>POST /requests</code> must create a test record or return the same record if the check has already created it.</li>
+        <li><strong>Can it read that data?</strong> A request for the saved record must return the expected content.</li>
       </ul>
-      <p>These are the Cloud Operations API contracts. Replace them with your own application's critical operations. The checks write labelled verification records: agree their retention and keep them out of customer reports. Direct Lambda invocation does not prove gateway authentication, which is checked after promotion.</p>
+      <p>If any check fails, the script stops before switching versions. Adapt these checks to the actions that matter in your application. Label test records clearly, decide when to delete them, and keep them out of customer reports.</p>
+      <p>Calling Lambda directly does not check whether API Gateway allows the right people in. That check comes after the switch.</p>
 
-      <h2 id="promotion">3. Promote the alias, then check the API</h2>
-      <p>This is the complete <code>release()</code> function from the project. The downloadable file also includes <code>candidate_check()</code>. Each alias update supplies a <code>RevisionId</code> so an unexpected concurrent change is rejected rather than overwritten. AWS documents that condition in the <a href="https://docs.aws.amazon.com/lambda/latest/api/API_UpdateAlias.html" target="_blank" rel="noreferrer">UpdateAlias API reference</a>.</p>
-      <Code label="Python release function: publish, verify, promote and roll back">{releaseCode}</Code>
-      <p>The gateway probe first checks that unsigned requests are denied. It then signs requests with SigV4 and verifies the release identifier, record creation, idempotent retry and retrieval. A 200 response alone would miss a wrong release or broken persistence.</p>
-      <p>If the probe raises an exception, the script requests the old version using the revision returned by its own promotion. Even after a successful restoration request, the release remains failed. The script does not re-probe the restored endpoint; the operator must confirm recovery. If the restoration request fails, do not retry blindly over a later deployment.</p>
-      <p>Application rollback does not undo database writes, schema migrations or infrastructure changes. Keep the previous version available, preserve backwards-compatible data contracts, and plan any migration separately.</p>
-
-      <h2 id="github-actions">4. Put the release behind a verified GitHub Actions job</h2>
-      <p>The project's workflow runs verification for pull requests and pushes. A separate release job requires manual dispatch with <code>deploy=true</code>, the <code>main</code> branch and a successful <code>verify</code> job. These are the job controls from that workflow:</p>
-      <Code label="GitHub Actions release job controls">{workflow}</Code>
-      <p>This is a workflow excerpt, not a complete application deployment. The project also checks out the selected commit, sets up Python, installs its locked dependencies and uses a commit-pinned <code>aws-actions/configure-aws-credentials</code> action. It obtains temporary credentials for a scoped AWS role through OIDC, then runs:</p>
-      <Code label="Cloud Operations package and release commands">{releaseCommand}</Code>
-      <p>The packaging script embeds <code>GITHUB_SHA</code> in the artifact so the candidate and endpoint checks can identify the intended release. <code>FUNCTION</code>, <code>API_URL</code> and <code>REGION</code> come from environment configuration, alongside the release role ARN.</p>
+      <h2 id="promotion">3. Switch versions, then check the application</h2>
+      <p>After the first checks pass, the script changes <code>live</code> to point to the new version. Each change includes a <code>RevisionId</code>, a value AWS uses to detect whether someone else changed the alias in the meantime. If they did, AWS rejects our change. See the <a href="https://docs.aws.amazon.com/lambda/latest/api/API_UpdateAlias.html" target="_blank" rel="noreferrer">UpdateAlias reference</a>.</p>
+      <p>Here is the complete <code>release()</code> function. The download also contains <code>candidate_check()</code>, which performs the checks described above.</p>
+      <Code label="Python code to check a release and switch back after a failure">{releaseCode}</Code>
+      <p>Next, the script tests the application through API Gateway. It checks that requests without AWS authentication are refused. It then uses AWS request signing, called SigV4, to make authenticated requests and check:</p>
       <ul>
-        <li>Provision and review the infrastructure before releasing. API Gateway must invoke the alias, and the previous version must exist.</li>
-        <li>Restrict the GitHub environment to the intended branch. Configure required reviewers where your repository plan supports them; naming an environment alone does not create an approval gate.</li>
-        <li>Restrict the AWS trust policy to the expected repository and environment subject. <code>id-token: write</code> permits requesting an OIDC token; the AWS role policy determines AWS access.</li>
-        <li>Use the same concurrency group for releases to the same target. <code>cancel-in-progress: false</code> avoids cancelling a running release when a new one arrives, but manual cancellation, timeouts and network failures can still interrupt recovery.</li>
+        <li>The application is running the expected code version.</li>
+        <li>It can create a record and read it back.</li>
+        <li>Repeating the same request returns the same record instead of creating a duplicate.</li>
       </ul>
-      <p>Follow GitHub's <a href="https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws" target="_blank" rel="noreferrer">AWS OIDC configuration guide</a> and <a href="https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency" target="_blank" rel="noreferrer">workflow concurrency documentation</a> when adapting these controls. Do not assume concurrency preserves every queued release.</p>
+      <p>If these checks fail, the script tries to point <code>live</code> back to the previous version. It uses the latest revision value from its own change, so it will not overwrite another release that happened afterwards.</p>
+      <p>The release is still reported as failed, even if switching back succeeds. The script does not test the application again after switching back; an engineer must confirm it works. If the switch fails, check the version now running before making another change.</p>
+      <p>Switching code versions does not undo saved data, database changes or infrastructure changes. The old version must still be able to use the current data. Keep it available and plan database changes separately.</p>
 
-      <h2 id="test-rollback">5. Reproduce a failed release locally</h2>
-      <p>Download the release code, gateway probe and five standalone tests. The tests use Python's standard library and a mocked Lambda client. They make no network requests and need no AWS credentials or SDK. Use Python 3.10 or later; we verified the package with Python 3.14.</p>
+      <h2 id="github-actions">4. Control releases with GitHub Actions</h2>
+      <p>The GitHub Actions workflow runs tests when code is pushed or a pull request is opened. The release step runs only after those tests pass. Someone must start it manually from <code>main</code> and choose <code>deploy=true</code>.</p>
+      <p>This part of the workflow sets those rules:</p>
+      <Code label="GitHub Actions settings for starting a release">{workflow}</Code>
+      <p>The full workflow also downloads the selected code, sets up Python and installs the package versions recorded for the project. It uses a specific version of <code>aws-actions/configure-aws-credentials</code> to get temporary AWS access.</p>
+      <p>That access uses <strong>OIDC</strong>, which lets GitHub prove its identity to AWS without storing long-lived AWS keys. The workflow then builds the application package and runs the release script:</p>
+      <Code label="Commands to package and release the application">{releaseCommand}</Code>
+      <p>The package contains <code>GITHUB_SHA</code>, the identifier for the chosen code commit. The checks use it to confirm which code is running. Set <code>FUNCTION</code> to the Lambda function name, <code>API_URL</code> to the application's address and <code>REGION</code> to its AWS region.</p>
+      <p>Before using the workflow:</p>
+      <ul>
+        <li><strong>Set up the AWS resources.</strong> API Gateway must send requests to the alias, and the previous Lambda version must still exist.</li>
+        <li><strong>Control who can release.</strong> Allow only the intended branch to use the GitHub environment. Add reviewer approval if your plan supports it; an environment name alone does not require approval.</li>
+        <li><strong>Limit AWS access.</strong> Configure the AWS role to trust only the intended repository and environment. Give it only the permissions the release needs. The <code>id-token: write</code> setting allows GitHub to request an identity token; it does not grant AWS permissions by itself.</li>
+        <li><strong>Run one release at a time.</strong> Use the same <code>concurrency</code> group for releases to the same application. With <code>cancel-in-progress: false</code>, a new release will not cancel the one already running. A manual cancellation, timeout or network failure can still stop it.</li>
+      </ul>
+      <p>Use GitHub's guides to <a href="https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws" target="_blank" rel="noreferrer">connect to AWS with OIDC</a> and <a href="https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency" target="_blank" rel="noreferrer">control which jobs can run together</a> for the full setup. Check how waiting jobs are handled; not every queued release is guaranteed to run.</p>
+
+      <h2 id="test-rollback">5. Run the tests on your computer</h2>
+      <p>The download includes the release script and five tests. They simulate AWS responses on your computer, so you do not need an AWS account, access keys or extra Python packages. Use Python 3.10 or later; these tests passed with Python 3.14.</p>
+      <p>The release code has been tested this way. It still needs testing in AWS before use with a real application.</p>
       <TrackedLink to="/downloads/lambda-rollback-tests.zip" reloadDocument download="lambda-rollback-tests.zip" eventSource="lambda-guide-tests" className="mt-5 inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 !text-base !font-bold !text-brand-off-white !no-underline transition hover:bg-brand-teal"><Download className="h-4 w-4 shrink-0" aria-hidden="true" />Download the rollback tests (.zip)</TrackedLink>
-      <p className="!text-sm">No email required. Unzip the download, then run these commands from your downloads directory:</p>
+      <p className="!text-sm">No email required. Open a terminal in the folder where you saved the download, then run:</p>
       <Code label="Run the standalone Lambda rollback tests">{localTest}</Code>
-      <p>The suite checks successful ordering, rejection before promotion, restoration after gateway failure, refusal to overwrite an alias conflict and rejection of weighted aliases. This is the failed-gateway test:</p>
+      <p>The five tests check what happens when:</p>
+      <ul>
+        <li>All checks pass and the steps run in the right order.</li>
+        <li>The new version fails a check before the switch.</li>
+        <li>The application fails a check after the switch.</li>
+        <li>Someone else changes the alias during the release.</li>
+        <li>The alias is already splitting requests between versions.</li>
+      </ul>
+      <p>This test checks that, after a failure, the script asks AWS to switch back to version 7:</p>
       <Code label="Test that gateway failure restores the previous Lambda version">{rollbackTest}</Code>
-      <p>Expected result: <code>Ran 5 tests</code> followed by <code>OK</code>. A JSON rollback event is expected during the failure test. The test verifies that the release raised an error and requested version 7 using the revision returned by promotion.</p>
-      <p>For a useful negative check, change the expected restored version in the test from <code>"7"</code> to <code>"8"</code> and rerun it. That assertion should fail. Restore the test afterwards. This confirms that the test detects a wrong rollback target.</p>
+      <p>You should see <code>Ran 5 tests</code> followed by <code>OK</code>. A message containing <code>"event": "rollback"</code> is expected: the test deliberately causes a failure and checks the recovery action.</p>
+      <p>To see the test catch a mistake, change its expected restored version from <code>"7"</code> to <code>"8"</code> and run it again. It should fail because the script requests version 7. Change the test back afterwards.</p>
 
-      <h2 id="aws-acceptance">6. Verify AWS behavior before relying on the workflow</h2>
-      <p>Local tests verify decisions and SDK arguments. They cannot prove IAM permissions, OIDC trust, service readiness or alias propagation. Rehearse the workflow in an isolated AWS environment with a reviewed budget and a known working previous version.</p>
+      <h2 id="aws-acceptance">6. Test the setup in AWS before going live</h2>
+      <p>The tests on your computer check what the script asks AWS to do. A separate AWS test must confirm that permissions work, requests reach the right version and the previous version can serve the application again.</p>
+      <p>Use a separate AWS test environment, agree its budget and keep a known working version available. Then check the following:</p>
       <ol>
-        <li>Confirm the deployment role, function, region and API endpoint. Check that unsigned requests fail and signed requests work.</li>
-        <li>Release a valid candidate and confirm the expected release identifier through API Gateway.</li>
-        <li>Reject a deliberately invalid candidate before promotion; confirm the old version remains selected.</li>
-        <li>Exercise a controlled post-promotion failure, inspect the alias and verify the previous release through the endpoint after restoration.</li>
-        <li>Rehearse the operator procedure for a stopped runner or alias conflict. Record the current revision, restore only the reviewed version and verify service health.</li>
+        <li>Confirm the AWS role, function, region and application address. Check that requests without authentication fail and authenticated requests work.</li>
+        <li>Release a working version. Check its version identifier through API Gateway.</li>
+        <li>Try a version that deliberately fails a check before the switch. Confirm that the application keeps using the old version.</li>
+        <li>Cause a controlled failure after the switch. Check that the alias points back to the previous version, then test that the application works.</li>
+        <li>Practise recovery when the release job stops or someone else changes the alias. Check its current version and revision, switch to the approved version, then test the application.</li>
       </ol>
-      <p>Choose bounded retry and timeout behavior appropriate to the endpoint, including transient errors and alias propagation. This implementation rolls back on the first failed gateway probe. Longer observation windows or gradual traffic shifts need a different deployment strategy and acceptance tests.</p>
-      <div className="mt-10 rounded-3xl bg-brand-mint/60 p-6 md:p-8"><h2 className="!pt-0">Apply this to your team's release process</h2><p>The <TrackedLink to="/services#cicd-setup" eventName="Service Click" eventSource="lambda-guide-offer">US$1,500 CI/CD Pipeline Setup</TrackedLink> covers one application, one repository and an existing AWS staging target. We agree compatible release checks and rollback behavior before implementation.</p><p><TrackedLink to="/contact?focus=cicd-setup" eventSource="lambda-guide-enquiry">Discuss your pipeline setup</TrackedLink>, or use the <TrackedLink to="/blog/cicd-best-practices#release-kit" eventName="Article Click" eventSource="lambda-guide-checklist">release checklist</TrackedLink> to prepare the current workflow, ownership and recovery requirements.</p></div>
+      <p>This script tries to switch back after the first failed check through API Gateway. Temporary errors or a delay in the version switch could trigger that action too. Decide how long checks should wait and how many retries your application needs. If you want to move users gradually between versions, use a release approach designed for that and test it separately.</p>
+      <div className="mt-10 rounded-3xl bg-brand-mint/60 p-6 md:p-8"><h2 className="!pt-0">Make your next release easier to manage</h2><p>The <TrackedLink to="/services#cicd-setup" eventName="Service Click" eventSource="lambda-guide-offer">US$1,500 CI/CD Pipeline Setup</TrackedLink> covers one application and one repository, deploying to an existing AWS test environment. We agree what to check and how to recover before starting the work.</p><p><TrackedLink to="/contact?focus=cicd-setup" eventSource="lambda-guide-enquiry">Discuss your pipeline setup</TrackedLink>, or use the <TrackedLink to="/blog/cicd-best-practices#release-kit" eventName="Article Click" eventSource="lambda-guide-checklist">release checklist</TrackedLink> to record the steps, who handles the release and what to do if it fails.</p></div>
     </InsightArticle>
   </>;
 }

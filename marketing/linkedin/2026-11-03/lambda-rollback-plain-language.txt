@@ -1,0 +1,16 @@
+A deployment can finish without errors while the application still fails for users.
+
+Before calling a release successful, check three things:
+
+• Is the new version working?
+• Can it save and read data?
+• Can you return to the previous version if something breaks?
+
+Our new guide shows how to build these checks into AWS Lambda releases with GitHub Actions. It includes Python code, a simple diagram and tests you can run on your computer.
+
+What does your team check after a release?
+
+Read the guide:
+https://www.anrotex.com/blog/aws-lambda-rollback-github-actions?utm_source=linkedin&utm_medium=social&utm_campaign=lambda-rollback-nov2026&utm_content=anuj-personal-launch
+
+#AWS #GitHubActions #DevOps
