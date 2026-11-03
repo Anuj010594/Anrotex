@@ -1,5 +1,10 @@
 const worker = {
   async fetch(request, env) {
+    const url = new URL(request.url);
+    if (url.pathname === "/portfolio/cloud-operations/index.html") {
+      url.pathname = "/portfolio/cloud-operations";
+      return Response.redirect(url.href, 308);
+    }
     const response = await env.ASSETS.fetch(request);
     const acceptsHtml = request.headers.get("accept")?.includes("text/html");
 

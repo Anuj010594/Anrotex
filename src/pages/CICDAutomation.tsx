@@ -1,6 +1,7 @@
 import { ArrowRight, Check, GitBranch, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
+import CloudOperationsCard from "@/components/CloudOperationsCard";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
@@ -170,6 +171,7 @@ export default function CICDAutomation() {
           </div>
         </section>
 
+        <CloudOperationsCard source="cicd" />
         <section className="bg-brand-navy px-6 py-20 text-brand-off-white">
           <div className="mx-auto max-w-4xl text-center">
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Make your next release easier to operate.</h2>

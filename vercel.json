@@ -8,6 +8,11 @@
       ],
       "destination": "https://www.anrotex.com/:path*",
       "permanent": true
+    },
+    {
+      "source": "/portfolio/cloud-operations/index.html",
+      "destination": "/portfolio/cloud-operations",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -25,6 +30,8 @@
     { "source": "/blog", "destination": "/blog/index.html" },
     { "source": "/blog/reduce-aws-costs", "destination": "/blog/reduce-aws-costs/index.html" },
     { "source": "/blog/cicd-best-practices", "destination": "/blog/cicd-best-practices/index.html" },
-    { "source": "/blog/kubernetes-scaling-best-practices", "destination": "/blog/kubernetes-scaling-best-practices/index.html" }
+    { "source": "/blog/kubernetes-scaling-best-practices", "destination": "/blog/kubernetes-scaling-best-practices/index.html" },
+    { "source": "/portfolio/cloud-operations", "destination": "/portfolio/cloud-operations/index.html" },
+    { "source": "/blog/aws-lambda-rollback-github-actions", "destination": "/blog/aws-lambda-rollback-github-actions/index.html" }
   ]
 }

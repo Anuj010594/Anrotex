@@ -8,6 +8,8 @@ import Team from "@/components/Team" ;
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import StartingProjects from "@/components/StartingProjects";
+import CloudOperationsCard from "@/components/CloudOperationsCard";
 
 const Index = () => (
   <>
@@ -20,6 +22,8 @@ const Index = () => (
     <Navbar />
     <main>
       <Hero />
+      <StartingProjects />
+      <CloudOperationsCard source="homepage" />
       <Solutions />
       <Services />
       <Process />

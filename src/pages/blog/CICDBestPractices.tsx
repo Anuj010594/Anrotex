@@ -39,7 +39,7 @@ export default function CICDBestPractices() {
               "A practical CI/CD guide with a downloadable Node.js workflow and release checklist, deployment controls, recovery steps, and troubleshooting advice.",
             path: "/blog/cicd-best-practices",
             datePublished: "2026-06-17",
-            dateModified: "2026-10-17",
+            dateModified: "2026-11-03",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -54,7 +54,7 @@ export default function CICDBestPractices() {
         title="CI/CD best practices: from pull request to production"
         description="Build a pipeline that catches failures early, releases the version you tested, and gives your team a dependable way to recover."
         published="17 June 2026"
-        updated="17 October 2026"
+        updated="3 November 2026"
         readTime="12 minute read"
         toc={toc}
         ctaTitle="Make releases easier to trust."
@@ -228,6 +228,7 @@ export default function CICDBestPractices() {
         </p>
 
         <h2 id="rollback">5. Make recovery part of the release</h2>
+        <p>For a concrete implementation, follow our <TrackedLink to="/blog/aws-lambda-rollback-github-actions" eventName="Article Click" eventSource="cicd-guide-lambda-rollback">AWS Lambda rollback with GitHub Actions walkthrough</TrackedLink>. It includes the release code, a flow diagram and five tests you can run locally without AWS.</p>
         <p>
           Keep a known-good application version available and decide what would
           trigger a rollback: failed smoke checks, elevated errors, slow critical

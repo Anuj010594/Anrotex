@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import CloudOperationsCard from "@/components/CloudOperationsCard";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
@@ -196,6 +197,7 @@ export default function ServicesPage() {
             </aside>
           </div>
         </section>
+        <CloudOperationsCard source="services" />
         <Contact />
       </main>
       <Footer />

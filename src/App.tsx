@@ -20,6 +20,8 @@ const AwsCostReductionBlog = lazy(() => import("./pages/blog/AwsCostReductionBlo
 const CICDBestPractices = lazy(() => import("./pages/blog/CICDBestPractices"));
 const KubernetesScalingBestPractices = lazy(() => import("./pages/blog/KubernetesScalingBestPractices"));
 const Blog = lazy(() => import("./pages/Blog"));
+const CloudOperations = lazy(() => import("./pages/CloudOperations"));
+const LambdaDeploymentRollback = lazy(() => import("./pages/blog/LambdaDeploymentRollback"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const Analytics = lazy(() =>
@@ -76,6 +78,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<ServicesPage />} />
+            <Route path="/portfolio/cloud-operations" element={<CloudOperations />} />
+            <Route path="/blog/aws-lambda-rollback-github-actions" element={<LambdaDeploymentRollback />} />
             <Route path="/case-studies" element={<CaseStudiesPage />} />
             <Route
               path="/case-studies/fintech-aws-cost-reduction"

@@ -8,6 +8,18 @@ import { breadcrumbSchema } from "@/lib/seo";
 
 const posts = [
   {
+    topic: "AWS release engineering",
+    problem: "Prove how a failed Lambda release will recover.",
+    title: "AWS Lambda Deployment Rollback with GitHub Actions",
+    description: "Follow the Cloud Operations release code, inspect the deployment flow and run five failure tests locally without an AWS account.",
+    link: "/blog/aws-lambda-rollback-github-actions",
+    sections: [
+      { id: "release-path", label: "See the release and rollback path" },
+      { id: "promotion", label: "Inspect the Python release code" },
+      { id: "test-rollback", label: "Download and run the rollback tests" },
+    ],
+  },
+  {
     topic: "AWS costs",
     problem: "Find why your AWS bill increased.",
     title: "How to Reduce AWS Costs: A Practical Checklist",
@@ -66,7 +78,7 @@ export default function Blog() {
         <section aria-labelledby="engineering-guides" className="px-6 pb-20 md:pb-28">
           <div className="container">
             <h2 id="engineering-guides" className="mb-8 text-2xl font-bold tracking-tight">Choose a guide for your next decision.</h2>
-            <div className="grid gap-6 lg:grid-cols-3">
+            <div className="grid gap-6 lg:grid-cols-2">
               {posts.map((post) => (
                 <article
                   key={post.title}

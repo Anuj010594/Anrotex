@@ -5,6 +5,8 @@ import { pathToFileURL } from "node:url";
 const routes = [
   ["/", "Index"],
   ["/services", "ServicesPage"],
+  ["/portfolio/cloud-operations", "CloudOperations"],
+  ["/blog/aws-lambda-rollback-github-actions", "blog/LambdaDeploymentRollback"],
   ["/solutions", "SolutionsPage"],
   ["/case-studies", "CaseStudiesPage"],
   ["/case-studies/fintech-aws-cost-reduction", "case-studies/FintechAwsCostReduction"],

@@ -344,11 +344,11 @@ const Hero = () => {
                 <ArrowRight className="h-4 w-4" />
               </a>
               <TrackedLink
-                to="/services"
+                to="/#starting-projects"
                 eventSource="homepage-hero-services"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-brand-navy/20 bg-brand-off-white px-7 py-4 font-semibold text-brand-navy transition hover:-translate-y-0.5 hover:bg-brand-stone"
               >
-                Explore services
+                Compare starting projects
               </TrackedLink>
             </div>
 
