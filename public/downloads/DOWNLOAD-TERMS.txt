@@ -1,0 +1,57 @@
+Anrotex download terms and safe use
+Effective 3 November 2026
+Copyright 2026 Anrotex IT Systems LLP, Pune, India. LLPIN ACY-8754.
+
+Permission for sample code and workflows
+
+Unless a file includes a different licence, you may download, copy and modify
+Anrotex's sample code and workflow files for learning and evaluation only,
+in a separate test environment. Keep the copyright and usage notices supplied
+with the files. This permission does not cover production use, delivery as part
+of client work or redistribution. Contact sales@anrotex.com for written permission
+before using the code for those purposes. Third-party software keeps its own
+licences. This permission does not cover Anrotex's branding.
+Do not present examples or your changes as work Anrotex has reviewed or endorsed.
+
+Guides, checklists and worksheets may be saved for your own reference and
+planning. Contact us before republishing complete articles, graphics or other
+website content. Paid work is covered by a separate written agreement.
+
+Review before use
+
+Read the files, commands, dependencies, permissions and instructions before
+running code. Use a separate test environment without production credentials
+or customer data. Keep security tools enabled. A separate folder is not an
+isolated environment. Use the least access needed, keep backups and plan how
+to stop and recover. Code can change files, access data, interrupt services
+and incur cloud charges. Use it only with systems you are authorised to access.
+
+For the Lambda package, python3 -m unittest -v test_release runs five tests
+with simulated responses and no network or AWS access. Running release.py or
+smoke.py directly is different: with AWS access, these scripts can publish
+code, change the version in use, send requests and create test records.
+The scripts have not been verified through a live AWS release.
+
+Responsibility and limits
+
+Free resources are provided as they are. To the extent permitted by law, we
+do not promise that they are error-free, suitable for every purpose or
+continuously available. Successful tests do not prove code is safe in every
+environment. You are responsible for reviewing and testing it for your use.
+
+To the extent permitted by law, Anrotex is not liable for loss of data,
+service interruption, lost profit or unexpected charges resulting from these
+free resources. Nothing in these terms removes rights you have or limits
+liability that cannot legally be excluded.
+
+File fingerprints and concerns
+
+Compare the file's SHA-256 fingerprint with our published value. A match means
+the contents match our copy; it is not a guarantee of safety. If they differ,
+stop and download a fresh copy. Report unexpected or harmful code to
+sales@anrotex.com with the file URL, date, fingerprint and description.
+Do not send passwords, access keys or private customer data.
+
+https://www.anrotex.com/downloads-policy
+https://www.anrotex.com/terms-of-use
+https://www.anrotex.com/privacy-policy

@@ -4,6 +4,7 @@ import InsightArticle from "@/components/InsightArticle";
 import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
 import { articleSchema, breadcrumbSchema, SITE_URL } from "@/lib/seo";
+import DownloadNotice from "@/components/DownloadNotice";
 import releaseSource from "../../../public/downloads/lambda-rollback/release.py?raw";
 import testSource from "../../../public/downloads/lambda-rollback/test_release.py?raw";
 
@@ -121,7 +122,8 @@ export default function LambdaDeploymentRollback() {
       <p>The download includes the release script and five tests. They simulate AWS responses on your computer, so you do not need an AWS account, access keys or extra Python packages. Use Python 3.10 or later; these tests passed with Python 3.14.</p>
       <p>The release code has been tested this way. It still needs testing in AWS before use with a real application.</p>
       <TrackedLink to="/downloads/lambda-rollback-tests.zip" reloadDocument download="lambda-rollback-tests.zip" eventSource="lambda-guide-tests" className="mt-5 inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 !text-base !font-bold !text-brand-off-white !no-underline transition hover:bg-brand-teal"><Download className="h-4 w-4 shrink-0" aria-hidden="true" />Download the rollback tests (.zip)</TrackedLink>
-      <p className="!text-sm">No email required. Open a terminal in the folder where you saved the download, then run:</p>
+      <DownloadNotice />
+      <p className="!text-sm">No email required. Read the README and terms inside the ZIP before running code. The test command below uses simulated responses; running the included release scripts directly can change AWS resources. Open a terminal in the folder where you saved the download, then run:</p>
       <Code label="Run the standalone Lambda rollback tests">{localTest}</Code>
       <p>The five tests check what happens when:</p>
       <ul>

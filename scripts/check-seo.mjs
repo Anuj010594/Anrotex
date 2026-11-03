@@ -1,5 +1,6 @@
 // Run after npm run build: node scripts/check-seo.mjs
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { render } from "../dist-ssr/entry-server.js";
 import worker from "../worker/index.js";
@@ -28,6 +29,11 @@ for (const url of urls) {
   assert.match(html, /<h1\b/, `Missing prerendered heading for ${url.pathname}`);
   assert(!html.includes("noindex"), `Public page is noindex: ${url.pathname}`);
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1, `Expected one main heading: ${url.pathname}`);
+  const policyNavigation = html.match(/<nav aria-label="Policies"[^>]*>(.*?)<\/nav>/s)?.[1];
+  assert(policyNavigation, `Missing footer policies: ${url.pathname}`);
+  for (const policy of ["/privacy-policy", "/terms-of-use", "/downloads-policy"]) {
+    assert(policyNavigation.includes(`href="${policy}"`), `Missing ${policy} footer link: ${url.pathname}`);
+  }
   const title = html.match(/<title\b[^>]*>([^<]+)<\/title>/)?.[1];
   assert(title && !titles.has(title), `Missing or duplicate title: ${url.pathname}`);
   titles.add(title);
@@ -129,6 +135,24 @@ const releaseSource = await readFile("public/downloads/lambda-rollback/release.p
 const releaseFunction = releaseSource.slice(releaseSource.indexOf("def release("), releaseSource.indexOf('\n\nif __name__'));
 assert(releaseFunction.length > 1000 && lambdaGuide.includes(escapeHtml(releaseFunction)), "Display the complete downloadable release function in initial HTML");
 assert(lambdaGuide.includes('href="/downloads/lambda-rollback-tests.zip"'), "Missing reproducible test download");
+for (const [name, html] of [["AWS", awsGuide], ["CI/CD", cicdGuide], ["Lambda", lambdaGuide]]) {
+  assert(html.includes("download terms and safe-use guidance"), `${name}: explain safe use beside downloads`);
+}
+const downloadPolicy = await readFile("dist/downloads-policy/index.html", "utf8");
+const fingerprints = (await readFile("dist/downloads/SHA256SUMS.txt", "utf8")).trim().split("\n");
+const fingerprintFiles = new Set();
+for (const line of fingerprints) {
+  assert.match(line, /^[a-f0-9]{64} {2}[\w./-]+$/, "Invalid download fingerprint entry");
+  const [hash, file] = line.split("  ");
+  assert(!file.startsWith("/") && !file.split("/").includes("..") && !fingerprintFiles.has(file), "Invalid or duplicate download path");
+  fingerprintFiles.add(file);
+  const actual = createHash("sha256").update(await readFile(`dist/downloads/${file}`)).digest("hex");
+  assert.equal(hash, actual, `Stale download fingerprint: ${file}`);
+  assert(downloadPolicy.includes(hash) && downloadPolicy.includes(`href="/downloads/${file}"`), `Fingerprint not visible: ${file}`);
+}
+for (const file of ["aws-cost-review-worksheet.xlsx", "cicd-release-checklist.txt", "node-ci.yml", "lambda-rollback-tests.zip", "DOWNLOAD-TERMS.txt", "lambda-rollback/TERMS.txt", "lambda-rollback/README.txt", "lambda-rollback/release.py", "lambda-rollback/smoke.py", "lambda-rollback/test_release.py"]) {
+  assert(fingerprintFiles.has(file), `Missing download fingerprint: ${file}`);
+}
 for (const [name, html] of [["Services", services], ["AWS service", aws], ["Insights", blog]]) {
   assert(html.includes('href="/blog/reduce-aws-costs#why-bill-increased"'), `${name}: missing route to the AWS bill checks`);
 }
@@ -175,7 +199,7 @@ const env = {
 const legacy = await worker.fetch(new Request("https://www.anrotex.com/portfolio/cloud-operations/index.html?utm_source=linkedin"), env);
 assert.equal(legacy.status, 308);
 assert.equal(legacy.headers.get("location"), "https://www.anrotex.com/portfolio/cloud-operations?utm_source=linkedin");
-for (const pathname of ["/blog/cicd-best-practices", "/blog/aws-lambda-rollback-github-actions", "/portfolio/cloud-operations", "/does-not-exist", "/missing.js"]) {
+for (const pathname of ["/blog/cicd-best-practices", "/blog/aws-lambda-rollback-github-actions", "/portfolio/cloud-operations", "/privacy-policy", "/terms-of-use", "/downloads-policy", "/does-not-exist", "/missing.js"]) {
   const response = await worker.fetch(new Request(`https://www.anrotex.com${pathname}`, {
     headers: { accept: pathname.endsWith(".js") ? "*/*" : "text/html" },
   }), env);

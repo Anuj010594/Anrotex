@@ -23,6 +23,9 @@ const Blog = lazy(() => import("./pages/Blog"));
 const CloudOperations = lazy(() => import("./pages/CloudOperations"));
 const LambdaDeploymentRollback = lazy(() => import("./pages/blog/LambdaDeploymentRollback"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const WebsiteTerms = lazy(() => import("./pages/WebsiteTerms"));
+const DownloadPolicy = lazy(() => import("./pages/DownloadPolicy"));
 
 const Analytics = lazy(() =>
   import("@vercel/analytics/react").then(({ Analytics: component }) => ({
@@ -78,6 +81,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<ServicesPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-use" element={<WebsiteTerms />} />
+            <Route path="/downloads-policy" element={<DownloadPolicy />} />
             <Route path="/portfolio/cloud-operations" element={<CloudOperations />} />
             <Route path="/blog/aws-lambda-rollback-github-actions" element={<LambdaDeploymentRollback />} />
             <Route path="/case-studies" element={<CaseStudiesPage />} />

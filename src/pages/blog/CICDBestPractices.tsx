@@ -2,6 +2,7 @@ import { ArrowRight, Download } from "lucide-react";
 import InsightArticle from "@/components/InsightArticle";
 import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
+import DownloadNotice from "@/components/DownloadNotice";
 import workflow from "../../../public/downloads/node-ci.yml?raw";
 import { articleSchema, breadcrumbSchema, SITE_URL } from "@/lib/seo";
 
@@ -80,6 +81,7 @@ export default function CICDBestPractices() {
             <Download className="h-4 w-4 shrink-0" aria-hidden="true" />Download the checklist (.txt)
           </TrackedLink>
           <p className="!mt-4 !text-sm">Editable text file. No email required. Open it in your text editor or paste it into a release ticket.</p>
+          <DownloadNotice />
           <p className="!mb-0 !text-sm">Using GitHub Actions? <a href="#github-actions">Get the Node.js workflow and setup steps</a>.</p>
         </section>
         <p>
@@ -155,6 +157,7 @@ export default function CICDBestPractices() {
           <Download className="h-4 w-4 shrink-0" aria-hidden="true" />Download the workflow (.yml)
         </TrackedLink>
         <p className="!text-sm">Review the scripts and output directory before adding the file to your repository. This workflow builds and tests your app; production deployment is configured separately.</p>
+        <DownloadNotice />
         <pre aria-label="Node.js CI workflow" tabIndex={0} className="mt-7 max-w-full overflow-x-auto rounded-2xl bg-brand-navy p-5 text-sm leading-7 text-brand-off-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-teal md:p-7"><code className="!bg-transparent !p-0 !text-inherit">{workflow}</code></pre>
         <p>
           The action references pin specific releases of{" "}

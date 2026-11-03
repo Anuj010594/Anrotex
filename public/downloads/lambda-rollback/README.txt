@@ -1,6 +1,20 @@
 Anrotex: test an AWS Lambda rollback on your computer
 https://www.anrotex.com/blog/aws-lambda-rollback-github-actions
 
+Before running anything
+
+This sample code is for learning and evaluation only. Production use, delivery
+as part of client work and redistribution need Anrotex's written permission.
+
+Read the code and TERMS.txt. Use a separate test environment without production
+credentials or customer data. A separate folder does not isolate code from your
+computer. Guidance and file fingerprints:
+https://www.anrotex.com/downloads-policy
+
+The test command below uses simulated responses. Running release.py or smoke.py
+directly with AWS access can publish code, change the live alias, send network
+requests and create test records. Cloud charges may apply.
+
 Run the tests
 
 You need Python 3.10 or later. These tests passed with Python 3.14.
@@ -36,7 +50,7 @@ Before using the release script in AWS
 
 The code comes from Anrotex's Cloud Operations project. The tests use
 simulated AWS responses; they do not connect to AWS or deploy an application.
-Test permissions and recovery in a separate AWS environment before real use.
+Evaluate permissions and recovery in a separate AWS test environment.
 
 Running release.py as a command needs the boto3 Python package, an application
 ZIP file, and the AWS resources already set up. The script expects the

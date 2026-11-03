@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2, LockKeyhole, Mail } from "lucide-react";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import TurnstileWidget from "@/components/TurnstileWidget";
 import { trackEvent } from "@/lib/analytics";
 import { TURNSTILE_SITE_KEY } from "@/lib/turnstile";
@@ -323,6 +323,8 @@ const Contact = ({ standalone = false }: { standalone?: boolean }) => {
                   key={turnstileKey}
                   onTokenChange={handleTurnstileToken}
                 />
+
+                <p className="mt-4 text-sm leading-relaxed text-brand-teal">We use your details to reply to this enquiry. Read our <Link to="/privacy-policy" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-4">privacy policy (opens in a new tab)</Link>.</p>
 
                 <button
                   type="submit"

@@ -2,6 +2,7 @@ import { ArrowRight, Download } from "lucide-react";
 import InsightArticle from "@/components/InsightArticle";
 import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
+import DownloadNotice from "@/components/DownloadNotice";
 import { articleSchema, breadcrumbSchema, SITE_URL } from "@/lib/seo";
 
 const sharingImage = `${SITE_URL}/images/og/aws-cost-guide.png`;
@@ -142,6 +143,7 @@ export default function AwsCostReductionBlog() {
             Download the worksheet (.xlsx)
           </TrackedLink>
           <p className="!mb-0 text-sm">Editable Excel workbook. No email required. Save one copy per workload and proposed change.</p>
+          <DownloadNotice />
         </section>
 
         <h2 id="baseline">1. Build a trustworthy AWS cost baseline</h2>

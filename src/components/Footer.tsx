@@ -129,9 +129,14 @@ const Footer = () => (
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 pt-7 text-xs text-brand-stone sm:flex-row sm:items-center sm:justify-between">
-        <p>© {new Date().getFullYear()} Anrotex. All rights reserved.</p>
+      <nav aria-label="Policies" className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-7 text-xs text-brand-stone">
+        <Link to="/privacy-policy" className="underline underline-offset-2 hover:text-brand-off-white">Privacy policy</Link>
+        <Link to="/terms-of-use" className="underline underline-offset-2 hover:text-brand-off-white">Website terms</Link>
+        <Link to="/downloads-policy" className="underline underline-offset-2 hover:text-brand-off-white">Download terms &amp; safe use</Link>
         {GA4_CONFIGURED && <button type="button" className="w-fit underline underline-offset-2 hover:text-brand-off-white" onClick={() => window.dispatchEvent(new Event(ANALYTICS_PREFERENCES_EVENT))}>Cookie preferences</button>}
+      </nav>
+      <div className="flex flex-col gap-3 pt-5 text-xs text-brand-stone sm:flex-row sm:items-center sm:justify-between">
+        <p>© {new Date().getFullYear()} Anrotex. All rights reserved.</p>
         <p>Cloud engineering with measurable outcomes.</p>
       </div>
     </div>

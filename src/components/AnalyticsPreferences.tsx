@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   ANALYTICS_CONSENT_KEY,
   ANALYTICS_PREFERENCES_EVENT,
@@ -71,6 +72,7 @@ export default function AnalyticsPreferences() {
         With your permission, we use Google Analytics cookies to understand which pages and services
         interest visitors. We do not send your name, email address or message to Google Analytics, or use it for advertising.
         You can change your choice using Cookie preferences in the footer.{" "}
+        <Link to="/privacy-policy#cookies" className="font-semibold underline underline-offset-2">Read our privacy policy</Link>.{" "}
         <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-2">
           How Google uses this data
         </a>
