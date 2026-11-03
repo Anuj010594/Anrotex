@@ -26,10 +26,13 @@ isolated environment. Use the least access needed, keep backups and plan how
 to stop and recover. Code can change files, access data, interrupt services
 and incur cloud charges. Use it only with systems you are authorised to access.
 
-For the Lambda package, python3 -m unittest -v test_release runs five tests
+For the Lambda package, python3 -B -m unittest -v test_release runs 23 tests
 with simulated responses and no network or AWS access. Running release.py or
 smoke.py directly is different: with AWS access, these scripts can publish
 code, change the version in use, send requests and create test records.
+Both commands require --confirm-test-account with the 12-digit ID of your
+separate test account. They check the destination and account before making
+changes. You must still verify that the account is suitable for testing.
 The scripts have not been verified through a live AWS release.
 
 Responsibility and limits

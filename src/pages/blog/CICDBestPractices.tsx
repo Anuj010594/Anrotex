@@ -231,7 +231,7 @@ export default function CICDBestPractices() {
         </p>
 
         <h2 id="rollback">5. Make recovery part of the release</h2>
-        <p>For a concrete implementation, follow our <TrackedLink to="/blog/aws-lambda-rollback-github-actions" eventName="Article Click" eventSource="cicd-guide-lambda-rollback">AWS Lambda rollback with GitHub Actions walkthrough</TrackedLink>. It includes the release code, a flow diagram and five tests you can run locally without AWS.</p>
+        <p>For a concrete implementation, follow our <TrackedLink to="/blog/aws-lambda-rollback-github-actions" eventName="Article Click" eventSource="cicd-guide-lambda-rollback">AWS Lambda rollback with GitHub Actions walkthrough</TrackedLink>. It includes the release code, a flow diagram and tests you can run locally without AWS.</p>
         <p>
           Keep a known-good application version available and decide what would
           trigger a rollback: failed smoke checks, elevated errors, slow critical

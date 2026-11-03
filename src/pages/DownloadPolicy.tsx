@@ -22,8 +22,9 @@ export default function DownloadPolicy() {
     </ol>
 
     <h2 id="lambda-tests">What the Lambda download does</h2>
-    <p>The command <code>python3 -m unittest -v test_release</code> runs five tests using simulated AWS responses. The supplied tests do not make network calls, use AWS credentials or deploy an application. They need only Python's standard library.</p>
+    <p>The command <code>python3 -B -m unittest -v test_release</code> runs 23 tests using simulated AWS and application responses. Network connections are blocked while the tests run. They do not use AWS credentials or deploy an application, and need only Python's standard library.</p>
     <p>The same ZIP also includes <code>release.py</code> and <code>smoke.py</code> so you can inspect the real release and application checks. Running those scripts directly is different: with AWS access, they can publish code, change the version in use, send network requests and create test records. Cloud charges may apply.</p>
+    <p>Both commands require <code>--confirm-test-account</code> with the 12-digit ID of your separate AWS test account. They check the destination and account before making changes. This does not prove that the account is safe to use: check its contents and permissions yourself.</p>
     <p>Read the <Link to="/blog/aws-lambda-rollback-github-actions#test-rollback">article's test instructions</Link> first. Review and configure the scripts separately before using them with AWS. They have not been verified through a live AWS release.</p>
 
     <h2>Workflows and other files</h2>

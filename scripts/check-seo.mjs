@@ -132,7 +132,7 @@ for (const [name, html] of [["Portfolio", portfolio], ["Lambda guide", lambdaGui
   assert.doesNotMatch(html, /utm_source=anrotex|illustrative|not a client result|publication boundaries|internal use/i);
 }
 const releaseSource = await readFile("public/downloads/lambda-rollback/release.py", "utf8");
-const releaseFunction = releaseSource.slice(releaseSource.indexOf("def release("), releaseSource.indexOf('\n\nif __name__'));
+const releaseFunction = releaseSource.slice(releaseSource.indexOf("def release("), releaseSource.indexOf('\n\ndef main('));
 assert(releaseFunction.length > 1000 && lambdaGuide.includes(escapeHtml(releaseFunction)), "Display the complete downloadable release function in initial HTML");
 assert(lambdaGuide.includes('href="/downloads/lambda-rollback-tests.zip"'), "Missing reproducible test download");
 for (const [name, html] of [["AWS", awsGuide], ["CI/CD", cicdGuide], ["Lambda", lambdaGuide]]) {

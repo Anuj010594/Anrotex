@@ -1,0 +1,105 @@
+Anrotex downloadable-code security review — 3 November 2026
+
+Scope
+Reviewed every file currently served from public/downloads, including the three
+Python files, their ZIP copy, Node.js workflow, text instructions, checklist and
+Excel workbook. Checked article commands and links for consistency. The separate,
+untracked engineering project is not a website download and was not modified.
+No deliberate malicious code, embedded credentials or hidden executable payload
+was found in the reviewed downloads. This is not a guarantee of safety.
+
+Confirmed findings and corrections
+
+1. API Gateway URL check could accept a different destination.
+   The region value was escaped for a regular expression but was not validated
+   as a region. A value such as us-east-1.amazonaws.com@unexpected.example/
+   made the old expression accept a URL whose parsed host was unexpected.example.
+   This requires a malicious or incorrect command/configuration; visiting the
+   website alone does not trigger it. Region syntax is now checked separately,
+   followed by an exact HTTPS API Gateway URL check. Credentials are not loaded
+   for an invalid destination. Redirects remain disabled and are covered by tests.
+
+2. Validation happened after AWS changes.
+   The original release command checked the application URL only during the
+   post-promotion probe. An invalid URL could therefore be discovered after
+   publishing code and moving the live alias. Commands now validate the URL first
+   and require --confirm-test-account with a 12-digit account ID. AWS STS confirms
+   the credential account before Lambda access or application writes. Function
+   ARNs are rejected by the release command; a name resolves in the confirmed
+   account and selected region. Custom SDK endpoint overrides are disabled.
+
+3. Application responses were trusted too broadly.
+   Returned record IDs were appended directly to a request path. IDs now must
+   match the application's 64-character lowercase hexadecimal format. Responses
+   must be JSON objects and are limited to 64 KiB. Lambda response streams are
+   closed even when the function reports an error. Wrong shapes, excessive data
+   and invalid IDs stop the check; the existing rollback rules still apply.
+
+4. Download packaging lacked an inventory check.
+   Two generated Python cache files existed locally under public/downloads, and
+   Vite copies public assets without applying Git ignore rules. Removed those two
+   generated files. Preparation now rejects unknown files and symbolic links,
+   including a symlinked downloads directory. It recreates the ZIP from the five
+   reviewed source files before calculating fingerprints, preventing a stale or
+   separately replaced archive from being shipped by the normal build.
+   The ZIP uses standard stored entries with fixed metadata, no new dependency.
+
+Other checks
+- No eval/exec/compile/dynamic-import calls, embedded AWS keys/private keys or
+  bidirectional control characters were found in the Python downloads.
+- Tests block socket creation. They use fake AWS/application responses, not
+  credentials or network access. The package now contains 23 tests.
+- Rollback revision checks and weighted-alias refusal are preserved. Added a
+  failed-rollback/concurrent-change test; there is no blind retry of alias updates.
+- Gateway writes retain a shared idempotency key. Corrected the returned count
+  to four authenticated requests plus one unsigned access check.
+- The Node workflow uses read-only contents permission, does not persist checkout
+  credentials, uses GitHub-hosted runners, and has no secrets or production deploy.
+  Its npm scripts still execute repository/dependency code; users must review that
+  code. These workflow properties do not make arbitrary pull requests safe.
+- Official action release refs matched all three pinned SHAs on 3 November:
+  checkout v7.0.1: 3d3c42e5aac5ba805825da76410c181273ba90b1
+  setup-node v7.0.0: 820762786026740c76f36085b0efc47a31fe5020
+  upload-artifact v7.0.2: cf430e030ddbb5b0abf93d22962f4752f3646cd9
+  Each repository's public security-advisories API returned an empty list.
+- Workbook: nine archive parts and 15 formulas inspected; no VBA, ActiveX,
+  embedded objects, macro sheets, external links/connections, external XML
+  relationships or executable/remote-fetch formulas found. No workbook changes.
+- Text checklist has no executable content; it and the Node workflow are unchanged.
+
+Validation
+- npm run check:downloads: Python reads the generated ZIP independently, verifies
+  member names, modes, CRCs and source bytes, then runs all 23 tests from a fresh
+  extracted copy. Checksums match. Fixtures confirm an extra file, file symlink
+  and directory symlink stop preparation, and a replaced ZIP is regenerated.
+- Real boto3/botocore 1.43.118 compatibility checked offline with dummy credentials
+  and sockets blocked. Verified signed idempotency/token headers, response closure,
+  timeout and that configured STS endpoint overrides are ignored.
+- Production build, API and application TypeScript, targeted ESLint, all 17
+  existing application tests and SEO checks for all 19 routes passed.
+- Desktop/mobile guide preview checked with analytics disabled; no horizontal
+  page overflow at 390px and no browser console errors observed.
+- Article, README, policies and fingerprints updated together. Learning and
+  evaluation only remains the permission for sample code and workflows.
+
+Limits
+No live AWS call, deployment, enquiry or production-data operation was performed.
+Account confirmation cannot prove that an account is non-production or that the
+chosen API belongs to it; the operator must choose the right account and restrict
+IAM access to the intended function and API. Direct use of library functions is
+not a sandbox. A failed/stopped deployment can still require manual recovery.
+Record checks can create persistent test data and cloud charges when run with AWS.
+The review does not certify all third-party dependencies or a user's environment.
+The tests are simulated; end-to-end AWS acceptance remains necessary before any
+separately authorised production use.
+
+Primary references
+https://docs.python.org/3/library/urllib.parse.html#url-parsing-security
+https://docs.aws.amazon.com/lambda/latest/api/API_UpdateFunctionCode.html
+https://docs.aws.amazon.com/lambda/latest/api/API_UpdateAlias.html
+https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIdentity.html
+https://docs.aws.amazon.com/botocore/latest/reference/config.html
+https://docs.github.com/en/actions/reference/security/secure-use
+https://github.com/actions/checkout/releases/tag/v7.0.1
+https://github.com/actions/setup-node/releases/tag/v7.0.0
+https://github.com/actions/upload-artifact/releases/tag/v7.0.2

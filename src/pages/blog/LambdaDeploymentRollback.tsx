@@ -12,7 +12,7 @@ const path = "/blog/aws-lambda-rollback-github-actions";
 const title = "AWS Lambda Deployment Rollback with GitHub Actions";
 const description = "Learn how to check an AWS Lambda release and switch back when it fails. Includes Python code, GitHub Actions steps and tests you can run on your computer.";
 const sharingImage = `${SITE_URL}/images/og/cicd-guide.png`;
-const releaseCode = releaseSource.slice(releaseSource.indexOf("def release("), releaseSource.indexOf('\n\nif __name__'));
+const releaseCode = releaseSource.slice(releaseSource.indexOf("def release("), releaseSource.indexOf('\n\ndef main('));
 const rollbackTest = testSource.slice(testSource.indexOf("    def test_gateway_failure"), testSource.indexOf("    def test_concurrent_alias"));
 const workflow = `release:
   if: github.event_name == 'workflow_dispatch' && inputs.deploy && github.ref == 'refs/heads/main'
@@ -29,10 +29,11 @@ const workflow = `release:
 const releaseCommand = `python scripts/package.py --release "$GITHUB_SHA"
 python scripts/release.py --function "$FUNCTION" \\
   --artifact build/function.zip --release "$GITHUB_SHA" \\
-  --url "$API_URL" --region "$REGION"`;
+  --url "$API_URL" --region "$REGION" \\
+  --confirm-test-account "$TEST_ACCOUNT_ID"`;
 const localTest = `unzip lambda-rollback-tests.zip
 cd lambda-rollback
-python3 -m unittest -v test_release`;
+python3 -B -m unittest -v test_release`;
 const toc = [
   { id: "release-path", label: "Keep the working version available" },
   { id: "candidate-checks", label: "Check the new version first" },
@@ -55,7 +56,7 @@ export default function LambdaDeploymentRollback() {
     <InsightArticle eyebrow="AWS deployments" title={title} description="Check that a new version works before sending users to it. If the release fails, have a clear way to switch back to the previous version." published="3 November 2026" updated="3 November 2026" readTime="12 minute read" toc={toc} ctaTitle="Make releases easier to manage." ctaDescription="Set up a release process for one application in your existing AWS test environment. Get checks, a rollback test and clear instructions for your team." ctaHref="/services#cicd-setup" ctaLabel="See the US$1,500 pipeline setup">
       <p>A deployment can finish without errors while the application still fails for users. The new code might be running, but can it save data, read it back and allow the right people to use it?</p>
       <p>This guide explains how to check an AWS Lambda release and switch back to the previous version when those checks fail. Switching back is called a <strong>rollback</strong>. We use Python code from Anrotex's <TrackedLink to="/portfolio/cloud-operations" eventName="Case Study Click" eventSource="lambda-guide-project">Cloud Operations project</TrackedLink> and show how it connects to GitHub Actions.</p>
-      <p>You can also <a href="#test-rollback">download five tests to run on your computer</a>. They let you try the failure checks without an AWS account.</p>
+      <p>You can also <a href="#test-rollback">download the tests to run on your computer</a>. They let you try the release and safety checks without an AWS account.</p>
 
       <h2 id="release-path">1. Keep the working version available</h2>
       <p>Keep the current version running while you check the new one. Lambda supports this through an <strong>alias</strong>: a name that points to a particular version of your code. In this example, that name is <code>live</code>.</p>
@@ -107,8 +108,10 @@ export default function LambdaDeploymentRollback() {
       <Code label="GitHub Actions settings for starting a release">{workflow}</Code>
       <p>The full workflow also downloads the selected code, sets up Python and installs the package versions recorded for the project. It uses a specific version of <code>aws-actions/configure-aws-credentials</code> to get temporary AWS access.</p>
       <p>That access uses <strong>OIDC</strong>, which lets GitHub prove its identity to AWS without storing long-lived AWS keys. The workflow then builds the application package and runs the release script:</p>
+      <p>Use the downloaded <code>release.py</code> and <code>smoke.py</code> in your project's <code>scripts</code> folder when following these commands.</p>
       <Code label="Commands to package and release the application">{releaseCommand}</Code>
       <p>The package contains <code>GITHUB_SHA</code>, the identifier for the chosen code commit. The checks use it to confirm which code is running. Set <code>FUNCTION</code> to the Lambda function name, <code>API_URL</code> to the application's address and <code>REGION</code> to its AWS region.</p>
+      <p>Set <code>TEST_ACCOUNT_ID</code> to the 12-digit ID of your separate AWS test account. Before changing resources, the command checks the address and confirms that your AWS credentials belong to that account. Use the function name, not an ARN. You must still confirm that the account and application are suitable for testing.</p>
       <p>Before using the workflow:</p>
       <ul>
         <li><strong>Set up the AWS resources.</strong> API Gateway must send requests to the alias, and the previous Lambda version must still exist.</li>
@@ -119,23 +122,25 @@ export default function LambdaDeploymentRollback() {
       <p>Use GitHub's guides to <a href="https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws" target="_blank" rel="noreferrer">connect to AWS with OIDC</a> and <a href="https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency" target="_blank" rel="noreferrer">control which jobs can run together</a> for the full setup. Check how waiting jobs are handled; not every queued release is guaranteed to run.</p>
 
       <h2 id="test-rollback">5. Run the tests on your computer</h2>
-      <p>The download includes the release script and five tests. They simulate AWS responses on your computer, so you do not need an AWS account, access keys or extra Python packages. Use Python 3.10 or later; these tests passed with Python 3.14.</p>
+      <p>The download includes the release script and 23 tests. They simulate AWS and application responses on your computer, so you do not need an AWS account, access keys or extra Python packages. Network connections are blocked while these tests run. Use Python 3.10 or later; these tests passed with Python 3.14.</p>
       <p>The release code has been tested this way. It still needs testing in AWS before use with a real application.</p>
       <TrackedLink to="/downloads/lambda-rollback-tests.zip" reloadDocument download="lambda-rollback-tests.zip" eventSource="lambda-guide-tests" className="mt-5 inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 !text-base !font-bold !text-brand-off-white !no-underline transition hover:bg-brand-teal"><Download className="h-4 w-4 shrink-0" aria-hidden="true" />Download the rollback tests (.zip)</TrackedLink>
       <DownloadNotice />
       <p className="!text-sm">No email required. Read the README and terms inside the ZIP before running code. The test command below uses simulated responses; running the included release scripts directly can change AWS resources. Open a terminal in the folder where you saved the download, then run:</p>
       <Code label="Run the standalone Lambda rollback tests">{localTest}</Code>
-      <p>The five tests check what happens when:</p>
+      <p>The tests check what happens when:</p>
       <ul>
         <li>All checks pass and the steps run in the right order.</li>
         <li>The new version fails a check before the switch.</li>
         <li>The application fails a check after the switch.</li>
         <li>Someone else changes the alias during the release.</li>
         <li>The alias is already splitting requests between versions.</li>
+        <li>The address or account details are wrong, or account confirmation is missing.</li>
+        <li>A response tries to redirect a request, change its path or return too much data.</li>
       </ul>
       <p>This test checks that, after a failure, the script asks AWS to switch back to version 7:</p>
       <Code label="Test that gateway failure restores the previous Lambda version">{rollbackTest}</Code>
-      <p>You should see <code>Ran 5 tests</code> followed by <code>OK</code>. A message containing <code>"event": "rollback"</code> is expected: the test deliberately causes a failure and checks the recovery action.</p>
+      <p>You should see <code>Ran 23 tests</code> followed by <code>OK</code>. A message containing <code>"event": "rollback"</code> is expected: the test deliberately causes a failure and checks the recovery action. The <code>-B</code> option keeps Python from creating extra cache files.</p>
       <p>To see the test catch a mistake, change its expected restored version from <code>"7"</code> to <code>"8"</code> and run it again. It should fail because the script requests version 7. Change the test back afterwards.</p>
 
       <h2 id="aws-acceptance">6. Test the setup in AWS before going live</h2>
