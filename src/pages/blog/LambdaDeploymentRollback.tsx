@@ -50,10 +50,10 @@ function Code({ label, children }: { label: string; children: ReactNode }) {
 export default function LambdaDeploymentRollback() {
   return <>
     <SEO title={`${title} | Anrotex`} description={description} path={path} type="article" image={sharingImage} imageAlt="CI/CD from pull request to production — a release pipeline with a recovery path, by Anrotex." imageWidth={1731} imageHeight={909} structuredData={[
-      articleSchema({ headline: title, description, path, datePublished: "2026-11-03", dateModified: "2026-11-03", image: sharingImage }),
+      articleSchema({ headline: title, description, path, datePublished: "2026-11-03", dateModified: "2026-11-05", image: sharingImage }),
       breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Insights", path: "/blog" }, { name: "Lambda deployment rollback", path }]),
     ]} />
-    <InsightArticle eyebrow="AWS deployments" title={title} description="Check that a new version works before sending users to it. If the release fails, have a clear way to switch back to the previous version." published="3 November 2026" updated="3 November 2026" readTime="12 minute read" toc={toc} ctaTitle="Make releases easier to manage." ctaDescription="Set up a release process for one application in your existing AWS test environment. Get checks, a rollback test and clear instructions for your team." ctaHref="/services#cicd-setup" ctaLabel="See the US$1,500 pipeline setup">
+    <InsightArticle eyebrow="AWS deployments" title={title} description="Check that a new version works before sending users to it. If the release fails, have a clear way to switch back to the previous version." published="3 November 2026" updated="5 November 2026" readTime="12 minute read" toc={toc} ctaTitle="Make releases easier to manage." ctaDescription="Set up a release process for one application in your existing AWS test environment. Get checks, a rollback test and clear instructions for your team." ctaHref="/services#cicd-setup" ctaLabel="See the US$1,500 pipeline setup">
       <p>A deployment can finish without errors while the application still fails for users. The new code might be running, but can it save data, read it back and allow the right people to use it?</p>
       <p>This guide explains how to check an AWS Lambda release and switch back to the previous version when those checks fail. Switching back is called a <strong>rollback</strong>. We use Python code from Anrotex's <TrackedLink to="/portfolio/cloud-operations" eventName="Case Study Click" eventSource="lambda-guide-project">Cloud Operations project</TrackedLink> and show how it connects to GitHub Actions.</p>
       <p>You can also <a href="#test-rollback">download the tests to run on your computer</a>. They let you try the release and safety checks without an AWS account.</p>
@@ -124,6 +124,17 @@ export default function LambdaDeploymentRollback() {
       <h2 id="test-rollback">5. Run the tests on your computer</h2>
       <p>The download includes the release script and 23 tests. They simulate AWS and application responses on your computer, so you do not need an AWS account, access keys or extra Python packages. Network connections are blocked while these tests run. Use Python 3.10 or later; these tests passed with Python 3.14.</p>
       <p>The release code has been tested this way. It still needs testing in AWS before use with a real application.</p>
+      <section aria-labelledby="test-results" className="mt-8 rounded-3xl border border-brand-navy/15 bg-brand-stone/55 p-6 md:p-8">
+        <h3 id="test-results" className="!pt-0">Test results: 5 November 2026</h3>
+        <p>All 23 automated tests passed with Python 3.14.6, using the files extracted from the downloadable ZIP. AWS and application responses were simulated. Network connections were blocked during the tests.</p>
+        <ul>
+          <li><strong>Checks pass:</strong> the script checks the new version, requests the switch, then checks the application.</li>
+          <li><strong>A check fails before the switch:</strong> the script makes no request to change the running version.</li>
+          <li><strong>A check fails after the switch:</strong> the script requests a return to the previous version and reports the release as failed.</li>
+          <li><strong>Another release changes the version:</strong> a rejected update stops the script; it does not retry without the revision check.</li>
+        </ul>
+        <p>These results check the script's decisions. They do not measure recovery time or prove that an application is working in AWS. Follow the <a href="#aws-acceptance">AWS test steps below</a> to check your own setup.</p>
+      </section>
       <TrackedLink to="/downloads/lambda-rollback-tests.zip" reloadDocument download="lambda-rollback-tests.zip" eventSource="lambda-guide-tests" className="mt-5 inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 !text-base !font-bold !text-brand-off-white !no-underline transition hover:bg-brand-teal"><Download className="h-4 w-4 shrink-0" aria-hidden="true" />Download the rollback tests (.zip)</TrackedLink>
       <DownloadNotice />
       <p className="!text-sm">No email required. Read the README and terms inside the ZIP before running code. The test command below uses simulated responses; running the included release scripts directly can change AWS resources. Open a terminal in the folder where you saved the download, then run:</p>

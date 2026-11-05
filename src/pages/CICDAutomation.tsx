@@ -11,7 +11,7 @@ import { STARTING_PROJECTS } from "@/lib/starting-projects";
 const [, pipelineSetup] = STARTING_PROJECTS;
 
 const description =
-  "Build or improve GitHub Actions, GitLab CI/CD, and Jenkins pipelines. Get practical testing, deployment, rollback, and handover support from Anrotex.";
+  `CI/CD setup for one app, with build checks, AWS staging deployment and rollback testing. ${pipelineSetup.price} fixed scope, with documentation and handover.`;
 
 const deliverables = [
   ["Pipeline assessment", "A map of build times, manual steps, release failures, and access risks, with a prioritized improvement plan."],
@@ -108,25 +108,26 @@ export default function CICDAutomation() {
         <section id="cicd-setup" aria-labelledby="pipeline-setup-heading" className="scroll-mt-24 px-6 pb-20 md:pb-24">
           <div className="mx-auto grid max-w-6xl gap-10 rounded-[2rem] border border-brand-navy/10 bg-brand-mint/50 p-6 md:p-10 lg:grid-cols-[1.1fr_1fr]">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-teal">Start with one application</p>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-navy">Start with one application</p>
               <h2 id="pipeline-setup-heading" className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">{pipelineSetup.name}</h2>
               <p className="mt-5 text-3xl font-bold">{pipelineSetup.price}<span className="ml-2 text-sm font-normal">one-time fee</span></p>
-              <p className="mt-2 font-semibold text-brand-teal">{pipelineSetup.days} business days after agreed access and inputs</p>
-              <p className="mt-5 leading-relaxed text-brand-teal">{pipelineSetup.scope}</p>
-              <p className="mt-4 leading-relaxed text-brand-teal">We set up the workflow to build your application, run its existing tests and deploy to staging. You receive deployment health checks, notifications, a test of restoring a compatible previous version, operating instructions and a 60-minute handover.</p>
+              <p className="mt-2 font-semibold text-brand-navy">{pipelineSetup.days} business days after agreed access and inputs</p>
+              <p className="mt-5 leading-relaxed text-brand-navy">{pipelineSetup.scope}</p>
+              <p className="mt-4 leading-relaxed text-brand-navy">We set up the workflow to build your application, run its existing tests and deploy to staging. You receive deployment health checks, notifications, a test of restoring a compatible previous version, operating instructions and a 60-minute handover.</p>
               <div className="mt-7 flex flex-wrap items-center gap-5">
                 <TrackedLink to={`/contact?focus=${pipelineSetup.focus}`} eventSource="cicd-setup-enquiry" className="inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 text-sm font-bold text-brand-off-white transition hover:bg-brand-teal">
                   {pipelineSetup.action}<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
                 </TrackedLink>
                 <TrackedLink to={`/services#${pipelineSetup.focus}`} eventName="Service Click" eventSource="cicd-setup-scope" className="font-semibold underline underline-offset-4">Full scope and pricing terms</TrackedLink>
               </div>
+              <p className="mt-6 leading-relaxed">See how we check a Lambda release and switch back when it fails. <TrackedLink to="/blog/aws-lambda-rollback-github-actions" eventName="Article Click" eventSource="cicd-setup-rollback-guide" className="font-semibold underline underline-offset-4">Read the Lambda rollback guide</TrackedLink>.</p>
             </div>
             <div>
               <h3 className="text-xl font-bold">What we need before starting</h3>
-              <p className="mt-4 leading-relaxed text-brand-teal">{pipelineSetup.inputs}</p>
+              <p className="mt-4 leading-relaxed text-brand-navy">{pipelineSetup.inputs}</p>
               <h3 className="mt-7 text-xl font-bold">What needs a separate quote</h3>
-              <p className="mt-4 leading-relaxed text-brand-teal">{pipelineSetup.exclusions}</p>
-              <p className="mt-7 border-t border-brand-navy/15 pt-5 text-sm leading-relaxed text-brand-teal">Prices are in US dollars. Applicable taxes, AWS and CI usage, and third-party licenses are additional. Delivery starts after the scope is agreed and required access and inputs are ready.</p>
+              <p className="mt-4 leading-relaxed text-brand-navy">{pipelineSetup.exclusions}</p>
+              <p className="mt-7 border-t border-brand-navy/15 pt-5 text-sm leading-relaxed text-brand-navy">Prices are in US dollars. Applicable taxes, AWS and CI usage, and third-party licenses are additional. Delivery starts after the scope is agreed and required access and inputs are ready.</p>
             </div>
           </div>
         </section>
@@ -158,10 +159,10 @@ export default function CICDAutomation() {
         <section className="bg-brand-mint/40 px-6 py-20">
           <div className="mx-auto max-w-6xl">
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Work with the tools you already use</h2>
-            <p className="mt-5 max-w-3xl leading-relaxed text-brand-teal">The right starting point is your current release path. A tool migration is a separate decision, based on the constraints it would solve.</p>
+            <p className="mt-5 max-w-3xl leading-relaxed text-brand-navy">The right starting point is your current release path. A tool migration is a separate decision, based on the constraints it would solve.</p>
             <div className="mt-10 grid gap-8 md:grid-cols-3">
               {tools.map(([title, text]) => (
-                <article key={title} className="border-t border-brand-navy/20 pt-6"><h3 className="text-xl font-bold">{title}</h3><p className="mt-3 leading-relaxed text-brand-teal">{text}</p></article>
+                <article key={title} className="border-t border-brand-navy/20 pt-6"><h3 className="text-xl font-bold">{title}</h3><p className="mt-3 leading-relaxed text-brand-navy">{text}</p></article>
               ))}
             </div>
           </div>

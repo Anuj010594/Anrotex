@@ -77,7 +77,7 @@ export default function AwsCostReductionBlog() {
         ctaLabel="Explore the AWS cost review"
       >
         <div className="rounded-[1.75rem] border border-brand-navy/10 bg-brand-stone/55 p-6 md:p-8">
-          <p className="m-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-teal">
+          <p className="m-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-navy">
             The short answer
           </p>
           <p className="mt-3 text-xl font-semibold leading-relaxed text-brand-navy">
@@ -149,7 +149,7 @@ export default function AwsCostReductionBlog() {
         </section>
 
         <section aria-labelledby="aws-review-heading" className="mt-8 rounded-[1.75rem] border border-brand-navy/15 bg-brand-stone/55 p-6 md:p-8">
-          <p className="!m-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-teal">{awsReview.name}</p>
+          <p className="!m-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-navy">{awsReview.name}</p>
           <h2 id="aws-review-heading" className="!pt-4">Want help reducing your AWS bill?</h2>
           <p>{awsReview.scope} Get a review of costs, access and reliability, a practical action plan and a 60-minute walkthrough.</p>
           <p><strong>{awsReview.price} one-time fee · {awsReview.days} business days</strong> after the scope is agreed and required access and inputs are ready. We use agreed read-only access or exports. Infrastructure changes are quoted separately.</p>

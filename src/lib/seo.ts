@@ -4,6 +4,13 @@ export const DEFAULT_OG_IMAGE = `${SITE_URL}/og.png`;
 
 export type JsonLd = Record<string, unknown>;
 
+export const guideReviewer = {
+  "@type": "Person",
+  name: "Anuj Dhadge",
+  jobTitle: "Co-Founder · DevOps Engineer",
+  url: "https://www.linkedin.com/in/anuj-dhadge-929963408/",
+};
+
 export const organizationSchema: JsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -118,7 +125,9 @@ export function articleSchema({
       "@id": `${SITE_URL}/#organization`,
     },
     mainEntityOfPage: {
+      "@type": "WebPage",
       "@id": `${SITE_URL}${path}#webpage`,
+      reviewedBy: guideReviewer,
     },
     inLanguage: "en",
   };

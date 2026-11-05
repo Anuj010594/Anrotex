@@ -54,6 +54,10 @@ for (const url of urls) {
     assert(schema["@type"], `Invalid structured data: ${url.pathname}`);
     if (schema["@type"] === "BlogPosting") {
       assert.equal(schema.image, image, `Mismatched article image: ${url.pathname}`);
+      const reviewer = schema.mainEntityOfPage.reviewedBy;
+      assert.equal(schema.mainEntityOfPage["@type"], "WebPage", `Reviewer must describe the page: ${url.pathname}`);
+      assert.equal(reviewer?.["@type"], "Person", `Missing engineer credit: ${url.pathname}`);
+      assert(html.includes(`href="${reviewer.url}"`) && html.includes(reviewer.name) && html.includes(reviewer.jobTitle), `Reviewer must match the visible credit: ${url.pathname}`);
     }
   }
   for (const [, href] of html.matchAll(/href="((?:\/|#)[^"]*)"/g)) {
@@ -124,7 +128,7 @@ for (const [name, html] of [["Homepage", homepage], ["Services", services], ["CI
 for (const focus of ["aws-review", "cicd-setup", "terraform-foundation"]) {
   assert(homepage.includes(`href="/services#${focus}"`), `Homepage: missing starting project ${focus}`);
 }
-for (const [name, html] of [["Portfolio", portfolio], ["Insights", blog], ["CI/CD guide", cicdGuide]]) {
+for (const [name, html] of [["Portfolio", portfolio], ["Insights", blog], ["CI/CD guide", cicdGuide], ["CI/CD service", cicd]]) {
   assert(html.includes('href="/blog/aws-lambda-rollback-github-actions"'), `${name}: missing Lambda walkthrough`);
 }
 for (const [name, html] of [["Portfolio", portfolio], ["Lambda guide", lambdaGuide]]) {

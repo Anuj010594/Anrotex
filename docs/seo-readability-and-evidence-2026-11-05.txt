@@ -1,0 +1,62 @@
+Guide readability and engineering evidence — 5 November 2026
+
+Prepared on main, based on 259b627. Publication requires a separately approved
+one-push administrator exception; no protection setting was changed here.
+
+Changes
+- Darkened shared guide dates, reading time, contents labels and numbers.
+  Plain article links now use navy text and a matching visible underline.
+  Darkened small labels on shaded cards in the AWS, CI/CD and Kubernetes guides.
+  Corrected shaded-panel text on the CI/CD service and Cloud Operations pages.
+- Added Anuj Dhadge as technical reviewer on the four existing guides, following
+  the owner's confirmation in this chat. His existing public role and LinkedIn
+  profile are used. Organizational authorship remains unchanged. The linked
+  WebPage in article structured data carries the matching reviewedBy Person;
+  this does not misidentify the reviewer as the original author.
+- Added a tracked link beside the CI/CD Pipeline Setup offer to the Lambda
+  rollback guide. It uses the existing Article Click event and the source
+  cicd-setup-rollback-guide.
+- Changed the CI/CD search/social description to describe the one-app starting
+  offer: build checks, AWS staging, rollback testing, documentation and handover.
+  Its US$1,500 price comes from the existing shared offer data.
+- Added dated results from the downloadable rollback package to the Lambda
+  guide, and linked those results from the Cloud Operations project. The project
+  retains its distinct 27 October test record. Lambda and project sitemap dates
+  are 5 November; the Lambda visible and structured update dates agree.
+
+Evidence and limits
+- Ran scripts/check-downloads.py with Python 3.14.6 against a newly extracted
+  copy of the downloadable ZIP. All 23 tests passed on 5 November 2026.
+  Archive contents and checksums matched; package rejection checks also passed.
+  Raw results: docs/analytics/2026-11-05/readability/download-test-results.txt.
+- Tests use simulated AWS/application responses and block sockets. They prove
+  release decisions and requested API calls, not live AWS recovery or timing.
+  No AWS call, resource creation, enquiry or production-data operation was run.
+- The owner previously reported that AWS testing was successful. The local
+  preparation record has no completed AWS run, and no cloud evidence has been
+  supplied for this batch. Requested the date, fault and recovery record before
+  publishing a live-AWS result. The website does not invent such a result.
+- The existing 27 October project evidence records 26 tests, Terraform validation
+  and six assertions. The new copy describes the scope of that particular run
+  instead of claiming that every later AWS test is still outstanding.
+
+Verification
+- Production build, application/API TypeScript, targeted ESLint, all 17 existing
+  application tests and SEO checks across 19 prerendered routes passed.
+- Added SEO checks for agreement between the visible engineer credit and the
+  structured reviewer, and the CI/CD service link to the Lambda guide.
+- Browser inspection on desktop and a 390px phone viewport (375px content width)
+  covered all four guides and the CI/CD service. No horizontal page overflow
+  was observed at phone width. Project evidence and the links were also checked.
+- Computed-style contrast checks found no remaining normal-state text failures
+  on these pages. Previously failing AWS date text increased from 4.33:1 to
+  11.94:1; labels on stone panels from 4.49:1 to 10.42:1; article links on mint
+  from 3.48:1 to 8.08:1. Checks blend ancestor background colors; they are not a
+  complete accessibility certification. This task did not rerun public PSI.
+- Fresh prerendered-route previews showed no browser console errors. Keyboard
+  activation reached the Lambda guide and its dated results section. Local
+  preview URLs used analytics=off, and no enquiry was submitted.
+- No new packages, changes to executable downloads, new branches or unrelated
+  work are included. Existing LinkedIn draft changes were preserved.
+
+Reference for reviewer markup: https://schema.org/reviewedBy

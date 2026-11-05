@@ -64,7 +64,7 @@ export default function CICDBestPractices() {
         ctaLabel="Discuss your pipeline"
       >
         <div className="rounded-[1.75rem] border border-brand-navy/10 bg-brand-stone/55 p-6 md:p-8">
-          <p className="!mt-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-teal">A reliable release starts here</p>
+          <p className="!mt-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-navy">A reliable release starts here</p>
           <p className="mt-3 text-xl font-semibold leading-relaxed text-brand-navy">
             Check every change, build from a known commit, control access to
             production, and confirm that the application works after deployment.
@@ -308,7 +308,7 @@ export default function CICDBestPractices() {
         </ul>
 
         <div className="mt-14 rounded-[1.75rem] border border-brand-navy/10 bg-brand-stone/55 p-6 md:p-8">
-          <p className="!mt-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-teal">Improve your release process</p>
+          <p className="!mt-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-navy">Improve your release process</p>
           <h2 className="!pt-4">Spend less time fixing deployments.</h2>
           <p>
             Anrotex helps teams improve GitHub Actions, GitLab CI/CD, and Jenkins
