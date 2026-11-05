@@ -4,8 +4,10 @@ import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
 import DownloadNotice from "@/components/DownloadNotice";
 import { articleSchema, breadcrumbSchema, SITE_URL } from "@/lib/seo";
+import { STARTING_PROJECTS } from "@/lib/starting-projects";
 
 const sharingImage = `${SITE_URL}/images/og/aws-cost-guide.png`;
+const [awsReview] = STARTING_PROJECTS;
 
 const toc = [
   { id: "why-bill-increased", label: "Find why your AWS bill increased" },
@@ -51,7 +53,7 @@ export default function AwsCostReductionBlog() {
               "Trace an AWS bill increase, choose which costs to investigate, and plan changes with an EC2 example and a free cost-review worksheet.",
             path: "/blog/reduce-aws-costs",
             datePublished: "2026-06-16",
-            dateModified: "2026-10-30",
+            dateModified: "2026-11-05",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -66,7 +68,7 @@ export default function AwsCostReductionBlog() {
         title="How to reduce AWS costs: a practical checklist"
         description="Find which charges are driving your AWS bill, choose the changes worth testing, and measure the result. Start with unused resources, then review capacity, storage, network costs and commitments."
         published="16 June 2026"
-        updated="30 October 2026"
+        updated="5 November 2026"
         readTime="16 minute read"
         toc={toc}
         ctaTitle="Find the waste in your AWS estate."
@@ -144,6 +146,20 @@ export default function AwsCostReductionBlog() {
           </TrackedLink>
           <p className="!mb-0 text-sm">Editable Excel workbook. No email required. Save one copy per workload and proposed change.</p>
           <DownloadNotice />
+        </section>
+
+        <section aria-labelledby="aws-review-heading" className="mt-8 rounded-[1.75rem] border border-brand-navy/15 bg-brand-stone/55 p-6 md:p-8">
+          <p className="!m-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-teal">{awsReview.name}</p>
+          <h2 id="aws-review-heading" className="!pt-4">Want help reducing your AWS bill?</h2>
+          <p>{awsReview.scope} Get a review of costs, access and reliability, a practical action plan and a 60-minute walkthrough.</p>
+          <p><strong>{awsReview.price} one-time fee · {awsReview.days} business days</strong> after the scope is agreed and required access and inputs are ready. We use agreed read-only access or exports. Infrastructure changes are quoted separately.</p>
+          <div className="mt-6 flex flex-wrap items-center gap-5">
+            <TrackedLink to={`/contact?focus=${awsReview.focus}`} eventSource="aws-guide-review-enquiry" className="inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 text-sm font-bold !text-brand-off-white !no-underline transition hover:bg-brand-teal">
+              {awsReview.action}<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+            </TrackedLink>
+            <TrackedLink to={`/services#${awsReview.focus}`} eventName="Service Click" eventSource="aws-guide-review-offer" className="font-semibold underline underline-offset-4">See the full scope and pricing terms</TrackedLink>
+          </div>
+          <p className="!mb-0 text-sm">Prices are in US dollars. Applicable taxes and cloud usage are additional. Savings depend on the findings and any later changes you choose to make.</p>
         </section>
 
         <h2 id="baseline">1. Build a trustworthy AWS cost baseline</h2>
@@ -636,26 +652,7 @@ export default function AwsCostReductionBlog() {
         </ul>
 
         <div className="mt-14 rounded-[2rem] bg-brand-mint p-7 md:p-10">
-          <p className="!m-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-navy">
-            Turn the guide into an action plan
-          </p>
-          <h2 className="!pt-4">Want help deciding what to fix first?</h2>
-          <p>
-            Our US$500 AWS Infrastructure Review covers one workload in one
-            account and primary region, with up to 20 agreed resources. Get an
-            architecture overview, prioritized cost, access and reliability
-            findings, and a walkthrough. The review uses read-only access;
-            implementation is scoped separately.
-          </p>
-          <TrackedLink
-            to="/services#aws-review"
-            eventName="Service Click"
-            eventSource="aws-guide-review-offer"
-            className="mt-7 inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 text-sm font-bold text-brand-off-white"
-          >
-            See the review scope and next step
-            <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
-          </TrackedLink>
+          <h2 className="!pt-0">Need a review across your wider platform?</h2>
           <p>
             Reviewing several accounts or a wider platform?{" "}
             <TrackedLink to="/aws-cost-optimization" eventName="Service Click" eventSource="aws-guide-bottom">
