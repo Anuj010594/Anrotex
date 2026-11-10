@@ -37,7 +37,7 @@ export default function AwsCostReductionBlog() {
   return (
     <>
       <SEO
-        title="How to Reduce AWS Costs: A Practical Checklist | Anrotex"
+        title="Reduce AWS Costs: Checklist & Free Worksheet | Anrotex"
         description="Find why your AWS bill increased, check EC2, storage and network costs, and plan safer savings with a practical checklist and free cost-review worksheet."
         path="/blog/reduce-aws-costs"
         type="article"
@@ -53,7 +53,7 @@ export default function AwsCostReductionBlog() {
               "Trace an AWS bill increase, choose which costs to investigate, and plan changes with an EC2 example and a free cost-review worksheet.",
             path: "/blog/reduce-aws-costs",
             datePublished: "2026-06-16",
-            dateModified: "2026-11-05",
+            dateModified: "2026-11-10",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -68,7 +68,7 @@ export default function AwsCostReductionBlog() {
         title="How to reduce AWS costs: a practical checklist"
         description="Find which charges are driving your AWS bill, choose the changes worth testing, and measure the result. Start with unused resources, then review capacity, storage, network costs and commitments."
         published="16 June 2026"
-        updated="5 November 2026"
+        updated="10 November 2026"
         readTime="16 minute read"
         toc={toc}
         ctaTitle="Find the waste in your AWS estate."
@@ -85,6 +85,19 @@ export default function AwsCostReductionBlog() {
             resources that provide no value, right-size compute and storage using
             utilization data, then introduce commitments and guardrails.
           </p>
+          <div className="mt-6 border-t border-brand-navy/15 pt-6">
+            <h2 className="!pt-0 !text-xl">Start with one cost change</h2>
+            <p>Use the free worksheet to work through a change before you commit to it. For a smaller EC2 instance:</p>
+            <ol>
+              <li><strong>Record the cost.</strong> Compare the current and proposed instance costs using your AWS rates and existing commitments.</li>
+              <li><strong>Set the checks.</strong> Agree acceptable response times, memory use and recovery checks before testing the smaller size.</li>
+              <li><strong>Measure the result.</strong> Compare actual costs and workload volume after the change. Keep the previous configuration ready if the checks fail.</li>
+            </ol>
+            <TrackedLink to="#worksheet" eventSource="aws-guide-worksheet-intro" className="inline-flex items-center gap-2 font-bold underline underline-offset-4">
+              Get the free cost-review worksheet <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+            </TrackedLink>
+            <p className="!mb-0 text-sm">Editable Excel workbook. No email required.</p>
+          </div>
         </div>
 
         <h2 id="why-bill-increased">Why did your AWS bill increase?</h2>

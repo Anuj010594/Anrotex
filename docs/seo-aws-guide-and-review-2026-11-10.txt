@@ -1,0 +1,94 @@
+AWS guide, review offer and indexing follow-up — 10 November 2026
+
+Prepared on main from dca2ae7. Publication is pending a new one-push
+administrator exception. No branch protection has been changed.
+
+Website changes
+- Changed the AWS guide's search/social title to:
+  Reduce AWS Costs: Checklist & Free Worksheet | Anrotex
+  The URL, main article heading, search description and existing cost advice
+  remain stable so this is a focused title/presentation change.
+- Added an opening walkthrough showing how to use the existing worksheet for
+  one EC2 change: record the costs, agree performance/recovery checks and
+  compare actual costs against workload volume. Added a tracked link to the
+  existing download section. The workbook remains free without an email gate.
+  No client saving, new benchmark or guaranteed result is claimed.
+- Added the existing US$500 AWS Infrastructure Review to the AWS service page,
+  immediately after the hero, with an introductory hero link. Price, duration,
+  scope, deliverables, required inputs, exclusions and enquiry destination use
+  the same STARTING_PROJECTS record as the existing offers.
+- Clearly separated this one-workload review from a separately quoted broader
+  cost audit. Added a heading above the broader audit details and clarified the
+  pricing FAQ. The existing custom-audit enquiry remains available.
+- Reused existing CTA/service event handling and the preselected aws-review
+  form. No analytics code, form logic, dependency or executable download changed.
+- Updated only the two changed URLs' sitemap dates. The guide's visible and
+  structured modification dates agree with its sitemap date, 10 November.
+- Added public copy uses ordinary visitor language; no editorial/internal
+  labels or unverified outcome statements were introduced.
+
+Indexing follow-up completed
+- Services still reports Discovered - currently not indexed, with last crawl
+  N/A in the indexed record. Google's live test at 13:04:52 on 10 November
+  (time displayed by Search Console) successfully fetched it as the Google
+  Inspection Tool smartphone. Crawl allowed: Yes; indexing allowed: Yes;
+  canonical: https://www.anrotex.com/services; one valid breadcrumb item.
+  Google's screenshot visibly renders the correct Services page.
+- The accepted 5 November Services indexing request was not repeated. Its
+  canonical, links and sitemap entry were retained. No blocker was observed
+  that justified changing that page merely to encourage a crawl.
+- Lambda also reports Discovered - currently not indexed in its indexed
+  record. Google's live test at 13:07:17 on 10 November successfully fetched
+  and rendered the article, with crawl/indexing allowed and its expected
+  canonical. One valid breadcrumb item was detected.
+- Requested indexing once for Lambda after the successful live test. Google
+  confirmed that the URL was added to a priority crawl queue. No challenge
+  requiring human CAPTCHA input appeared. A request is not proof of indexing.
+- Live tests do not establish why Google has not selected either page for
+  indexing or when it will do so. Historical server crawl logs were not used.
+
+Validation
+- Production build, application/API TypeScript and targeted ESLint passed.
+- All 17 existing tests passed (analytics, enquiry delivery/security and
+  load-error handling).
+- SEO verification passed across 19 prerendered pages, hosting routes, metadata,
+  canonical links, downloads, structured data and offer/enquiry destinations.
+- Checked the new title, worksheet anchor, both AWS enquiry routes, offer copy,
+  unique HTML IDs and absence of the prohibited editorial labels in built HTML.
+- Desktop and 390x844 mobile preview checked. Both changed pages fit within
+  the 375px mobile content width without horizontal page overflow.
+- Guide introduction -> worksheet anchor works. The US$500 review button opens
+  the existing form with AWS Infrastructure Review selected and the correct
+  price, scope and tailored prompt. No enquiry was submitted.
+- Preview uses analytics=off; localhost is also excluded by existing tracking.
+- A first no-trailing-slash Vite preview URL served the homepage fallback and
+  caused hydration warnings. Verification then used the actual prerendered
+  directory route; its fresh console was clean. Production already rewrites
+  each canonical route to its matching prerendered HTML.
+- Temporary mobile viewport restored. Existing unrelated LinkedIn draft edits
+  are preserved and excluded from the release.
+
+Evidence
+docs/analytics/2026-11-10/aws-batch/
+  services-live-test.txt and services-google-rendered.png
+  lambda-live-test.txt and lambda-google-rendered.png
+  lambda-indexing-requested.txt and lambda-indexing-requested.png
+  aws-offer-desktop.png, aws-offer-mobile.png and aws-guide-mobile.png
+  aws-review-enquiry.txt
+  protection-before.json
+
+Publication
+GitHub CLI identity: Anuj010594. Remote main still matches the starting commit.
+Main enforces administrators, one approving review and strict backend/frontend/
+terraform checks. No force push, branch creation or protection change was made.
+Publishing this prepared batch directly to main requires a fresh, specific
+administrator-exception approval; all previous exceptions covered earlier pushes.
+After approval, restore and compare every original protection setting, then
+verify the Vercel production deployment and live title/offer/enquiry paths.
+
+Measure after recrawling
+Record the first reported crawl of the updated AWS guide. Compare two complete
+weeks directionally and four weeks more fully, keeping URL, query and market
+scope consistent. Track guide clicks and positions, worksheet activity, review
+clicks, form starts and confirmed enquiries using existing reports. Do not
+attribute an immediate daily impression jump to this release without evidence.

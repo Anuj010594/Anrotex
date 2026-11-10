@@ -18,6 +18,9 @@ import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
 import { breadcrumbSchema, serviceSchema } from "@/lib/seo";
+import { STARTING_PROJECTS } from "@/lib/starting-projects";
+
+const [awsReview] = STARTING_PROJECTS;
 
 const reviewAreas = [
   {
@@ -126,7 +129,7 @@ const faqs = [
   {
     question: "Is the AWS Cost Optimization Audit free?",
     answer:
-      "The initial fit call is free. If the audit is a good fit, we provide a fixed-scope proposal based on the accounts, services, and decision your team needs to make.",
+      `The initial fit call is free. For one workload, the ${awsReview.name} costs ${awsReview.price} and covers costs, access and reliability within the scope shown above. A broader cost audit is quoted separately based on the accounts, services and decisions involved.`,
   },
   {
     question: "How much can the audit save?",
@@ -218,6 +221,9 @@ export default function AwsCostOptimization() {
               <p className="mt-5 text-sm font-semibold text-brand-navy/60">
                 Free fit call · Fixed-scope proposal · Read-only discovery
               </p>
+              <p className="mt-5 max-w-xl leading-relaxed text-brand-navy">
+                Reviewing one workload? <TrackedLink to={`#${awsReview.focus}`} eventSource="aws-audit-review-intro" className="font-semibold underline underline-offset-4">See the {awsReview.price} {awsReview.name}</TrackedLink> for costs, access and reliability.
+              </p>
               <p className="mt-6 max-w-xl leading-relaxed text-brand-teal">
                 Preparing your own review? <TrackedLink to="/blog/reduce-aws-costs#worksheet" eventName="Article Click" eventSource="aws-audit-worksheet" className="font-semibold text-brand-navy underline underline-offset-4">Get the free cost-review worksheet</TrackedLink> to record your baseline, compare a proposed change and measure the result.
               </p>
@@ -255,7 +261,38 @@ export default function AwsCostOptimization() {
           </div>
         </section>
 
+        <section id={awsReview.focus} aria-labelledby="aws-review-heading" className="scroll-mt-28 bg-brand-mint px-6 py-16 md:py-20">
+          <div className="container grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+            <div>
+              <p className="text-sm font-bold text-brand-navy">Start with one workload</p>
+              <h2 id="aws-review-heading" className="mt-4 text-3xl font-bold tracking-tight text-brand-navy md:text-4xl">{awsReview.name}</h2>
+              <p className="mt-5 text-3xl font-bold text-brand-navy">{awsReview.price}<span className="ml-2 text-base font-normal">one-time fee</span></p>
+              <p className="mt-3 font-semibold text-brand-navy">{awsReview.days} business days after scope, access and inputs are agreed.</p>
+              <p className="mt-5 leading-relaxed text-brand-navy">{awsReview.scope}</p>
+              <p className="mt-4 leading-relaxed text-brand-navy">For a broader cost audit across workloads or accounts, we agree a separate scope and price.</p>
+              <TrackedLink to={`/contact?focus=${awsReview.focus}`} eventSource="aws-audit-review-enquiry" className="mt-7 inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 font-bold text-brand-off-white transition hover:bg-brand-teal">
+                {awsReview.action}<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+              </TrackedLink>
+            </div>
+            <div className="rounded-3xl border border-brand-navy/15 bg-brand-off-white p-6 md:p-8">
+              <h3 className="text-xl font-bold text-brand-navy">What you receive</h3>
+              <ul className="mt-4 space-y-3">
+                {awsReview.deliverables.map((deliverable) => (
+                  <li key={deliverable} className="flex gap-3 leading-relaxed text-brand-navy"><Check className="mt-1 h-4 w-4 shrink-0" aria-hidden="true" /><span>{deliverable}</span></li>
+                ))}
+              </ul>
+              <h3 className="mt-6 font-bold text-brand-navy">What we need from you</h3>
+              <p className="mt-2 leading-relaxed text-brand-navy">{awsReview.inputs}</p>
+              <h3 className="mt-6 font-bold text-brand-navy">Outside this review</h3>
+              <p className="mt-2 leading-relaxed text-brand-navy">{awsReview.exclusions}</p>
+              <TrackedLink to={`/services#${awsReview.focus}`} eventName="Service Click" eventSource="aws-audit-review-scope" className="mt-6 inline-flex items-center gap-2 font-semibold text-brand-navy underline underline-offset-4">See the full scope and pricing terms<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></TrackedLink>
+            </div>
+          </div>
+          <p className="container mt-6 text-sm leading-relaxed text-brand-navy">Prices are in US dollars. Applicable taxes and cloud usage are additional. We confirm fit and agree the scope in writing before work starts.</p>
+        </section>
+
         <section className="border-y border-brand-navy/10 bg-brand-stone px-6 py-14">
+          <h2 className="container mb-8 text-2xl font-bold text-brand-navy">For a broader AWS cost audit</h2>
           <div className="container grid gap-8 md:grid-cols-3">
             <div>
               <p className="text-4xl font-bold tracking-[-0.04em]">3–7 days</p>
