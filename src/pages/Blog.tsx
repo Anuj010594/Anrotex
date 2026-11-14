@@ -8,13 +8,26 @@ import { breadcrumbSchema } from "@/lib/seo";
 
 const posts = [
   {
+    topic: "AWS deployments",
+    problem: "Know how to switch back when a Lambda release fails.",
+    title: "AWS Lambda Deployment Rollback with GitHub Actions",
+    description: "Check a new version before using it and plan how to recover if it fails. Includes Python code, a diagram and tests to run on your computer.",
+    link: "/blog/aws-lambda-rollback-github-actions",
+    sections: [
+      { id: "release-path", label: "See how the release works" },
+      { id: "promotion", label: "Read the Python release code" },
+      { id: "test-rollback", label: "Download and run the rollback tests" },
+    ],
+  },
+  {
     topic: "AWS costs",
-    problem: "Understand where your AWS budget goes.",
+    problem: "Find why your AWS bill increased.",
     title: "How to Reduce AWS Costs: A Practical Checklist",
     description:
-      "Use the free cost-review worksheet, follow a worked EC2 example, and measure savings across compute, storage, and network costs.",
+      "Trace the charges that changed, choose which costs to review first, and use the free worksheet to plan changes and measure savings.",
     link: "/blog/reduce-aws-costs",
     sections: [
+      { id: "why-bill-increased", label: "Find the cause of a higher AWS bill" },
       { id: "worksheet", label: "Get the cost-review worksheet" },
       { id: "rightsizing-example", label: "Work through an EC2 savings example" },
     ],
@@ -65,7 +78,7 @@ export default function Blog() {
         <section aria-labelledby="engineering-guides" className="px-6 pb-20 md:pb-28">
           <div className="container">
             <h2 id="engineering-guides" className="mb-8 text-2xl font-bold tracking-tight">Choose a guide for your next decision.</h2>
-            <div className="grid gap-6 lg:grid-cols-3">
+            <div className="grid gap-6 lg:grid-cols-2">
               {posts.map((post) => (
                 <article
                   key={post.title}

@@ -2,15 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.anrotex.com/</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-11-03</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/services</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-11-03</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/solutions</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-10-22</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/case-studies</loc>
@@ -22,11 +22,11 @@
   </url>
   <url>
     <loc>https://www.anrotex.com/contact</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-10-27</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/aws-cost-optimization</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-11-10</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/kubernetes-scaling</loc>
@@ -34,7 +34,7 @@
   </url>
   <url>
     <loc>https://www.anrotex.com/ci-cd-automation</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-11-05</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/devops-consulting</loc>
@@ -42,18 +42,38 @@
   </url>
   <url>
     <loc>https://www.anrotex.com/blog</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-11-03</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/blog/reduce-aws-costs</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-11-10</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/blog/cicd-best-practices</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-11-03</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/blog/kubernetes-scaling-best-practices</loc>
     <lastmod>2026-10-07</lastmod>
+  </url>
+  <url>
+    <loc>https://www.anrotex.com/portfolio/cloud-operations</loc>
+    <lastmod>2026-11-05</lastmod>
+  </url>
+  <url>
+    <loc>https://www.anrotex.com/blog/aws-lambda-rollback-github-actions</loc>
+    <lastmod>2026-11-05</lastmod>
+  </url>
+  <url>
+    <loc>https://www.anrotex.com/privacy-policy</loc>
+    <lastmod>2026-11-03</lastmod>
+  </url>
+  <url>
+    <loc>https://www.anrotex.com/terms-of-use</loc>
+    <lastmod>2026-11-03</lastmod>
+  </url>
+  <url>
+    <loc>https://www.anrotex.com/downloads-policy</loc>
+    <lastmod>2026-11-03</lastmod>
   </url>
 </urlset>

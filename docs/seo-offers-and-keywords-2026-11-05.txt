@@ -1,0 +1,165 @@
+Anrotex offers, indexing follow-up and keyword priorities
+5 November 2026 — prepared on main
+
+Implemented
+- Moved the existing US$500 AWS Infrastructure Review offer from the end of
+  the AWS cost guide to immediately after its free worksheet section, before
+  the detailed cost-baseline instructions. Added a direct enquiry link that
+  selects AWS Infrastructure Review, retaining the full-scope link and the
+  separate route for a wider audit. The worksheet remains available without
+  an email address.
+- Added the existing US$1,500 CI/CD Pipeline Setup immediately below the
+  CI/CD service introduction. It includes the one-application staging scope,
+  ten-business-day delivery basis, prerequisites, exclusions, handover and
+  direct enquiry link. The hero links to this offer and the pricing FAQ now
+  explains the fixed-scope option alongside separately quoted work.
+- Name, price, delivery days, scope and enquiry choices reuse STARTING_PROJECTS.
+  Existing TrackedLink events handle the new routes. New CTA sources are
+  aws-guide-review-enquiry and cicd-setup-enquiry; full CI/CD scope uses
+  cicd-setup-scope. The existing aws-guide-review-offer source is retained.
+- Updated sitemap lastmod for only the two edited pages, plus the AWS guide's
+  visible update date and BlogPosting dateModified. Titles, descriptions,
+  canonical URLs, existing terms, downloads and measurement settings remain
+  unchanged. No dependencies or branches added.
+
+Services indexing follow-up — completed
+A fresh inspection reported 'Discovered - currently not indexed', recognized
+the submitted sitemap and referring AWS/Kubernetes service pages, and still
+had no recorded crawl. This differs from the earlier same-day 'unknown to
+Google' response; the reporting difference's cause is not established.
+After the user authorized this follow-up, requested indexing exactly once
+for https://www.anrotex.com/services. Google completed its live eligibility
+test and displayed 'Indexing requested', confirming addition to its priority
+crawl queue. No CAPTCHA challenge was completed by the agent. This is an
+accepted request, not confirmation of indexing. The Services page itself is
+unchanged by this code batch, so there is no reason to request it again after
+publishing these two other page edits.
+The existing sitemap is valid and registered; no sitemap or canonical fix
+was invented and no repeated sitemap submission was made.
+
+Keyword analysis
+Evidence: Search Console Web, main www site, all countries/devices. Latest
+complete 28 days: 6 October–2 November; latest 7 days: 27 October–2 November.
+All figures below are this site's reported impressions, not total search
+volume. Visible query rows omit some searches. No keyword-volume provider,
+paid keyword tool, current competitor SERP study or country-specific volume
+estimate was used. These priorities are evidence-based opportunities, not
+forecasts or promises of increased traffic.
+
+Priority 1 — reduce aws bill / reduce aws costs
+28 days: 136 impressions at position 19.5 / 123 at 22.3; zero reported clicks.
+Latest week: 27 at 13.2 / 29 at 17.3, versus 24 at 20.3 / 18 at 19.9.
+Why: the largest observed search exposure and clear relevance to the cost
+review. These phrases show a problem to solve, though they do not establish
+an intention to hire a consultancy.
+Destination: /blog/reduce-aws-costs, then the existing AWS review.
+Implementation: the guide already uses both costs/bill naturally, explains
+how to investigate a bill increase and includes EC2/storage/network checks.
+The new early offer makes paid help visible after the useful free resource.
+Do not create separate pages for reduce aws cost, reduce your aws bill and
+aws cost reduction: they largely describe the same need.
+Next possible search-snippet experiment, after adequate post-crawl data:
+  Reduce Your AWS Bill: Checklist & Cost Worksheet | Anrotex
+This is a candidate only. No title change has been implemented in this batch.
+Google chooses the displayed title/snippet and can rewrite either.
+
+Priority 2 — ci/cd automation services
+28 days: 31 impressions, position 41.8, zero reported clicks.
+Latest week: 7 at 23.7, versus 17 at 39.3. Better average position alongside
+fewer impressions is not evidence that all rankings or demand improved.
+Why: the phrase explicitly seeks a service and fits the scoped pipeline offer.
+Destination: /ci-cd-automation. Its existing title already targets the phrase.
+Implementation: clearly present price, scope, requirements and a direct
+pipeline-setup enquiry; keep broader consulting available for other needs.
+Supporting phrases to validate: CI/CD pipeline setup, GitHub Actions pipeline
+setup, GitHub Actions consulting. These fit the service but do not have
+established demand in the current visible query table. Do not report a search
+volume or build three near-duplicate pages around them.
+
+Priority 3 — how to reduce ec2 costs / reduce ec2 bill
+Core three-query set (also lower ec2 costs quickly): 40 impressions total,
+zero clicks, individual 28-day positions 9.2 / 7.4 / 7.6 respectively.
+Latest week: only reduce ec2 bill has impressions (3, position 10.3); the
+other two have none. Their earlier near-top-ten averages are not a current
+ranking guarantee or sufficient evidence for a separate article.
+Destination: the existing AWS guide's EC2 and worked-example sections.
+Action: retain the explicit heading, calculations and performance checks;
+watch whether exposure returns. Avoid promising instant savings or using
+'quickly' as a claim. No additional EC2 article is recommended now.
+
+Priority 4 — AWS cost audit / AWS cost optimization audit
+The reported related query cloud cost optimization audit has only two
+impressions at position 88.5 and no clicks. The exact proposed variants do
+not have demonstrated volume in the available table.
+Destination: /aws-cost-optimization, with the smaller review distinguished
+from its wider audit. This is a commercial-intent hypothesis, not a current
+traffic winner. Strengthen existing service evidence and relevant links
+before creating another service page.
+
+Supporting audience and project phrases
+- DevOps consulting for small product teams / development agencies: useful
+  buyer-fit language on Home, Services and DevOps consulting. No visible
+  exact-query evidence establishes their volume; the DevOps page's one click
+  cannot be assigned to a disclosed keyword.
+- AWS Lambda rollback with GitHub Actions / test Lambda deployment rollback:
+  precise fit for the original project and new article. Published 3 November,
+  after the current GSC window, so search performance is not yet measurable.
+  Promote the useful article and retain its pipeline-setup link; do not
+  broaden it into unrelated Lambda topics solely to add keywords.
+- Kubernetes autoscaling best practices: 11 impressions at 43.1 across 28
+  days, none in the latest week. Keep the existing guide; lower near-term
+  priority than the AWS and CI/CD paths.
+- aws kosten senken: 30 impressions at 47.5, nine at 64.4 in the latest week.
+  German-language exposure alone does not justify German text mixed into an
+  English page or a rushed translation. A localized page would need verified
+  demand, fluent review and a suitable delivery/customer experience.
+
+Application rules
+Use one main purpose per page. Article pages answer the technical question;
+service pages explain the work Anrotex can deliver. Do not repeat variants
+to increase keyword density, add meta-keywords tags, invent city offices or
+create separate pages for each of the nine markets. The current all-country
+data does not establish demand in any individual target market. Review
+country/device breakdowns as more relevant traffic accumulates.
+
+Measurement
+Before interpreting results, confirm a new crawl of the edited pages and
+Services inclusion separately. Record the production release date. Compare
+the first complete seven-day period directionally, then a complete 28-day
+post-release period with processing allowed. Compare the same query groups,
+pages, countries and devices; report absent query rows as unknown, not zero
+rank. Use impressions, clicks and CTR alongside position.
+Use the existing GA4 reports for offer clicks, selected service, form starts,
+confirmed submissions and errors, excluding qa. Confirm received enquiries
+and buyer fit separately. One LinkedIn-attributed form start and no recorded
+submissions in the current report are not proof of a converting channel or
+a faulty form. No new enquiry was submitted during this batch.
+
+Validation
+Production build passed; all 19 public routes prerendered. Existing 17 tests,
+application/API TypeScript, changed-file ESLint and SEO checks passed.
+Browser: desktop and a 390x844 mobile viewport verified. Both offer sections
+remain readable without page-wide horizontal overflow. Direct CTA links
+select the correct enquiry service; full-scope links reach the matching
+Services anchor. The free worksheet link remains present. Temporary viewport
+was reset. Preview activity uses localhost and analytics=off.
+The build reported an existing stale Browserslist data warning; it did not
+fail. No dependency update was bundled into these content changes.
+
+Publication
+Prepared on main. Commit and production verification details will be added
+after publishing. GitHub's administrator enforcement, review and required
+checks must remain intact except for a new, explicitly approved one-push
+exception, followed immediately by restoration and full comparison.
+
+Local evidence (not public-site content)
+docs/analytics/2026-11-05/ contains keyword/page snapshots, Services request
+confirmation, public checks and desktop/mobile offer/enquiry previews.
+The earlier findings are in docs/seo-keyword-review-2026-11-05.txt.
+
+Primary guidance checked on 5 November
+https://developers.google.com/search/docs/appearance/title-link
+https://developers.google.com/search/docs/appearance/snippet
+https://developers.google.com/search/docs/fundamentals/creating-helpful-content
+https://developers.google.com/search/docs/crawling-indexing/ask-google-to-recrawl
+https://support.google.com/webmasters/answer/17010575

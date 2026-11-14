@@ -76,20 +76,21 @@ const Services = () => (
             What we solve
           </span>
           <h2 className="mt-4 max-w-xl text-4xl font-bold leading-tight tracking-[-0.04em] text-brand-navy md:text-6xl">
-            Infrastructure that enables growth.
+            Focused projects. Clear handover.
           </h2>
         </div>
         <div className="md:pb-2">
           <p className="max-w-2xl text-lg leading-relaxed text-brand-teal">
-            From one painful bottleneck to a complete platform rebuild, we focus
-            on the highest-leverage work first and leave your team stronger.
+            Start with one release pipeline, an AWS cost review, or a Terraform
+            environment. We agree the scope, work alongside your engineers and
+            document what your team needs to run it.
           </p>
           <TrackedLink
-            to="/contact"
+            to="/services"
             eventSource="services-intro"
             className="mt-6 inline-flex items-center gap-2 font-semibold text-brand-navy underline decoration-brand-yellow decoration-4 underline-offset-4"
           >
-            Tell us what is slowing you down
+            Compare services and starting points
             <ArrowUpRight className="h-4 w-4" />
           </TrackedLink>
         </div>

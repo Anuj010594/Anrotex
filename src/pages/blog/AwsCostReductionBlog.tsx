@@ -1,12 +1,18 @@
-import { ArrowRight, CheckCircle2, Download } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 import InsightArticle from "@/components/InsightArticle";
 import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
+import DownloadNotice from "@/components/DownloadNotice";
 import { articleSchema, breadcrumbSchema, SITE_URL } from "@/lib/seo";
+import { STARTING_PROJECTS } from "@/lib/starting-projects";
 
 const sharingImage = `${SITE_URL}/images/og/aws-cost-guide.png`;
+const [awsReview] = STARTING_PROJECTS;
 
 const toc = [
+  { id: "why-bill-increased", label: "Find why your AWS bill increased" },
+  { id: "cost-checklist", label: "Choose what to investigate first" },
+  { id: "worksheet", label: "Download the cost-review worksheet" },
   { id: "baseline", label: "Build a trustworthy cost baseline" },
   { id: "idle-resources", label: "Remove idle and orphaned resources" },
   { id: "ec2", label: "Reduce EC2 costs safely" },
@@ -16,24 +22,23 @@ const toc = [
   { id: "guardrails", label: "Prevent costs from returning" },
   { id: "measure-savings", label: "Measure savings after the change" },
   { id: "plan", label: "A practical 30-day plan" },
-  { id: "worksheet", label: "Download the cost-review worksheet" },
 ];
 
-const quickWins = [
-  "Unattached EBS volumes and obsolete snapshots",
-  "Idle or oversized EC2 and RDS resources",
-  "Non-production workloads running outside working hours",
-  "S3 data without lifecycle or retention rules",
-  "NAT Gateway and cross-zone data-transfer patterns",
-  "Commitment discounts that no longer match usage",
+const costChecks = [
+  { id: "idle-resources", title: "Unused resources still cost money", check: "Confirm the owner, dependencies and recovery needs of old volumes, snapshots and development environments.", action: "Check idle resources" },
+  { id: "ec2", title: "EC2 runs below capacity", check: "Compare CPU, memory, traffic peaks and recovery capacity before choosing a smaller instance or a schedule.", action: "Review EC2 costs" },
+  { id: "storage-databases", title: "Storage and database costs keep growing", check: "Check retained data, provisioned IOPS, replicas and access patterns before changing storage or database capacity.", action: "Review storage and databases" },
+  { id: "network-costs", title: "Network charges are unexpectedly high", check: "Separate NAT Gateway hours, processed data and transfer charges. Trace the traffic before changing routes.", action: "Trace network costs" },
+  { id: "log-costs", title: "Logging costs jumped after a release", check: "Identify the application producing more logs, then check ingestion, retention and query usage.", action: "Review CloudWatch costs" },
+  { id: "commitments", title: "Usage fell but the invoice did not", check: "Check commitment payments and remaining storage or network charges before counting the change as a cash saving.", action: "Check commitment coverage" },
 ];
 
 export default function AwsCostReductionBlog() {
   return (
     <>
       <SEO
-        title="How to Reduce AWS Costs: A Practical Checklist | Anrotex"
-        description="Reduce AWS costs with a practical checklist, an EC2 rightsizing example, and a free cost-review worksheet to plan changes and measure results."
+        title="Reduce AWS Costs: Checklist & Free Worksheet | Anrotex"
+        description="Find why your AWS bill increased, check EC2, storage and network costs, and plan safer savings with a practical checklist and free cost-review worksheet."
         path="/blog/reduce-aws-costs"
         type="article"
         image={sharingImage}
@@ -45,10 +50,10 @@ export default function AwsCostReductionBlog() {
             image: sharingImage,
             headline: "How to reduce AWS costs: a practical checklist",
             description:
-              "An AWS cost reduction checklist with an editable cost-review worksheet, a worked EC2 example, and checks for measuring results.",
+              "Trace an AWS bill increase, choose which costs to investigate, and plan changes with an EC2 example and a free cost-review worksheet.",
             path: "/blog/reduce-aws-costs",
             datePublished: "2026-06-16",
-            dateModified: "2026-10-17",
+            dateModified: "2026-11-10",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -61,10 +66,10 @@ export default function AwsCostReductionBlog() {
       <InsightArticle
         eyebrow="AWS cost optimization"
         title="How to reduce AWS costs: a practical checklist"
-        description="The safest way to lower an AWS bill is to remove waste first, right-size from real utilization data, and buy commitments only after demand is understood."
+        description="Find which charges are driving your AWS bill, choose the changes worth testing, and measure the result. Start with unused resources, then review capacity, storage, network costs and commitments."
         published="16 June 2026"
-        updated="17 October 2026"
-        readTime="14 minute read"
+        updated="10 November 2026"
+        readTime="16 minute read"
         toc={toc}
         ctaTitle="Find the waste in your AWS estate."
         ctaDescription="Get a focused review of the highest-value cost opportunities, their operational risk, and the order in which to address them."
@@ -72,7 +77,7 @@ export default function AwsCostReductionBlog() {
         ctaLabel="Explore the AWS cost review"
       >
         <div className="rounded-[1.75rem] border border-brand-navy/10 bg-brand-stone/55 p-6 md:p-8">
-          <p className="m-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-teal">
+          <p className="m-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-navy">
             The short answer
           </p>
           <p className="mt-3 text-xl font-semibold leading-relaxed text-brand-navy">
@@ -80,6 +85,55 @@ export default function AwsCostReductionBlog() {
             resources that provide no value, right-size compute and storage using
             utilization data, then introduce commitments and guardrails.
           </p>
+          <div className="mt-6 border-t border-brand-navy/15 pt-6">
+            <h2 className="!pt-0 !text-xl">Start with one cost change</h2>
+            <p>Use the free worksheet to work through a change before you commit to it. For a smaller EC2 instance:</p>
+            <ol>
+              <li><strong>Record the cost.</strong> Compare the current and proposed instance costs using your AWS rates and existing commitments.</li>
+              <li><strong>Set the checks.</strong> Agree acceptable response times, memory use and recovery checks before testing the smaller size.</li>
+              <li><strong>Measure the result.</strong> Compare actual costs and workload volume after the change. Keep the previous configuration ready if the checks fail.</li>
+            </ol>
+            <TrackedLink to="#worksheet" eventSource="aws-guide-worksheet-intro" className="inline-flex items-center gap-2 font-bold underline underline-offset-4">
+              Get the free cost-review worksheet <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+            </TrackedLink>
+            <p className="!mb-0 text-sm">Editable Excel workbook. No email required.</p>
+          </div>
+        </div>
+
+        <h2 id="why-bill-increased">Why did your AWS bill increase?</h2>
+        <p>
+          First separate a change in usage from a change in what you pay for it.
+          A busier product, a new deployment, an expired credit and an upfront
+          commitment fee call for different actions. Use AWS Cost Explorer to
+          narrow the increase before changing production resources.
+        </p>
+        <ol>
+          <li><strong>Compare equivalent periods.</strong> Use complete days with the same account filters and cost basis. Compare the same number of days and similar weekday patterns; do not compare a partial month with a full month or a forecast with billed usage.</li>
+          <li><strong>Find the service and the day.</strong> Group costs by Service and use daily granularity to find where the increase began. Compare that date with deployments, traffic changes and scheduled jobs.</li>
+          <li><strong>Identify the charge.</strong> Filter to the service, then group by Usage type. Use Region or Linked account to narrow it further. Look for instance hours, storage, data processing or transfer rather than assuming every EC2-related charge is compute.</li>
+          <li><strong>Check what changed in the bill.</strong> Review Charge type for credits, refunds and upfront fees. Compare usage quantities only within a consistent usage type and unit; a total mixing hours and gigabytes is not useful.</li>
+          <li><strong>Connect the charge to a workload.</strong> Use tags, resource inventory and application metrics to identify the owner and purpose. Record the charge, likely cause and next check before choosing a change.</li>
+        </ol>
+        <p>
+          AWS documents the available{" "}
+          <a href="https://docs.aws.amazon.com/cost-management/latest/userguide/ce-filtering.html" rel="noreferrer" target="_blank">Cost Explorer filters and groupings</a>.
+          Its data is refreshed at least daily, and some charges arrive later,
+          so an incomplete day is not evidence that a change has worked. See{" "}
+          <a href="https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html" rel="noreferrer" target="_blank">how Cost Explorer updates cost data</a>.
+        </p>
+
+        <h2 id="cost-checklist">Choose the first cost reduction to investigate</h2>
+        <p>Start with the largest avoidable charge you can verify. Use the checks below to find the relevant steps, then estimate the effect on the whole workload before rollout.</p>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          {costChecks.map((item) => (
+            <div key={item.id} className="flex flex-col rounded-2xl border border-brand-navy/10 bg-brand-stone/45 p-5">
+              <h3 className="!pt-0 !text-lg">{item.title}</h3>
+              <p className="!mt-3 text-sm leading-relaxed">{item.check}</p>
+              <a href={`#${item.id}`} className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-bold text-brand-teal underline underline-offset-4">
+                {item.action}<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+              </a>
+            </div>
+          ))}
         </div>
 
         <section aria-labelledby="worksheet" className="mt-8 rounded-[1.75rem] border border-brand-navy/10 bg-brand-mint p-6 md:p-8">
@@ -104,33 +158,22 @@ export default function AwsCostReductionBlog() {
             Download the worksheet (.xlsx)
           </TrackedLink>
           <p className="!mb-0 text-sm">Editable Excel workbook. No email required. Save one copy per workload and proposed change.</p>
+          <DownloadNotice />
         </section>
 
-        <p>
-          AWS cost reduction is not a one-time exercise and it should not begin
-          with indiscriminate shutdowns. A useful optimization program connects
-          every saving to a workload owner, a performance constraint, and a way
-          to verify that the change did not create new reliability risk.
-        </p>
-
-        <p>
-          The opportunities below are ordered deliberately. Start with visibility
-          and reversible cleanup. Move to rightsizing and architecture changes
-          once you understand workload behavior. Purchase Savings Plans or
-          reservations only after the underlying demand is stable.
-        </p>
-
-        <div className="mt-8 grid gap-3 sm:grid-cols-2">
-          {quickWins.map((item) => (
-            <p
-              key={item}
-              className="!m-0 flex items-start gap-3 rounded-2xl border border-brand-navy/10 bg-brand-off-white p-4 text-sm font-semibold leading-relaxed text-brand-navy"
-            >
-              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-brand-teal" />
-              {item}
-            </p>
-          ))}
-        </div>
+        <section aria-labelledby="aws-review-heading" className="mt-8 rounded-[1.75rem] border border-brand-navy/15 bg-brand-stone/55 p-6 md:p-8">
+          <p className="!m-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-navy">{awsReview.name}</p>
+          <h2 id="aws-review-heading" className="!pt-4">Want help reducing your AWS bill?</h2>
+          <p>{awsReview.scope} Get a review of costs, access and reliability, a practical action plan and a 60-minute walkthrough.</p>
+          <p><strong>{awsReview.price} one-time fee · {awsReview.days} business days</strong> after the scope is agreed and required access and inputs are ready. We use agreed read-only access or exports. Infrastructure changes are quoted separately.</p>
+          <div className="mt-6 flex flex-wrap items-center gap-5">
+            <TrackedLink to={`/contact?focus=${awsReview.focus}`} eventSource="aws-guide-review-enquiry" className="inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 text-sm font-bold !text-brand-off-white !no-underline transition hover:bg-brand-teal">
+              {awsReview.action}<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+            </TrackedLink>
+            <TrackedLink to={`/services#${awsReview.focus}`} eventName="Service Click" eventSource="aws-guide-review-offer" className="font-semibold underline underline-offset-4">See the full scope and pricing terms</TrackedLink>
+          </div>
+          <p className="!mb-0 text-sm">Prices are in US dollars. Applicable taxes and cloud usage are additional. Savings depend on the findings and any later changes you choose to make.</p>
+        </section>
 
         <h2 id="baseline">1. Build a trustworthy AWS cost baseline</h2>
 
@@ -456,7 +499,7 @@ export default function AwsCostReductionBlog() {
           separately, then optimize workload and node capacity together.
         </p>
 
-        <h3>NAT Gateways and data transfer</h3>
+        <h3 id="network-costs">NAT Gateways and data transfer</h3>
         <p>
           Separate gateway hours, processed data, and transfer charges before
           changing routes. The{" "}
@@ -472,6 +515,23 @@ export default function AwsCostReductionBlog() {
           through NAT. Interface endpoints have different pricing. Check routing
           and connectivity requirements, and include any remaining gateway hours
           and transfer costs in the estimate.
+        </p>
+
+        <h3 id="log-costs">CloudWatch logs and monitoring</h3>
+        <p>
+          If monitoring costs rise after a release, filter Cost Explorer to
+          CloudWatch and group by Usage type. Separate ingestion, retained logs,
+          queries and metrics before deciding what to reduce. AWS explains how
+          to investigate these charges in its{" "}
+          <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_billing.html" rel="noreferrer" target="_blank">CloudWatch cost guide</a>.
+        </p>
+        <p>
+          Check whether an application is emitting debug output, duplicate
+          messages or repeated errors. Agree the logs needed for incidents and
+          audit requirements before reducing volume or retention. Shorter retention
+          addresses stored data; it does not reduce the cost of ingesting the same
+          new logs. Limit query time ranges to the period you need to investigate,
+          and compare costs after the next billing-data refresh.
         </p>
 
         <h2 id="commitments">6. Buy Savings Plans and reservations last</h2>
@@ -605,24 +665,13 @@ export default function AwsCostReductionBlog() {
         </ul>
 
         <div className="mt-14 rounded-[2rem] bg-brand-mint p-7 md:p-10">
-          <p className="!m-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-navy">
-            Turn the guide into an action plan
-          </p>
-          <h2 className="!pt-4">Get a focused AWS cost review.</h2>
+          <h2 className="!pt-0">Need a review across your wider platform?</h2>
           <p>
-            Anrotex reviews your AWS usage and costs, checks how changes could
-            affect performance, and gives your engineers a prioritized plan
-            they can put into action.
+            Reviewing several accounts or a wider platform?{" "}
+            <TrackedLink to="/aws-cost-optimization" eventName="Service Click" eventSource="aws-guide-bottom">
+              Explore the AWS Cost Optimization Audit
+            </TrackedLink>.
           </p>
-          <TrackedLink
-            to="/aws-cost-optimization"
-            eventName="Service Click"
-            eventSource="aws-guide-bottom"
-            className="mt-7 inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 text-sm font-bold text-brand-off-white"
-          >
-            See what the review includes
-            <ArrowRight className="h-4 w-4" />
-          </TrackedLink>
           <p className="!mb-0">
             Ready to discuss your AWS bill?{" "}
             <TrackedLink to="/contact?focus=aws-audit" eventSource="aws-guide-enquiry">

@@ -1,0 +1,70 @@
+Anrotex project visibility, homepage offers and Lambda rollback guide
+Prepared 3 November 2026 on main
+
+Implemented
+- Homepage: direct comparison of the three existing offers, using the shared
+  STARTING_PROJECTS data. Hero link goes to the comparison; each offer goes to
+  its detailed Services anchor and existing focused enquiry flow.
+- Cloud Operations: converted the standalone portfolio document to a
+  prerendered React page with the site navigation, SEO and analytics controls.
+  Added project cards on Home, Services and CI/CD Automation. Linked the
+  project to AWS review, CI/CD setup, DevOps services and the new article.
+- Canonical project URL: /portfolio/cloud-operations. Permanent redirects
+  preserve /portfolio/cloud-operations/index.html on Vercel and Cloudflare.
+  Existing architecture and other image URLs are unchanged.
+- New article: /blog/aws-lambda-rollback-github-actions. Contains the original
+  release function, a responsive flow diagram, GitHub Actions job controls,
+  practical prerequisites, failure behavior and five downloadable local tests.
+- Added discovery links in Insights and the existing CI/CD guide, both new
+  sitemap entries, page-specific prerender chunks and explicit hosting routes.
+- Project/enquiry links use existing TrackedLink events. Removed the project's
+  old internal campaign UTMs. GA4 remains consent-dependent and preview/test
+  traffic stays excluded; no reporting or production consent settings changed.
+
+Source and claim boundaries
+- release.py and smoke.py downloads are unchanged copies from the user's
+  engineering/cloud-operations/scripts directory.
+- test_release.py contains the project's ReleaseTests class with standalone
+  standard-library imports. The ZIP contains these three files and README.txt.
+- The article's release function is imported from the download, so displayed
+  code and downloaded code cannot diverge. The job-controls excerpt is from
+  engineering/cloud-operations/.github/workflows/delivery.yml. It is explicitly
+  labelled as an excerpt, not an independently deployable application workflow.
+- Public copy distinguishes locally tested/emulated behavior from AWS work
+  still to verify. No live AWS deployment, production recovery, client outcome
+  or cloud performance claim was added.
+- Project verification figures are dated 27 October and sourced from
+  engineering/cloud-operations/evidence/verification.json. No live AWS action
+  was taken for this website batch.
+
+Validation completed
+- Production build: passed; 16 pages and 404 prerendered.
+- Existing application tests: all 17 passed (analytics consent/exclusion,
+  enquiry delivery/security and page recovery).
+- App/API TypeScript checks and targeted ESLint: passed.
+- SEO checks: passed for canonicals, metadata, structured data, sharing images,
+  sitemap, internal paths/anchors, offer-to-enquiry paths, code/download agreement,
+  hosting routes, legacy redirect and missing-page responses.
+- Download ZIP unpacked into a temporary directory: all 5 release tests passed
+  on Python 3.14.6 without dependencies or AWS requests. Negative control changed
+  expected restored version from 7 to 8 and produced exactly one failure.
+- ZIP members match the standalone download files; original scripts match byte
+  for byte. Archive contains only the intended four files.
+- Browser: desktop and 390x844 viewport checked. Home, project and article fit
+  without page-level horizontal overflow; code blocks scroll independently.
+  Home comparison -> CI/CD scope -> preselected CI/CD enquiry verified; project
+  -> preselected AWS review enquiry verified; project -> article verified.
+  No browser warnings/errors observed. No enquiry submitted.
+- Temporary viewport restored. Preview uses analytics=off and localhost is
+  excluded by the existing measurement code.
+- Screenshots: docs/analytics/2026-11-03/homepage-offers-preview.png,
+  cloud-operations-preview.png, lambda-guide-preview.png,
+  lambda-guide-mobile.png and homepage-offers-mobile.png.
+
+Publishing
+- Remote main was b357183 before this batch; identity is Anuj010594.
+- No branches created. Unrelated marketing, research and engineering files
+  remain untouched and excluded from this commit.
+- Push/deployment pending the user's specific administrator-exception approval.
+  Restore and compare the full branch protection after the one approved push,
+  then verify Vercel, live routes, legacy redirect, download and enquiry links.

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TrackedLink from "@/components/TrackedLink";
+import { guideReviewer } from "@/lib/seo";
 
 type TocItem = {
   id: string;
@@ -69,7 +70,7 @@ const InsightArticle = ({
         <p className="mt-7 max-w-3xl text-lg leading-relaxed text-brand-teal md:text-xl">
           {description}
         </p>
-        <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-semibold text-brand-navy/65">
+        <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-semibold text-brand-navy">
           <span>
             By{" "}
             <Link to="/#team" rel="author" className="text-brand-navy underline underline-offset-4 hover:text-brand-teal">
@@ -83,6 +84,13 @@ const InsightArticle = ({
             {readTime}
           </span>
         </div>
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-brand-navy">
+          Technical review by{" "}
+          <a href={guideReviewer.url} className="font-semibold underline underline-offset-4">
+            {guideReviewer.name}
+          </a>
+          {" · "}{guideReviewer.jobTitle}
+        </p>
         <div className="mt-8 space-y-5 lg:hidden">
           <details className="rounded-2xl border border-brand-navy/10 bg-brand-stone/55 p-5">
             <summary className="cursor-pointer font-bold text-brand-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-teal">
@@ -117,7 +125,7 @@ const InsightArticle = ({
               className="hidden rounded-[1.5rem] border border-brand-navy/10 bg-brand-stone/55 p-6 lg:block"
               aria-label="Article contents"
             >
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-teal">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-navy">
                 In this guide
               </p>
               <ol className="mt-5 space-y-3">
@@ -127,7 +135,7 @@ const InsightArticle = ({
                       href={`#${item.id}`}
                       className="group flex gap-3 text-sm font-semibold leading-snug text-brand-navy/75 transition hover:text-brand-navy"
                     >
-                      <span className="text-brand-teal">
+                      <span className="text-brand-navy">
                         {String(index + 1).padStart(2, "0")}
                       </span>
                       {item.label}

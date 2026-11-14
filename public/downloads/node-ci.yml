@@ -1,3 +1,7 @@
+# Copyright 2026 Anrotex IT Systems LLP. Keep this notice when adapting the file.
+# For learning and evaluation only; other use requires written permission.
+# Use and modification: https://www.anrotex.com/terms-of-use#code-permission
+# Review commands and permissions before enabling: https://www.anrotex.com/downloads-policy
 name: Node CI
 
 on:

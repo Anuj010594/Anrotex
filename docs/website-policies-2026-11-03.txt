@@ -1,0 +1,63 @@
+Website policies and download guidance — 3 November 2026
+
+Prepared on main. On 3 November the owner approved this policy batch's one-push
+administrator exception, immediate restoration of protection and, specifically,
+learning/evaluation-only use. The unpublished commit was amended to honor that
+specific choice before the approved push. The earlier exception for correction
+41a9200 was not reused.
+
+Public pages
+- /privacy-policy: enquiry data, hosting, Turnstile, Google Analytics consent,
+  Vercel analytics/performance reports, retention criteria and privacy requests.
+- /terms-of-use: examples, sample-code permission, other content, separate paid
+  engagements, responsible use and limits subject to non-waivable legal rights.
+- /downloads-policy: isolated testing, permissions, cloud charges, differences
+  between simulated tests and AWS scripts, fingerprints and concern reporting.
+
+All three pages are linked from the footer, prerendered and in the sitemap.
+The enquiry form and cookie panel link to the privacy policy. Download sections
+link to safe-use guidance. The Lambda ZIP contains README, TERMS and the three
+unchanged Python files. SHA-256 fingerprints are regenerated during each build
+and checked against built files and the rendered download policy.
+
+Permission selected by the owner
+Anrotex sample code and workflows are limited to learning and evaluation in a
+separate test environment, with notices retained. Production use, delivery as
+part of client work and redistribution require written permission. A different
+licence supplied with a file still governs that file. The wording does not grant
+rights to third-party code, branding or whole-article republication.
+
+Verification
+- Production build and API/application TypeScript checks passed.
+- Targeted ESLint passed; 17 existing application/API utility tests passed.
+- SEO, internal-link, canonical, hosting and fingerprint checks passed for 19 routes.
+- Five standalone Lambda tests passed; all three Python files match 41a9200.
+- ZIP contains five expected files, each byte-matched to the public source copy.
+- XLSX archive contains no VBA, embedded objects, external-link or connection
+  parts, and no external relationships were found. The workbook was not changed.
+- Desktop footer, mobile policy layout, footer navigation and enquiry privacy
+  link checked in browser; no enquiry submitted. No browser console errors seen.
+- Local build lacks a GA4 ID, so the conditional cookie-preferences control was
+  not exercised in this preview. Its existing behavior is unchanged.
+- Screenshots: docs/analytics/2026-11-03/policies-footer-preview.png and
+  policies-mobile-preview.png (local verification files, not deployed assets).
+
+Limits and drafting choices
+These are practical policy drafts, not legal advice or a legal compliance audit.
+Have qualified counsel review liability wording, licensing and privacy obligations
+for Anrotex's business and target markets. No blanket safety certification or
+claim of worldwide privacy compliance is made. A checksum confirms matching bytes,
+not safety or authorship. No new live AWS release or dependency security audit was
+performed. We did not invent a fixed retention period or a named privacy officer.
+Vercel analytics is disclosed as able to run when Google Analytics is declined,
+matching the current code; no tracking or consent behavior was changed.
+
+Primary sources consulted for privacy drafting (3 November 2026)
+https://vercel.com/docs/analytics/privacy-policy
+https://vercel.com/docs/speed-insights/privacy-policy
+https://www.cloudflare.com/turnstile-privacy-policy/
+https://policies.google.com/technologies/partner-sites
+https://www.meity.gov.in/static/uploads/2025/11/c56ceae6c383460ca69577428d36828b.pdf
+https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf
+The Indian commencement notices provide phased dates; this release does not
+claim all DPDP provisions are already in force or certify legal compliance.

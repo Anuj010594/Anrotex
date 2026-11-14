@@ -8,18 +8,22 @@ import Team from "@/components/Team" ;
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import StartingProjects from "@/components/StartingProjects";
+import CloudOperationsCard from "@/components/CloudOperationsCard";
 
 const Index = () => (
   <>
     <SEO
       title="DevOps Consulting & Cloud Cost Optimization | Anrotex"
-      description="Founder-led DevOps consulting for growing teams. Improve cloud reliability, automate CI/CD, scale Kubernetes, and reduce AWS costs with Anrotex."
+      description="DevOps consulting for small product teams and development agencies. Improve CI/CD, AWS costs and cloud reliability with hands-on engineering and clear handover."
       path="/"
       imageAlt="Anrotex — DevOps consulting, cloud cost optimization, and platform engineering"
     />
     <Navbar />
     <main>
       <Hero />
+      <StartingProjects />
+      <CloudOperationsCard source="homepage" />
       <Solutions />
       <Services />
       <Process />

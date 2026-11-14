@@ -72,7 +72,7 @@ export default function KubernetesScalingBestPractices() {
         ctaLabel="Explore the cluster review"
       >
         <div className="rounded-[1.75rem] border border-brand-navy/10 bg-brand-stone/55 p-6 md:p-8">
-          <p className="m-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-teal">
+          <p className="m-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-navy">
             The operating principle
           </p>
           <p className="mt-3 text-xl font-semibold leading-relaxed text-brand-navy">

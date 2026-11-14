@@ -1,5 +1,6 @@
 // Run after npm run build: node scripts/check-seo.mjs
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { render } from "../dist-ssr/entry-server.js";
 import worker from "../worker/index.js";
@@ -11,6 +12,7 @@ const titles = new Set();
 const guideImages = new Map([
   ["/blog/reduce-aws-costs", "/images/og/aws-cost-guide.png"],
   ["/blog/cicd-best-practices", "/images/og/cicd-guide.png"],
+  ["/blog/aws-lambda-rollback-github-actions", "/images/og/cicd-guide.png"],
   ["/blog/kubernetes-scaling-best-practices", "/images/og/kubernetes-scaling-guide.png"],
 ]);
 const manifest = JSON.parse(await readFile("dist/.vite/manifest.json", "utf8"));
@@ -27,6 +29,11 @@ for (const url of urls) {
   assert.match(html, /<h1\b/, `Missing prerendered heading for ${url.pathname}`);
   assert(!html.includes("noindex"), `Public page is noindex: ${url.pathname}`);
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1, `Expected one main heading: ${url.pathname}`);
+  const policyNavigation = html.match(/<nav aria-label="Policies"[^>]*>(.*?)<\/nav>/s)?.[1];
+  assert(policyNavigation, `Missing footer policies: ${url.pathname}`);
+  for (const policy of ["/privacy-policy", "/terms-of-use", "/downloads-policy"]) {
+    assert(policyNavigation.includes(`href="${policy}"`), `Missing ${policy} footer link: ${url.pathname}`);
+  }
   const title = html.match(/<title\b[^>]*>([^<]+)<\/title>/)?.[1];
   assert(title && !titles.has(title), `Missing or duplicate title: ${url.pathname}`);
   titles.add(title);
@@ -47,6 +54,10 @@ for (const url of urls) {
     assert(schema["@type"], `Invalid structured data: ${url.pathname}`);
     if (schema["@type"] === "BlogPosting") {
       assert.equal(schema.image, image, `Mismatched article image: ${url.pathname}`);
+      const reviewer = schema.mainEntityOfPage.reviewedBy;
+      assert.equal(schema.mainEntityOfPage["@type"], "WebPage", `Reviewer must describe the page: ${url.pathname}`);
+      assert.equal(reviewer?.["@type"], "Person", `Missing engineer credit: ${url.pathname}`);
+      assert(html.includes(`href="${reviewer.url}"`) && html.includes(reviewer.name) && html.includes(reviewer.jobTitle), `Reviewer must match the visible credit: ${url.pathname}`);
     }
   }
   for (const [, href] of html.matchAll(/href="((?:\/|#)[^"]*)"/g)) {
@@ -86,6 +97,70 @@ assert(aws.includes("Reducing covered usage can release capacity"), "Missing AWS
 assert(aws.includes('href="/contact?focus=aws-audit"'), "Missing focused AWS enquiry link");
 assert.match((await render("/contact?focus=aws-audit")).html, /<option[^>]*selected=""[^>]*>AWS Cost Optimization Audit<\/option>/);
 
+const services = await readFile("dist/services/index.html", "utf8");
+assert(services.includes('id="starting-projects"'), "Missing starting-projects destination");
+for (const [focus, projectType, price] of [
+  ["aws-review", "AWS Infrastructure Review", "US$500"],
+  ["cicd-setup", "CI/CD Pipeline Setup", "US$1,500"],
+  ["terraform-foundation", "Terraform AWS Foundation", "US$3,000"],
+]) {
+  assert(services.includes(`id="${focus}"`) && services.includes(price), `Missing public offer: ${projectType}`);
+  assert(services.includes(`href="/contact?focus=${focus}"`), `Missing project enquiry: ${projectType}`);
+  assert.match((await render(`/contact?focus=${focus}`)).html, new RegExp(`<option[^>]*selected=""[^>]*>${projectType}</option>`));
+}
+assert.doesNotMatch(services, /illustrative|not a client result|publication boundaries|internal use/i);
+const awsGuide = await readFile("dist/blog/reduce-aws-costs/index.html", "utf8");
+assert(awsGuide.includes('href="/services#aws-review"'), "Missing worksheet-to-review route");
+assert(awsGuide.includes('href="/downloads/aws-cost-review-worksheet.xlsx"'), "Keep the free worksheet available");
+assert.doesNotMatch(awsGuide, /illustrative|not a client result|publication boundaries|internal use/i);
+const awsArticle = [...awsGuide.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>(.*?)<\/script>/gs)]
+  .map(([, json]) => JSON.parse(json)).find((schema) => schema["@type"] === "BlogPosting");
+const awsSitemapDate = sitemap.match(/<loc>https:\/\/www\.anrotex\.com\/blog\/reduce-aws-costs<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/)?.[1];
+assert(awsSitemapDate, "The AWS guide must have a sitemap update date");
+assert.equal(awsArticle?.dateModified, awsSitemapDate, "The AWS article and sitemap must agree on the update date");
+const blog = await readFile("dist/blog/index.html", "utf8");
+const homepage = await readFile("dist/index.html", "utf8");
+const portfolio = await readFile("dist/portfolio/cloud-operations/index.html", "utf8");
+const lambdaGuide = await readFile("dist/blog/aws-lambda-rollback-github-actions/index.html", "utf8");
+for (const [name, html] of [["Homepage", homepage], ["Services", services], ["CI/CD", cicd]]) {
+  assert(html.includes('href="/portfolio/cloud-operations"'), `${name}: missing engineering project link`);
+}
+for (const focus of ["aws-review", "cicd-setup", "terraform-foundation"]) {
+  assert(homepage.includes(`href="/services#${focus}"`), `Homepage: missing starting project ${focus}`);
+}
+for (const [name, html] of [["Portfolio", portfolio], ["Insights", blog], ["CI/CD guide", cicdGuide], ["CI/CD service", cicd]]) {
+  assert(html.includes('href="/blog/aws-lambda-rollback-github-actions"'), `${name}: missing Lambda walkthrough`);
+}
+for (const [name, html] of [["Portfolio", portfolio], ["Lambda guide", lambdaGuide]]) {
+  assert(html.includes('href="/contact?focus=cicd-setup"'), `${name}: missing focused enquiry`);
+  assert.doesNotMatch(html, /utm_source=anrotex|illustrative|not a client result|publication boundaries|internal use/i);
+}
+const releaseSource = await readFile("public/downloads/lambda-rollback/release.py", "utf8");
+const releaseFunction = releaseSource.slice(releaseSource.indexOf("def release("), releaseSource.indexOf('\n\ndef main('));
+assert(releaseFunction.length > 1000 && lambdaGuide.includes(escapeHtml(releaseFunction)), "Display the complete downloadable release function in initial HTML");
+assert(lambdaGuide.includes('href="/downloads/lambda-rollback-tests.zip"'), "Missing reproducible test download");
+for (const [name, html] of [["AWS", awsGuide], ["CI/CD", cicdGuide], ["Lambda", lambdaGuide]]) {
+  assert(html.includes("download terms and safe-use guidance"), `${name}: explain safe use beside downloads`);
+}
+const downloadPolicy = await readFile("dist/downloads-policy/index.html", "utf8");
+const fingerprints = (await readFile("dist/downloads/SHA256SUMS.txt", "utf8")).trim().split("\n");
+const fingerprintFiles = new Set();
+for (const line of fingerprints) {
+  assert.match(line, /^[a-f0-9]{64} {2}[\w./-]+$/, "Invalid download fingerprint entry");
+  const [hash, file] = line.split("  ");
+  assert(!file.startsWith("/") && !file.split("/").includes("..") && !fingerprintFiles.has(file), "Invalid or duplicate download path");
+  fingerprintFiles.add(file);
+  const actual = createHash("sha256").update(await readFile(`dist/downloads/${file}`)).digest("hex");
+  assert.equal(hash, actual, `Stale download fingerprint: ${file}`);
+  assert(downloadPolicy.includes(hash) && downloadPolicy.includes(`href="/downloads/${file}"`), `Fingerprint not visible: ${file}`);
+}
+for (const file of ["aws-cost-review-worksheet.xlsx", "cicd-release-checklist.txt", "node-ci.yml", "lambda-rollback-tests.zip", "DOWNLOAD-TERMS.txt", "lambda-rollback/TERMS.txt", "lambda-rollback/README.txt", "lambda-rollback/release.py", "lambda-rollback/smoke.py", "lambda-rollback/test_release.py"]) {
+  assert(fingerprintFiles.has(file), `Missing download fingerprint: ${file}`);
+}
+for (const [name, html] of [["Services", services], ["AWS service", aws], ["Insights", blog]]) {
+  assert(html.includes('href="/blog/reduce-aws-costs#why-bill-increased"'), `${name}: missing route to the AWS bill checks`);
+}
+
 const notFound = await readFile("dist/404.html", "utf8");
 for (const [route, focus, projectType] of [
   ["devops-consulting", "devops", "DevOps consulting"],
@@ -104,7 +179,8 @@ for (const focus of ["unknown", "constructor", "__proto__"]) {
 
 assert.match(notFound, /<h1\b[^>]*>404<\/h1>/);
 assert.match(notFound, /name="robots" content="noindex, nofollow"/);
-const { rewrites } = JSON.parse(await readFile("vercel.json", "utf8"));
+const { rewrites, redirects } = JSON.parse(await readFile("vercel.json", "utf8"));
+assert(redirects.some((rule) => rule.source === "/portfolio/cloud-operations/index.html" && rule.destination === "/portfolio/cloud-operations" && rule.permanent), "Preserve the legacy project URL with a permanent redirect");
 const publicPaths = new Set([...urls.map((url) => url.pathname), "/robots.txt", "/sitemap.xml"]);
 for (const rewrite of rewrites) {
   assert(publicPaths.has(rewrite.source), `Unexpected route or catch-all: ${rewrite.source}`);
@@ -124,11 +200,14 @@ const env = {
     },
   },
 };
-for (const pathname of ["/blog/cicd-best-practices", "/does-not-exist", "/missing.js"]) {
+const legacy = await worker.fetch(new Request("https://www.anrotex.com/portfolio/cloud-operations/index.html?utm_source=linkedin"), env);
+assert.equal(legacy.status, 308);
+assert.equal(legacy.headers.get("location"), "https://www.anrotex.com/portfolio/cloud-operations?utm_source=linkedin");
+for (const pathname of ["/blog/cicd-best-practices", "/blog/aws-lambda-rollback-github-actions", "/portfolio/cloud-operations", "/privacy-policy", "/terms-of-use", "/downloads-policy", "/does-not-exist", "/missing.js"]) {
   const response = await worker.fetch(new Request(`https://www.anrotex.com${pathname}`, {
     headers: { accept: pathname.endsWith(".js") ? "*/*" : "text/html" },
   }), env);
-  assert.equal(response.status, pathname.startsWith("/blog/") ? 200 : 404);
+  assert.equal(response.status, publicPaths.has(pathname) ? 200 : 404);
   if (pathname === "/does-not-exist") assert.equal(await response.text(), notFound);
 }
 console.log(`Verified ${urls.length} prerendered pages, hosting routes, and missing-page responses.`);

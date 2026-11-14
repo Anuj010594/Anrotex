@@ -1,0 +1,47 @@
+AWS guide update — 30 October 2026
+
+Reason
+The matched 24–27 October / 17–20 October Search Console comparison attributed
+122 of the main site's 146 lost page impressions to /blog/reduce-aws-costs.
+Technical checks found the guide indexable and available; the last recorded
+indexed crawl was 7 October. Lost broad-query visibility is evidenced, but the
+precise ranking cause is not established. See seo-impression-drop-2026-10-30.txt.
+
+Implementation
+- Keep the AWS guide's URL, title, canonical, original publication date and image.
+- Lead with five steps for diagnosing an increased AWS bill in Cost Explorer.
+- Replace the generic quick-win list with six checks linked to the relevant advice.
+- Add CloudWatch cost guidance and a direct anchor for the network-cost section.
+- Keep the workbook ungated; put the existing US$500 review offer after the guide.
+- Link to the diagnosis from Services, the AWS service hero and Insights.
+- Update the guide description, visible update date and Article dateModified.
+- Update sitemap dates only for the four edited public pages.
+- Reuse existing click/download tracking and enquiry choices; no analytics or
+  enquiry-delivery behavior changes. No new dependencies.
+
+Sources checked
+https://docs.aws.amazon.com/cost-management/latest/userguide/ce-filtering.html
+https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_billing.html
+
+Validation
+Production build and API typecheck passed. SEO checks passed for all 14 public
+routes, including links, anchors, canonical URLs, initial HTML and missing pages.
+All 17 existing tests passed; app TypeScript, changed-component ESLint and
+git diff --check passed. Added checks for the new incoming links, guide copy and
+agreement between Article dateModified and sitemap lastmod.
+Browser checks at desktop and 390px mobile viewport: no document overflow,
+checklist and CloudWatch anchors work, guide-to-review route lands on the offer,
+and its enquiry link selects AWS Infrastructure Review. No enquiry submitted.
+Preview screenshots: docs/analytics/2026-10-30/aws-guide-preview-desktop.png and
+aws-guide-preview-mobile.png. Browser analytics excluded with analytics=off.
+
+Publishing and assessment
+Prepared on main. Publishing requires a new, explicit one-push administrator
+exception, followed by restoration and comparison of the original protections.
+Production and recrawl remain unverified until publishing completes.
+After production verification, request indexing once for this substantive update.
+Compare complete reporting days for the AWS guide and its lost queries after a
+new crawl; use a full 28-day period to judge direction. Do not count missing days
+as zero or interpret a zero-impression query as a measured current position.
+Ranking recovery and enquiry gains are not established by this release.

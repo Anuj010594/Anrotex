@@ -2,6 +2,7 @@ import { ArrowRight, Download } from "lucide-react";
 import InsightArticle from "@/components/InsightArticle";
 import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
+import DownloadNotice from "@/components/DownloadNotice";
 import workflow from "../../../public/downloads/node-ci.yml?raw";
 import { articleSchema, breadcrumbSchema, SITE_URL } from "@/lib/seo";
 
@@ -39,7 +40,7 @@ export default function CICDBestPractices() {
               "A practical CI/CD guide with a downloadable Node.js workflow and release checklist, deployment controls, recovery steps, and troubleshooting advice.",
             path: "/blog/cicd-best-practices",
             datePublished: "2026-06-17",
-            dateModified: "2026-10-17",
+            dateModified: "2026-11-03",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -54,7 +55,7 @@ export default function CICDBestPractices() {
         title="CI/CD best practices: from pull request to production"
         description="Build a pipeline that catches failures early, releases the version you tested, and gives your team a dependable way to recover."
         published="17 June 2026"
-        updated="17 October 2026"
+        updated="3 November 2026"
         readTime="12 minute read"
         toc={toc}
         ctaTitle="Make releases easier to trust."
@@ -63,7 +64,7 @@ export default function CICDBestPractices() {
         ctaLabel="Discuss your pipeline"
       >
         <div className="rounded-[1.75rem] border border-brand-navy/10 bg-brand-stone/55 p-6 md:p-8">
-          <p className="!mt-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-teal">A reliable release starts here</p>
+          <p className="!mt-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-navy">A reliable release starts here</p>
           <p className="mt-3 text-xl font-semibold leading-relaxed text-brand-navy">
             Check every change, build from a known commit, control access to
             production, and confirm that the application works after deployment.
@@ -80,6 +81,7 @@ export default function CICDBestPractices() {
             <Download className="h-4 w-4 shrink-0" aria-hidden="true" />Download the checklist (.txt)
           </TrackedLink>
           <p className="!mt-4 !text-sm">Editable text file. No email required. Open it in your text editor or paste it into a release ticket.</p>
+          <DownloadNotice />
           <p className="!mb-0 !text-sm">Using GitHub Actions? <a href="#github-actions">Get the Node.js workflow and setup steps</a>.</p>
         </section>
         <p>
@@ -155,6 +157,7 @@ export default function CICDBestPractices() {
           <Download className="h-4 w-4 shrink-0" aria-hidden="true" />Download the workflow (.yml)
         </TrackedLink>
         <p className="!text-sm">Review the scripts and output directory before adding the file to your repository. This workflow builds and tests your app; production deployment is configured separately.</p>
+        <DownloadNotice />
         <pre aria-label="Node.js CI workflow" tabIndex={0} className="mt-7 max-w-full overflow-x-auto rounded-2xl bg-brand-navy p-5 text-sm leading-7 text-brand-off-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-teal md:p-7"><code className="!bg-transparent !p-0 !text-inherit">{workflow}</code></pre>
         <p>
           The action references pin specific releases of{" "}
@@ -228,6 +231,7 @@ export default function CICDBestPractices() {
         </p>
 
         <h2 id="rollback">5. Make recovery part of the release</h2>
+        <p>For a concrete implementation, follow our <TrackedLink to="/blog/aws-lambda-rollback-github-actions" eventName="Article Click" eventSource="cicd-guide-lambda-rollback">AWS Lambda rollback with GitHub Actions walkthrough</TrackedLink>. It includes the release code, a flow diagram and tests you can run locally without AWS.</p>
         <p>
           Keep a known-good application version available and decide what would
           trigger a rollback: failed smoke checks, elevated errors, slow critical
@@ -304,7 +308,7 @@ export default function CICDBestPractices() {
         </ul>
 
         <div className="mt-14 rounded-[1.75rem] border border-brand-navy/10 bg-brand-stone/55 p-6 md:p-8">
-          <p className="!mt-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-teal">Improve your release process</p>
+          <p className="!mt-0 text-xs font-bold uppercase tracking-[0.18em] text-brand-navy">Improve your release process</p>
           <h2 className="!pt-4">Spend less time fixing deployments.</h2>
           <p>
             Anrotex helps teams improve GitHub Actions, GitLab CI/CD, and Jenkins

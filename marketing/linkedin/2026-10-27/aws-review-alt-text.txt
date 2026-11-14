@@ -1,0 +1,1 @@
+Anrotex AWS Infrastructure Review. A practical plan for your next infrastructure decision. Fixed scope: US$500, five business days. Assess, prioritize and walk through findings for one workload. The timeline starts after agreed access and inputs; scope and exclusions are in the service description.

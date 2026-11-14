@@ -1,0 +1,34 @@
+Checked at: 2026-11-05T11:42:14.091286+00:00
+Python: 3.14.6
+Environment: local computer; simulated AWS responses; sockets blocked in tests
+
+{"event": "rollback", "restored_version": "7"}
+Archive, fingerprints, isolated tests and package rejection checks passed.
+test_candidate_error_closes_its_response (test_release.ApplicationChecks.test_candidate_error_closes_its_response) ... ok
+test_candidate_rejects_invalid_record_before_another_invocation (test_release.ApplicationChecks.test_candidate_rejects_invalid_record_before_another_invocation) ... ok
+test_gateway_rejects_untrusted_record_path (test_release.ApplicationChecks.test_gateway_rejects_untrusted_record_path) ... ok
+test_gateway_reuses_the_key_and_checks_the_saved_record (test_release.ApplicationChecks.test_gateway_reuses_the_key_and_checks_the_saved_record) ... ok
+test_gateway_stops_on_failed_auth_or_release_check (test_release.ApplicationChecks.test_gateway_stops_on_failed_auth_or_release_check) ... ok
+test_redirects_never_reach_another_destination (test_release.ApplicationChecks.test_redirects_never_reach_another_destination) ... ok
+test_account_identity_is_checked_and_endpoint_overrides_disabled (test_release.CommandTests.test_account_identity_is_checked_and_endpoint_overrides_disabled) ... ok
+test_cross_account_function_arn_is_rejected_before_access (test_release.CommandTests.test_cross_account_function_arn_is_rejected_before_access) ... ok
+test_gateway_command_requires_confirmation_before_access (test_release.CommandTests.test_gateway_command_requires_confirmation_before_access) ... ok
+test_invalid_endpoint_stops_before_reading_files_or_using_aws (test_release.CommandTests.test_invalid_endpoint_stops_before_reading_files_or_using_aws) ... ok
+test_release_requires_account_confirmation_before_access (test_release.CommandTests.test_release_requires_account_confirmation_before_access) ... ok
+test_wrong_account_stops_before_lambda_access (test_release.CommandTests.test_wrong_account_stops_before_lambda_access) ... ok
+test_expected_gateway_is_accepted (test_release.InputTests.test_expected_gateway_is_accepted) ... ok
+test_other_url_forms_are_rejected (test_release.InputTests.test_other_url_forms_are_rejected) ... ok
+test_record_id_cannot_add_a_path_or_query (test_release.InputTests.test_record_id_cannot_add_a_path_or_query) ... ok
+test_region_cannot_change_the_url_destination (test_release.InputTests.test_region_cannot_change_the_url_destination) ... ok
+test_response_size_and_shape_are_bounded (test_release.InputTests.test_response_size_and_shape_are_bounded) ... ok
+test_candidate_failure_never_changes_live_alias (test_release.ReleaseTests.test_candidate_failure_never_changes_live_alias) ... ok
+test_concurrent_alias_change_is_not_blindly_overwritten (test_release.ReleaseTests.test_concurrent_alias_change_is_not_blindly_overwritten) ... ok
+test_failed_rollback_keeps_revision_guard_and_reports_failure (test_release.ReleaseTests.test_failed_rollback_keeps_revision_guard_and_reports_failure) ... ok
+test_gateway_failure_rolls_back_previous_version (test_release.ReleaseTests.test_gateway_failure_rolls_back_previous_version) ... ok
+test_success_promotes_only_after_candidate_check (test_release.ReleaseTests.test_success_promotes_only_after_candidate_check) ... ok
+test_weighted_alias_requires_operator_review (test_release.ReleaseTests.test_weighted_alias_requires_operator_review) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.070s
+
+OK

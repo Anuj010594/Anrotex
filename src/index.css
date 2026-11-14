@@ -145,7 +145,7 @@
     font-weight: 700;
   }
   .article-content a:not([class]) {
-    @apply font-semibold text-brand-teal underline decoration-brand-yellow decoration-2 underline-offset-4;
+    @apply font-semibold text-brand-navy underline decoration-2 underline-offset-4;
   }
   .article-content strong {
     @apply font-bold text-brand-navy;
