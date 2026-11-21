@@ -73,7 +73,7 @@ it("reports success only after delivery accepts a fresh verified attempt", async
   expect(sendMail).toHaveBeenCalledTimes(2);
 });
 
-it.each(["AWS Infrastructure Review", "CI/CD Pipeline Setup", "Terraform AWS Foundation"])("delivers the selected %s project in the enquiry email", async (projectType) => {
+it.each(["AWS Infrastructure Review", "CI/CD Pipeline Setup", "Terraform AWS Foundation", "Agency cloud delivery"])("delivers the selected %s project in the enquiry email", async (projectType) => {
   vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify({
     success: true, action: "lead_form", hostname: "www.anrotex.com",
   }))));

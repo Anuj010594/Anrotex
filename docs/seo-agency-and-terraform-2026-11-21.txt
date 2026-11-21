@@ -1,0 +1,41 @@
+Agency and Terraform service pages — 21 November 2026
+
+Scope
+- Replaced the existing /solutions page with DevOps support for development agencies.
+- Added /terraform-aws for the existing US$3,000 Terraform AWS Foundation offer.
+- Kept the agreed scope: new ECS Fargate infrastructure for one stateless HTTP application, one AWS account and region, staging and production configuration, and 15 business days after agreed access and inputs.
+- Explained responsibilities, required inputs, exclusions, delivery checks, pricing and handover in customer-facing language.
+- Linked both pages from the homepage, Services and footer. Linked Terraform from DevOps consulting and Cloud Operations.
+- Added a tailored agency enquiry option through the existing form, validation, email delivery and analytics allowlist. No contact details or enquiry message are added to analytics.
+- Added the Terraform route to the app, prerender output, Vercel rewrites and sitemap. Both pages include service and breadcrumb structured data.
+- Used the existing Cloud Operations project as engineering evidence; did not describe its Lambda implementation as an ECS client result.
+
+Verification
+- Production build passed: 20 prerendered pages plus the missing-page response.
+- All 18 tests passed, including agency enquiry email delivery and analytics handling.
+- SEO checks passed across all 20 pages: canonical URLs, metadata, headings, links, sitemap, hosting routes and initial HTML.
+- Application and API TypeScript checks passed.
+- ESLint passed with local Python .venv directories excluded. The unqualified npm run lint command also scanned third-party JavaScript installed inside a Python environment and failed on those external files.
+- git diff --check passed.
+- Desktop and 390 x 844 mobile previews inspected. No horizontal overflow on either page; mobile navigation and FAQ interaction checked.
+- Both primary enquiry routes show the correct selected service and tailored text. No real enquiry was submitted; delivery was checked with mocked mail and verification services.
+- Preview analytics were disabled. No browser errors or warnings were observed in the final preview check.
+
+Local evidence
+docs/analytics/2026-11-21/agency-terraform/agency-desktop.jpg
+docs/analytics/2026-11-21/agency-terraform/agency-mobile.jpg
+docs/analytics/2026-11-21/agency-terraform/terraform-desktop.jpg
+docs/analytics/2026-11-21/agency-terraform/terraform-mobile.jpg
+docs/analytics/2026-11-21/agency-terraform/terraform-environments-mobile.jpg
+docs/analytics/2026-11-21/agency-terraform/agency-enquiry.txt
+docs/analytics/2026-11-21/agency-terraform/terraform-enquiry.txt
+
+Release status
+Prepared on main. Remote main was e4af1212087eeb7f2e3a2fb50b974333641c42b2 before release preparation. GitHub CLI identity verified as Anuj010594.
+Production deployment is pending the user's approval of a one-push administrator exception. Existing protection requires one approving review and strict backend/frontend/terraform checks, with administrator enforcement enabled. Original settings are saved locally in protection-before.json alongside the preview evidence.
+After approval: temporarily exempt administrators, push only this commit, restore administrator enforcement immediately, compare every original protection setting, and verify Vercel production before reporting publication.
+No branch was created. Unrelated marketing edits and research files are excluded from this release.
+
+Technical references
+https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html
+https://developer.hashicorp.com/terraform/language/state

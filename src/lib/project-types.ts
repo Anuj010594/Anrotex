@@ -2,6 +2,7 @@ export const PROJECT_TYPES = [
   "AWS Infrastructure Review",
   "CI/CD Pipeline Setup",
   "Terraform AWS Foundation",
+  "Agency cloud delivery",
   "DevOps consulting",
   "AWS Cost Optimization Audit",
   "Reduce cloud costs",

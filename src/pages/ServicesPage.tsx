@@ -97,6 +97,7 @@ export default function ServicesPage() {
                   <TrackedLink to={`/contact?focus=${project.focus}`} eventSource={`services-project:${project.focus}`} className="mt-7 inline-flex items-center gap-2 rounded-full bg-brand-navy px-5 py-3 text-sm font-bold text-brand-off-white transition hover:bg-brand-teal">
                     {project.action} <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
                   </TrackedLink>
+                  {project.focus === "terraform-foundation" && <TrackedLink to="/terraform-aws" eventName="Service Click" eventSource="services-terraform-details" className="mt-4 inline-block font-semibold text-brand-navy underline underline-offset-4">Explore the Terraform setup and handover</TrackedLink>}
                 </article>
               ))}
             </div>
@@ -120,7 +121,7 @@ export default function ServicesPage() {
                 <h3 className="text-2xl font-bold tracking-tight text-brand-navy">For agencies and delivery partners</h3>
                 <p className="mt-4 leading-relaxed text-brand-teal">When a client project needs cloud setup, deployment automation or infrastructure changes, add engineering help for that part of the delivery. Work with us through your technical or delivery lead.</p>
                 <p className="mt-4 leading-relaxed text-brand-teal">Start with one client environment or deployment workflow. Agree access, review responsibilities and handover with your team before the work begins.</p>
-                <TrackedLink to="/contact?focus=devops" eventSource="services-agency" className="mt-auto inline-flex items-center gap-2 pt-6 font-bold text-brand-navy underline underline-offset-4">Discuss a client project <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></TrackedLink>
+                <TrackedLink to="/solutions" eventName="Service Click" eventSource="services-agency" className="mt-auto inline-flex items-center gap-2 pt-6 font-bold text-brand-navy underline underline-offset-4">Explore support for your client projects <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></TrackedLink>
               </article>
             </div>
           </div>

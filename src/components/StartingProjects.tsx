@@ -17,12 +17,13 @@ export default function StartingProjects() {
               <p className="mt-2 text-sm font-semibold text-brand-teal">{project.days} business days</p>
               <p className="mt-5 leading-relaxed text-brand-teal">{project.scope}</p>
               <div className="mt-auto pt-7">
-                <TrackedLink to={`/services#${project.focus}`} eventName="Service Click" eventSource={`homepage-${project.focus}`} className="inline-flex items-center gap-2 font-bold text-brand-navy underline underline-offset-4">View scope and next steps <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></TrackedLink>
+                <TrackedLink to={project.focus === "terraform-foundation" ? "/terraform-aws" : `/services#${project.focus}`} eventName="Service Click" eventSource={`homepage-${project.focus}`} className="inline-flex items-center gap-2 font-bold text-brand-navy underline underline-offset-4">View scope and next steps <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></TrackedLink>
               </div>
             </article>
           ))}
         </div>
         <p className="mt-6 text-sm leading-relaxed text-brand-teal">Prices are in US dollars. Delivery starts after the scope is agreed and required access and inputs are ready. <TrackedLink to="/services#starting-projects" eventName="Service Click" eventSource="homepage-project-terms" className="font-semibold underline underline-offset-4">See deliverables, exclusions and pricing terms.</TrackedLink></p>
+        <p className="mt-5 leading-relaxed text-brand-teal">Delivering software for a client? <TrackedLink to="/solutions" eventName="Service Click" eventSource="homepage-agency" className="font-semibold text-brand-navy underline underline-offset-4">See how we support development agencies.</TrackedLink></p>
       </div>
     </section>
   );

@@ -8,6 +8,8 @@ const serviceLinks = [
   { label: "AWS cost optimization", href: "/aws-cost-optimization" },
   { label: "Kubernetes scaling", href: "/kubernetes-scaling" },
   { label: "CI/CD automation", href: "/ci-cd-automation" },
+  { label: "Terraform AWS setup", href: "/terraform-aws" },
+  { label: "For development agencies", href: "/solutions" },
 ];
 
 const companyLinks = [

@@ -47,9 +47,9 @@ const services = [
     icon: Blocks,
     title: "Infrastructure as Code",
     description:
-      "Create reusable Terraform and Pulumi foundations that are reviewable, repeatable, and easier to evolve.",
-    link: "/devops-consulting",
-    linkText: "See how we work",
+      "Set up AWS environments with Terraform, clear access controls, tested configuration and a handover your team can use.",
+    link: "/terraform-aws",
+    linkText: "Explore Terraform AWS setup",
   },
   {
     icon: ShieldCheck,

@@ -130,10 +130,10 @@ it("stops measurement after withdrawal, even when persisting the choice fails", 
   expect(document.cookie).toContain("Max-Age=0");
 });
 
-it("keeps each starting project identifiable through the enquiry funnel without sending form details", async () => {
+it("keeps project and agency enquiries identifiable without sending form details", async () => {
   const { setAnalyticsConsent, trackEvent } = await import("./analytics");
   setAnalyticsConsent("granted");
-  for (const focus of ["AWS Infrastructure Review", "CI/CD Pipeline Setup", "Terraform AWS Foundation"]) {
+  for (const focus of ["AWS Infrastructure Review", "CI/CD Pipeline Setup", "Terraform AWS Foundation", "Agency cloud delivery"]) {
     trackEvent("Lead Form Started", { focus, email: "private@example.com" });
     expect(commands().at(-1)).toEqual(["event", "form_start", { form_name: "enquiry", service_interest: focus }]);
     trackEvent("Lead Form Submitted", { focus, message: "Private workload details" });

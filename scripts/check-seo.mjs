@@ -126,8 +126,22 @@ for (const [name, html] of [["Homepage", homepage], ["Services", services], ["CI
   assert(html.includes('href="/portfolio/cloud-operations"'), `${name}: missing engineering project link`);
 }
 for (const focus of ["aws-review", "cicd-setup", "terraform-foundation"]) {
-  assert(homepage.includes(`href="/services#${focus}"`), `Homepage: missing starting project ${focus}`);
+  const destination = focus === "terraform-foundation" ? "/terraform-aws" : `/services#${focus}`;
+  assert(homepage.includes(`href="${destination}"`), `Homepage: missing starting project ${focus}`);
 }
+const agency = await readFile("dist/solutions/index.html", "utf8");
+const terraform = await readFile("dist/terraform-aws/index.html", "utf8");
+for (const [name, html, focus] of [["Agency", agency, "agency"], ["Terraform", terraform, "terraform-foundation"]]) {
+  assert(html.includes(`href="/contact?focus=${focus}"`), `${name}: missing focused enquiry`);
+  assert(html.includes('href="/portfolio/cloud-operations"'), `${name}: missing engineering evidence`);
+  assert.doesNotMatch(html, /illustrative|not a client result|publication boundaries|internal use|keyword target|SEO batch/i);
+}
+for (const [name, html] of [["Homepage", homepage], ["Services", services]]) {
+  assert(html.includes('href="/solutions"') && html.includes('href="/terraform-aws"'), `${name}: new services must be discoverable`);
+}
+assert.match((await render("/contact?focus=agency")).html, /<option[^>]*selected=""[^>]*>Agency cloud delivery<\/option>/);
+assert(terraform.includes("US$3,000") && terraform.includes("ECS Fargate"), "Terraform: preserve the agreed offer");
+assert.equal([...terraform.matchAll(/<details\b/g)].length, 5, "Terraform answers must be in initial HTML");
 for (const [name, html] of [["Portfolio", portfolio], ["Insights", blog], ["CI/CD guide", cicdGuide], ["CI/CD service", cicd]]) {
   assert(html.includes('href="/blog/aws-lambda-rollback-github-actions"'), `${name}: missing Lambda walkthrough`);
 }
@@ -203,7 +217,7 @@ const env = {
 const legacy = await worker.fetch(new Request("https://www.anrotex.com/portfolio/cloud-operations/index.html?utm_source=linkedin"), env);
 assert.equal(legacy.status, 308);
 assert.equal(legacy.headers.get("location"), "https://www.anrotex.com/portfolio/cloud-operations?utm_source=linkedin");
-for (const pathname of ["/blog/cicd-best-practices", "/blog/aws-lambda-rollback-github-actions", "/portfolio/cloud-operations", "/privacy-policy", "/terms-of-use", "/downloads-policy", "/does-not-exist", "/missing.js"]) {
+for (const pathname of ["/solutions", "/terraform-aws", "/blog/cicd-best-practices", "/blog/aws-lambda-rollback-github-actions", "/portfolio/cloud-operations", "/privacy-policy", "/terms-of-use", "/downloads-policy", "/does-not-exist", "/missing.js"]) {
   const response = await worker.fetch(new Request(`https://www.anrotex.com${pathname}`, {
     headers: { accept: pathname.endsWith(".js") ? "*/*" : "text/html" },
   }), env);

@@ -14,6 +14,7 @@ const projectFocus = new Map<string, (typeof PROJECT_TYPES)[number]>([
   ["aws-cost", "Reduce cloud costs"],
   ["cicd", "Improve deployment speed"],
   ["devops", "DevOps consulting"],
+  ["agency", "Agency cloud delivery"],
   ["kubernetes", "Scale Kubernetes reliably"],
 ]);
 
@@ -44,6 +45,11 @@ const serviceCopy = new Map([
     title: "Discuss your DevOps needs.",
     description: "Tell us where infrastructure or delivery is slowing your team down. We will help you define a focused next step.",
     prompt: "What does your team run today, what keeps getting in the way, and what would you like to improve first?",
+  }],
+  ["Agency cloud delivery", {
+    title: "Discuss your client project.",
+    description: "Tell us which part of the cloud or release work your agency needs help delivering. We will agree the responsibilities and scope with your team.",
+    prompt: "What is your agency delivering, which infrastructure work needs help, and what is your timeline? An outline of the application and current setup is enough. Please leave credentials and customer data out.",
   }],
 ]);
 

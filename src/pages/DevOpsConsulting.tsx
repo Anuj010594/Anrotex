@@ -82,7 +82,8 @@ export default function DevOpsConsulting() {
         <section className="bg-brand-mint/40 px-6 py-20">
           <div className="mx-auto max-w-6xl">
             <h2 className="text-3xl font-bold tracking-tight">Choose where to start</h2>
-            <div className="mt-10 grid gap-8 md:grid-cols-3">{[
+            <div className="mt-10 grid gap-8 md:grid-cols-2">{[
+              ["/terraform-aws", "Terraform AWS setup", "For a new application on ECS Fargate. Explore the fixed scope, environment design and handover."],
               ["/ci-cd-automation", "CI/CD automation", "For slow builds, fragile releases and recovery gaps. Review pipeline deliverables and the implementation process."],
               ["/kubernetes-scaling", "Kubernetes consulting", "For pending pods, unstable autoscaling or inefficient node capacity. See the cluster review scope and evidence needed."],
               ["/aws-cost-optimization", "AWS cost optimization", "For unexplained spend and idle capacity. See how an audit connects potential savings with operational risk."],

@@ -18,6 +18,7 @@ const routes = [
   ["/kubernetes-scaling", "KubernetesScaling"],
   ["/ci-cd-automation", "CICDAutomation"],
   ["/devops-consulting", "DevOpsConsulting"],
+  ["/terraform-aws", "TerraformAWS"],
   ["/blog", "Blog"],
   ["/blog/reduce-aws-costs", "blog/AwsCostReductionBlog"],
   ["/blog/cicd-best-practices", "blog/CICDBestPractices"],

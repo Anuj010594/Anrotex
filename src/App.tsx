@@ -16,6 +16,7 @@ const AWSCostOptimization = lazy(() => import("./pages/AWSCostOptimization"));
 const KubernetesScaling = lazy(() => import("./pages/KubernetesScaling"));
 const CICDAutomation = lazy(() => import("./pages/CICDAutomation"));
 const DevOpsConsulting = lazy(() => import("./pages/DevOpsConsulting"));
+const TerraformAWS = lazy(() => import("./pages/TerraformAWS"));
 const AwsCostReductionBlog = lazy(() => import("./pages/blog/AwsCostReductionBlog"));
 const CICDBestPractices = lazy(() => import("./pages/blog/CICDBestPractices"));
 const KubernetesScalingBestPractices = lazy(() => import("./pages/blog/KubernetesScalingBestPractices"));
@@ -97,6 +98,7 @@ function App() {
             <Route path="/kubernetes-scaling" element={<KubernetesScaling />} />
             <Route path="/ci-cd-automation" element={<CICDAutomation />} />
             <Route path="/devops-consulting" element={<DevOpsConsulting />} />
+            <Route path="/terraform-aws" element={<TerraformAWS />} />
             <Route path="/blog/reduce-aws-costs" element={<AwsCostReductionBlog />} />
             <Route path="/blog/cicd-best-practices" element={<CICDBestPractices />} />
             <Route
