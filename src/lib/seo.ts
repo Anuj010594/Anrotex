@@ -6,9 +6,11 @@ export type JsonLd = Record<string, unknown>;
 
 export const guideReviewer = {
   "@type": "Person",
+  "@id": `${SITE_URL}/about#anuj-dhadge`,
   name: "Anuj Dhadge",
   jobTitle: "Co-Founder · DevOps Engineer",
-  url: "https://www.linkedin.com/in/anuj-dhadge-929963408/",
+  url: `${SITE_URL}/about#anuj-dhadge`,
+  sameAs: ["https://www.linkedin.com/in/anuj-dhadge-929963408/"],
 };
 
 export const organizationSchema: JsonLd = {
@@ -16,8 +18,13 @@ export const organizationSchema: JsonLd = {
   "@type": "Organization",
   "@id": `${SITE_URL}/#organization`,
   name: SITE_NAME,
+  legalName: "Anrotex IT Systems LLP",
   url: SITE_URL,
-  sameAs: ["https://www.linkedin.com/company/anrotex-solutions/"],
+  sameAs: [
+    "https://www.linkedin.com/company/anrotex-solutions/",
+    "https://techbehemoths.com/company/anrotex-it-systems-llp",
+    "https://www.goodfirms.co/company/anrotex-it-systems-llp",
+  ],
   logo: {
     "@type": "ImageObject",
     url: `${SITE_URL}/Anrotex.png`,

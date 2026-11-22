@@ -8,6 +8,8 @@ import { analyticsUrl, isAnalyticsExcluded } from "./lib/analytics";
 
 const Index = lazy(() => import("./pages/Index"));
 const ServicesPage = lazy(() => import("./pages/ServicesPage"));
+const About = lazy(() => import("./pages/About"));
+const AWSReviewPreview = lazy(() => import("./pages/AWSReviewPreview"));
 const CaseStudiesPage = lazy(() => import("./pages/CaseStudiesPage"));
 const FintechAwsCostReduction = lazy(() => import("./pages/case-studies/FintechAwsCostReduction"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
@@ -82,6 +84,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<ServicesPage />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/aws-review-preview" element={<AWSReviewPreview />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-use" element={<WebsiteTerms />} />
             <Route path="/downloads-policy" element={<DownloadPolicy />} />

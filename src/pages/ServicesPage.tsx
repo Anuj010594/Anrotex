@@ -97,6 +97,7 @@ export default function ServicesPage() {
                   <TrackedLink to={`/contact?focus=${project.focus}`} eventSource={`services-project:${project.focus}`} className="mt-7 inline-flex items-center gap-2 rounded-full bg-brand-navy px-5 py-3 text-sm font-bold text-brand-off-white transition hover:bg-brand-teal">
                     {project.action} <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
                   </TrackedLink>
+                  {project.focus === "aws-review" && <TrackedLink to="/aws-review-preview" eventName="Service Click" eventSource="services-aws-preview" className="mt-4 inline-block font-semibold text-brand-navy underline underline-offset-4">Preview the findings and action plan</TrackedLink>}
                   {project.focus === "terraform-foundation" && <TrackedLink to="/terraform-aws" eventName="Service Click" eventSource="services-terraform-details" className="mt-4 inline-block font-semibold text-brand-navy underline underline-offset-4">Explore the Terraform setup and handover</TrackedLink>}
                 </article>
               ))}

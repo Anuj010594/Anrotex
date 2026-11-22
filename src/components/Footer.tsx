@@ -13,6 +13,7 @@ const serviceLinks = [
 ];
 
 const companyLinks = [
+  { label: "About Anrotex", href: "/about" },
   { label: "Case studies", href: "/case-studies" },
   { label: "Insights", href: "/blog" },
   { label: "Contact", href: "/contact" },

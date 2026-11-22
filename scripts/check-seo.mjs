@@ -98,6 +98,17 @@ assert(aws.includes('href="/contact?focus=aws-audit"'), "Missing focused AWS enq
 assert.match((await render("/contact?focus=aws-audit")).html, /<option[^>]*selected=""[^>]*>AWS Cost Optimization Audit<\/option>/);
 
 const services = await readFile("dist/services/index.html", "utf8");
+const about = await readFile("dist/about/index.html", "utf8");
+const reviewPreview = await readFile("dist/aws-review-preview/index.html", "utf8");
+assert(about.includes('id="anuj-dhadge"') && about.includes("Anrotex IT Systems LLP"), "About: keep the company identity and reviewer destination available");
+for (const [name, html] of [["About", about], ["AWS review preview", reviewPreview]]) {
+  assert.doesNotMatch(html, /illustrative|not a client result|publication boundaries|internal use|keyword target|SEO batch/i);
+}
+for (const [name, html] of [["About", about], ["Services", services], ["AWS service", aws]]) {
+  assert(html.includes('href="/aws-review-preview"'), `${name}: missing AWS review preview link`);
+}
+assert(reviewPreview.includes('href="/contact?focus=aws-review"') && reviewPreview.includes("US$500"), "Preview: preserve the review offer and focused enquiry");
+assert.equal(await readFile("dist/BingSiteAuth.xml", "utf8"), await readFile("public/BingSiteAuth.xml", "utf8"), "Bing verification file must ship unchanged");
 assert(services.includes('id="starting-projects"'), "Missing starting-projects destination");
 for (const [focus, projectType, price] of [
   ["aws-review", "AWS Infrastructure Review", "US$500"],

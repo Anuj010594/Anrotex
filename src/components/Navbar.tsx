@@ -6,7 +6,7 @@ import TrackedLink from "@/components/TrackedLink";
 const links = [
   { label: "Services", path: "/services" },
   { label: "Results", path: "/case-studies" },
-  { label: "About", path: "/", section: "#team" },
+  { label: "About", path: "/about" },
   { label: "Insights", path: "/blog" },
 ];
 
@@ -23,17 +23,8 @@ const Navbar = () => {
       ? "block w-full py-3 text-left text-base font-medium text-brand-navy"
       : "text-sm font-medium text-brand-navy/70 transition-colors hover:text-brand-navy";
 
-    if (location.pathname === "/" && link.section) {
-      return (
-        <a key={link.label} href={link.section} className={classes} onClick={() => setOpen(false)}>
-          {link.label}
-        </a>
-      );
-    }
-
-    const destination = link.section ? `/${link.section}` : link.path;
     return (
-      <Link key={link.label} to={destination} className={classes} onClick={() => setOpen(false)}>
+      <Link key={link.label} to={link.path} className={classes} onClick={() => setOpen(false)}>
         {link.label}
       </Link>
     );
