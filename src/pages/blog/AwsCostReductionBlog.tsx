@@ -166,6 +166,7 @@ export default function AwsCostReductionBlog() {
           <h2 id="aws-review-heading" className="!pt-4">Want help reducing your AWS bill?</h2>
           <p>{awsReview.scope} Get a review of costs, access and reliability, a practical action plan and a 60-minute walkthrough.</p>
           <p><strong>{awsReview.price} one-time fee · {awsReview.days} business days</strong> after the scope is agreed and required access and inputs are ready. We use agreed read-only access or exports. Infrastructure changes are quoted separately.</p>
+          <p><TrackedLink to="/aws-review-preview" eventName="Service Click" eventSource="aws-guide-review-preview">See what an AWS review includes</TrackedLink>, with an example cost finding and action plan.</p>
           <div className="mt-6 flex flex-wrap items-center gap-5">
             <TrackedLink to={`/contact?focus=${awsReview.focus}`} eventSource="aws-guide-review-enquiry" className="inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 text-sm font-bold !text-brand-off-white !no-underline transition hover:bg-brand-teal">
               {awsReview.action}<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />

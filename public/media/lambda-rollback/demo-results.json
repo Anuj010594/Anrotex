@@ -1,0 +1,59 @@
+{
+  "recorded_at": "2026-11-23T10:00:35.649952+00:00",
+  "environment": "local",
+  "aws_responses": "simulated",
+  "network_access": "blocked",
+  "starting_version": "7",
+  "candidate_version": "8",
+  "final_version": "7",
+  "release_status": "failed",
+  "recovery_checked_separately": true,
+  "source_sha256": {
+    "release.py": "7aa1a3b31c5703991d7c0d845234d464347dde576f362cf652c192ce6f25fccd",
+    "smoke.py": "ec86243840385baa8fa3c4f6f251bd3bd3cc158d9d8f4c52f47adc3419227509"
+  },
+  "events": [
+    {
+      "step": "starting_version",
+      "version": "7"
+    },
+    {
+      "step": "candidate_check",
+      "path": "/health",
+      "status": 200
+    },
+    {
+      "step": "candidate_check",
+      "path": "/requests",
+      "status": 201
+    },
+    {
+      "step": "candidate_check",
+      "path": "/requests/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "status": 200
+    },
+    {
+      "step": "alias_changed",
+      "version": "8"
+    },
+    {
+      "step": "gateway_check",
+      "version": "8",
+      "status": 500
+    },
+    {
+      "step": "alias_changed",
+      "version": "7"
+    },
+    {
+      "step": "release_failed",
+      "reason": "Gateway release mismatch"
+    },
+    {
+      "step": "recovery_checked_separately",
+      "version": "7",
+      "authenticated_checks": 4,
+      "unsigned_request_denied": true
+    }
+  ]
+}

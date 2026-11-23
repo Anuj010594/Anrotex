@@ -35,6 +35,7 @@ const localTest = `unzip lambda-rollback-tests.zip
 cd lambda-rollback
 python3 -B -m unittest -v test_release`;
 const toc = [
+  { id: "watch-rollback", label: "Watch the rollback walkthrough" },
   { id: "release-path", label: "Keep the working version available" },
   { id: "candidate-checks", label: "Check the new version first" },
   { id: "promotion", label: "Switch versions and check the app" },
@@ -50,13 +51,35 @@ function Code({ label, children }: { label: string; children: ReactNode }) {
 export default function LambdaDeploymentRollback() {
   return <>
     <SEO title={`${title} | Anrotex`} description={description} path={path} type="article" image={sharingImage} imageAlt="CI/CD from pull request to production — a release pipeline with a recovery path, by Anrotex." imageWidth={1731} imageHeight={909} structuredData={[
-      articleSchema({ headline: title, description, path, datePublished: "2026-11-03", dateModified: "2026-11-05", image: sharingImage }),
+      articleSchema({ headline: title, description, path, datePublished: "2026-11-03", dateModified: "2026-11-23", image: sharingImage }),
       breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Insights", path: "/blog" }, { name: "Lambda deployment rollback", path }]),
     ]} />
-    <InsightArticle eyebrow="AWS deployments" title={title} description="Check that a new version works before sending users to it. If the release fails, have a clear way to switch back to the previous version." published="3 November 2026" updated="5 November 2026" readTime="12 minute read" toc={toc} ctaTitle="Make releases easier to manage." ctaDescription="Set up a release process for one application in your existing AWS test environment. Get checks, a rollback test and clear instructions for your team." ctaHref="/services#cicd-setup" ctaLabel="See the US$1,500 pipeline setup">
+    <InsightArticle eyebrow="AWS deployments" title={title} description="Check that a new version works before sending users to it. If the release fails, have a clear way to switch back to the previous version." published="3 November 2026" updated="23 November 2026" readTime="12 minute read" toc={toc} ctaTitle="Make releases easier to manage." ctaDescription="Set up a release process for one application in your existing AWS test environment. Get checks, a rollback test and clear instructions for your team." ctaHref="/services#cicd-setup" ctaLabel="See the US$1,500 pipeline setup">
       <p>A deployment can finish without errors while the application still fails for users. The new code might be running, but can it save data, read it back and allow the right people to use it?</p>
       <p>This guide explains how to check an AWS Lambda release and switch back to the previous version when those checks fail. Switching back is called a <strong>rollback</strong>. We use Python code from Anrotex's <TrackedLink to="/portfolio/cloud-operations" eventName="Case Study Click" eventSource="lambda-guide-project">Cloud Operations project</TrackedLink> and show how it connects to GitHub Actions.</p>
       <p>You can also <a href="#test-rollback">download the tests to run on your computer</a>. They let you try the release and safety checks without an AWS account.</p>
+
+      <h2 id="watch-rollback">Watch a failed release switch back</h2>
+      <p>This 72-second walkthrough follows a test of the code in this guide. It runs on a computer with simulated AWS responses, so you can see the steps without creating cloud resources.</p>
+      <figure className="mx-auto my-8 max-w-lg">
+        <video controls playsInline preload="none" width={1080} height={1350} poster="/media/lambda-rollback/rollback-poster.jpg" aria-label="Lambda rollback walkthrough, with text on screen and no audio" aria-describedby="rollback-video-caption" className="aspect-[4/5] w-full rounded-2xl bg-brand-navy">
+          <source src="/media/lambda-rollback/rollback-walkthrough.mp4" type="video/mp4" />
+          <a href="/media/lambda-rollback/rollback-walkthrough.mp4">Download the Lambda rollback video</a>
+        </video>
+        <figcaption id="rollback-video-caption" className="mt-3 text-sm leading-relaxed">No sound needed. The test checks recovery separately after the release script switches back.</figcaption>
+      </figure>
+      <details className="rounded-2xl border border-brand-navy/15 p-5">
+        <summary className="cursor-pointer font-bold">Read the walkthrough</summary>
+        <ol>
+          <li><strong>Check the new version.</strong> Version 8 passes checks for the expected code version, saving data and reading it back. Version 7 remains in use during these checks.</li>
+          <li><strong>Switch to version 8.</strong> The next check goes through the application's normal entry point. This test deliberately returns a server error.</li>
+          <li><strong>Switch back to version 7.</strong> The script first checks that another release has not changed the destination. The original release is still reported as failed.</li>
+          <li><strong>Check recovery separately.</strong> The test then checks access, the restored version, saving and reading data, and whether repeating a request creates a duplicate. These checks pass with the simulated responses.</li>
+          <li><strong>Check your data before a real release.</strong> Switching code versions does not undo database changes. The previous code must still work with the current data.</li>
+        </ol>
+        <p>The download includes the code, instructions and 23 local tests. Use a separate test environment before connecting it to AWS.</p>
+      </details>
+      <p><TrackedLink to="/services#cicd-setup" eventName="Service Click" eventSource="lambda-walkthrough-pipeline">See the US$1,500 pipeline setup</TrackedLink> for one application in your existing AWS test environment.</p>
 
       <h2 id="release-path">1. Keep the working version available</h2>
       <p>Keep the current version running while you check the new one. Lambda supports this through an <strong>alias</strong>: a name that points to a particular version of your code. In this example, that name is <code>live</code>.</p>
