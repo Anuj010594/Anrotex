@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "pages": {
+    "https://www.anrotex.com/": "b9449a98c5d8121cbff7a586ffee45d844fb57951c6333718b2909f47b92a1da",
+    "https://www.anrotex.com/about": "9a22849de3e86900a9d126cf35f9c6f41dfb7ecd0b1a4f070a25a0c65d88a3e5",
+    "https://www.anrotex.com/aws-cost-optimization": "679d788157e65ceff56e7662d5fbb38d6e8d776a1a64e1851ae537c447ab6f18",
+    "https://www.anrotex.com/aws-review-preview": "871f7d003ab88aab13137ff56ab0e1a7fdaa2474337824e991b885e802c20281",
+    "https://www.anrotex.com/blog": "acc2f8c823641a65f77964e76921e4a8997eb5883424f58cec389c09b6403c65",
+    "https://www.anrotex.com/blog/aws-lambda-rollback-github-actions": "b8808249777e2cfb7ddac6d7be82bbb83d34f4bd55d2d8176bce406204a6fbf0",
+    "https://www.anrotex.com/blog/cicd-best-practices": "96ca6d73cd3651a06670cc87bb3756e02120c0a1cf64978816835daacd0cb943",
+    "https://www.anrotex.com/blog/kubernetes-scaling-best-practices": "735f28894d5ddfe0f3c261bfc3af57bee6e7026e08a6b35edc9c18baa556154b",
+    "https://www.anrotex.com/blog/reduce-aws-costs": "4bf526c8e025da570c5a9df310661da73ed1adcf53d7c75be1d6ef14f49613fb",
+    "https://www.anrotex.com/case-studies": "e503962356af17139a64cd5470de632222d6e044ec1a48ea83dfd5aefc6ccf36",
+    "https://www.anrotex.com/case-studies/fintech-aws-cost-reduction": "15c87faec8de41deb10de135ef38f00dde5f50c1ba4839ce206d1033b9df5db6",
+    "https://www.anrotex.com/ci-cd-automation": "6fcaacaac417c07e45ac05ea1b9a508bc4011f50dddd2c92394536eb482ef79f",
+    "https://www.anrotex.com/contact": "896a556dce1e3a028fa86feae78eb89619140a4898922d9f0496b9f74d70c351",
+    "https://www.anrotex.com/devops-consulting": "37fdb9ce70c4554c5b5fb65785bba9d150a9102a51372acbd12a8b7f5326cc84",
+    "https://www.anrotex.com/downloads-policy": "1d0c0003badeeb91861c4c9c7c2c8d76602ef667f1a85a0f1850c7c24d709c93",
+    "https://www.anrotex.com/kubernetes-scaling": "c75d9808f0e4ef57f520c615145fb393db3319523bdd51292d2adfaf7420373d",
+    "https://www.anrotex.com/portfolio/cloud-operations": "e7f1116e7d760271e6556d20e73740c5dea41777442432177e1fab0cc573e472",
+    "https://www.anrotex.com/privacy-policy": "c0ced0f89ff9ab80690e85d815d5d7685ffa2eaba728a2f875ad0c70e940e800",
+    "https://www.anrotex.com/services": "d960798b779ab8f69647a1f344cf117735ae12bcf37c1c002b98a79def340007",
+    "https://www.anrotex.com/solutions": "b645c13bacee23a524e3cb9d8cf61d3f8067f1a752faaf650cd13e10d2bfa0a6",
+    "https://www.anrotex.com/terms-of-use": "28005c41918e60e7e5220b96b6e3d7de64597d6bca015094b87ef0105c57d02f",
+    "https://www.anrotex.com/terraform-aws": "16205fde2d6d81051a4dbb7ee640a9214a01033097646d777f13e24469e22b16"
+  }
+}

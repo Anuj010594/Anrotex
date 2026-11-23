@@ -62,3 +62,8 @@ for (const [route, page] of [...routes, ["/404", "NotFound"]]) {
 }
 
 console.log(`Prerendered ${routes.length} SEO-ready routes and a 404 page.`);
+
+await writeFile(path.join(distDirectory, "release.json"), JSON.stringify({
+  commit: process.env.VERCEL_GIT_COMMIT_SHA ?? "",
+  branch: process.env.VERCEL_GIT_COMMIT_REF ?? "",
+}));

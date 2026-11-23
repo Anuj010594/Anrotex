@@ -109,6 +109,13 @@ for (const [name, html] of [["About", about], ["Services", services], ["AWS serv
 }
 assert(reviewPreview.includes('href="/contact?focus=aws-review"') && reviewPreview.includes("US$500"), "Preview: preserve the review offer and focused enquiry");
 assert.equal(await readFile("dist/BingSiteAuth.xml", "utf8"), await readFile("public/BingSiteAuth.xml", "utf8"), "Bing verification file must ship unchanged");
+const indexNowKey = await readFile("public/indexnow-key.txt", "utf8");
+assert.match(indexNowKey.trim(), /^[a-zA-Z0-9-]{8,128}$/, "Invalid IndexNow verification key");
+assert.equal(await readFile("dist/indexnow-key.txt", "utf8"), indexNowKey, "IndexNow key must ship unchanged");
+assert.deepEqual(JSON.parse(await readFile("dist/release.json", "utf8")), {
+  commit: process.env.VERCEL_GIT_COMMIT_SHA ?? "",
+  branch: process.env.VERCEL_GIT_COMMIT_REF ?? "",
+}, "Production release identity must match the build");
 assert(services.includes('id="starting-projects"'), "Missing starting-projects destination");
 for (const [focus, projectType, price] of [
   ["aws-review", "AWS Infrastructure Review", "US$500"],

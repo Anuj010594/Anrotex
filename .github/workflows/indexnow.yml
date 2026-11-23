@@ -1,0 +1,46 @@
+name: Notify IndexNow
+
+on:
+  deployment_status:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: indexnow-production
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    if: >-
+      github.repository == 'Anuj010594/Anrotex' &&
+      ((github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' &&
+      github.event.deployment.environment == 'Production' && github.event.deployment.creator.login == 'vercel[bot]' &&
+      github.event.deployment_status.creator.login == 'vercel[bot]'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Test notification safeguards
+        run: python3 -B -m unittest discover -s scripts -p 'test_indexnow.py' -v
+      - name: Notify changed production pages
+        id: notify
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DEPLOYMENT_SHA: ${{ github.event.deployment.sha || github.sha }}
+        run: python3 -B scripts/indexnow.py
+      - name: Save accepted notification state
+        if: steps.notify.outputs.save_state == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: indexnow-state
+          path: .indexnow/state.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90

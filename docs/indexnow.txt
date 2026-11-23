@@ -1,0 +1,49 @@
+IndexNow production notifications
+
+The Notify IndexNow GitHub Actions workflow runs after Vercel reports a successful
+Production deployment. It may also be run manually from main to retry a failed
+notification. It never pushes commits or changes branch protection.
+
+Before submitting, the script checks that www.anrotex.com/release.json identifies
+the expected commit and main branch. It checks again after reading the pages, so
+a deployment overtaken by another release cannot submit a mixed snapshot.
+
+The public sitemap supplies the URLs. Each must return 200, contain its own
+canonical URL and main content, and permit indexing. Fingerprints cover the page
+title, search/sharing metadata, structured data, main text, headings, links and
+image references. CSS classes, generated JavaScript filenames, analytics and the
+shared footer are excluded. A changed downloadable file with an unchanged page
+and unchanged link is not detected; update its guide when its instructions change.
+
+Only added, changed or removed canonical URLs are submitted. Preview domains,
+query strings and fragments are rejected. Removed URLs are sent so the search
+engine can fetch their current redirect, noindex or missing-page response.
+
+The public /indexnow-key.txt file proves domain control. It grants no access to
+GitHub, Vercel, customer data or AWS. No new account token or paid service is used.
+GitHub's job token has read-only contents and Actions permissions.
+
+Each successful run stores the page fingerprints in the indexnow-state artifact
+for 90 days. Failed submissions preserve the previous state; rerun the workflow
+after resolving the error. A 200 receipt means accepted; 202 means accepted while
+key validation is pending. Neither means the URLs have been indexed.
+
+The initial baseline was captured from production on 23 November 2026, after
+commit 0982424. The first setup release normally has no changed page content and
+therefore establishes a receipt without submitting the entire site. Verify the
+new key after deployment by submitting the two recently corrected pages once.
+
+After a publishing pause longer than artifact retention, the checked-in baseline
+is used. This can repeat notifications for pages changed since that baseline.
+Refresh scripts/indexnow-baseline.json in the next maintenance release if needed:
+  python3 -B scripts/indexnow.py --snapshot scripts/indexnow-baseline.json
+
+Validation:
+  python3 -B -m unittest discover -s scripts -p 'test_indexnow.py' -v
+  npm run build
+  npm run check:seo
+
+Sources:
+https://www.indexnow.org/documentation
+https://www.indexnow.org/faq.html
+https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#deployment_status
