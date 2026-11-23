@@ -18,6 +18,7 @@ type InsightArticleProps = {
   published: string;
   updated: string;
   readTime: string;
+  reviewed?: boolean;
   toc: TocItem[];
   ctaTitle: string;
   ctaDescription: string;
@@ -33,6 +34,7 @@ const InsightArticle = ({
   published,
   updated,
   readTime,
+  reviewed = true,
   toc,
   ctaTitle,
   ctaDescription,
@@ -84,13 +86,13 @@ const InsightArticle = ({
             {readTime}
           </span>
         </div>
-        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-brand-navy">
+        {reviewed && <p className="mt-3 max-w-3xl text-sm leading-relaxed text-brand-navy">
           Technical review by{" "}
           <a href={guideReviewer.url} className="font-semibold underline underline-offset-4">
             {guideReviewer.name}
           </a>
           {" · "}{guideReviewer.jobTitle}
-        </p>
+        </p>}
         <div className="mt-8 space-y-5 lg:hidden">
           <details className="rounded-2xl border border-brand-navy/10 bg-brand-stone/55 p-5">
             <summary className="cursor-pointer font-bold text-brand-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-teal">

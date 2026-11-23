@@ -23,6 +23,9 @@ const AwsCostReductionBlog = lazy(() => import("./pages/blog/AwsCostReductionBlo
 const CICDBestPractices = lazy(() => import("./pages/blog/CICDBestPractices"));
 const KubernetesScalingBestPractices = lazy(() => import("./pages/blog/KubernetesScalingBestPractices"));
 const Blog = lazy(() => import("./pages/Blog"));
+const FixedPriceAWSCostAudit = lazy(() => import("./pages/blog/FixedPriceAWSCostAudit"));
+const ClusterAutoscalingLimits = lazy(() => import("./pages/blog/ClusterAutoscalingLimits"));
+const ScheduledPredictiveAutoscaling = lazy(() => import("./pages/blog/ScheduledPredictiveAutoscaling"));
 const CloudOperations = lazy(() => import("./pages/CloudOperations"));
 const LambdaDeploymentRollback = lazy(() => import("./pages/blog/LambdaDeploymentRollback"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -110,6 +113,9 @@ function App() {
               element={<KubernetesScalingBestPractices />}
             />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/fixed-price-aws-cost-audit" element={<FixedPriceAWSCostAudit />} />
+            <Route path="/blog/cluster-autoscaling-limits-quotas" element={<ClusterAutoscalingLimits />} />
+            <Route path="/blog/scheduled-predictive-kubernetes-autoscaling" element={<ScheduledPredictiveAutoscaling />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

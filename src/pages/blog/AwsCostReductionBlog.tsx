@@ -53,7 +53,7 @@ export default function AwsCostReductionBlog() {
               "Trace an AWS bill increase, choose which costs to investigate, and plan changes with an EC2 example and a free cost-review worksheet.",
             path: "/blog/reduce-aws-costs",
             datePublished: "2026-06-16",
-            dateModified: "2026-11-10",
+            dateModified: "2026-11-23",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -68,7 +68,7 @@ export default function AwsCostReductionBlog() {
         title="How to reduce AWS costs: a practical checklist"
         description="Find which charges are driving your AWS bill, choose the changes worth testing, and measure the result. Start with unused resources, then review capacity, storage, network costs and commitments."
         published="16 June 2026"
-        updated="10 November 2026"
+        updated="23 November 2026"
         readTime="16 minute read"
         toc={toc}
         ctaTitle="Find the waste in your AWS estate."
@@ -167,6 +167,7 @@ export default function AwsCostReductionBlog() {
           <p>{awsReview.scope} Get a review of costs, access and reliability, a practical action plan and a 60-minute walkthrough.</p>
           <p><strong>{awsReview.price} one-time fee · {awsReview.days} business days</strong> after the scope is agreed and required access and inputs are ready. We use agreed read-only access or exports. Infrastructure changes are quoted separately.</p>
           <p><TrackedLink to="/aws-review-preview" eventName="Service Click" eventSource="aws-guide-review-preview">See what an AWS review includes</TrackedLink>, with an example cost finding and action plan.</p>
+          <p>Comparing providers? Use our <TrackedLink to="/blog/fixed-price-aws-cost-audit" eventName="Article Click" eventSource="aws-guide-buyer-checklist">fixed-price AWS cost audit checklist</TrackedLink> to compare fees, scope and deliverables.</p>
           <div className="mt-6 flex flex-wrap items-center gap-5">
             <TrackedLink to={`/contact?focus=${awsReview.focus}`} eventSource="aws-guide-review-enquiry" className="inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-3.5 text-sm font-bold !text-brand-off-white !no-underline transition hover:bg-brand-teal">
               {awsReview.action}<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />

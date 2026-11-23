@@ -34,11 +34,11 @@
   </url>
   <url>
     <loc>https://www.anrotex.com/aws-cost-optimization</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/kubernetes-scaling</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/ci-cd-automation</loc>
@@ -50,11 +50,11 @@
   </url>
   <url>
     <loc>https://www.anrotex.com/blog</loc>
-    <lastmod>2026-11-03</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/blog/reduce-aws-costs</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/blog/cicd-best-practices</loc>
@@ -62,7 +62,7 @@
   </url>
   <url>
     <loc>https://www.anrotex.com/blog/kubernetes-scaling-best-practices</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-11-23</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/portfolio/cloud-operations</loc>
@@ -87,5 +87,17 @@
   <url>
     <loc>https://www.anrotex.com/terraform-aws</loc>
     <lastmod>2026-11-21</lastmod>
+  </url>
+  <url>
+    <loc>https://www.anrotex.com/blog/fixed-price-aws-cost-audit</loc>
+    <lastmod>2026-11-23</lastmod>
+  </url>
+  <url>
+    <loc>https://www.anrotex.com/blog/cluster-autoscaling-limits-quotas</loc>
+    <lastmod>2026-11-23</lastmod>
+  </url>
+  <url>
+    <loc>https://www.anrotex.com/blog/scheduled-predictive-kubernetes-autoscaling</loc>
+    <lastmod>2026-11-23</lastmod>
   </url>
 </urlset>

@@ -56,8 +56,12 @@ for (const url of urls) {
       assert.equal(schema.image, image, `Mismatched article image: ${url.pathname}`);
       const reviewer = schema.mainEntityOfPage.reviewedBy;
       assert.equal(schema.mainEntityOfPage["@type"], "WebPage", `Reviewer must describe the page: ${url.pathname}`);
-      assert.equal(reviewer?.["@type"], "Person", `Missing engineer credit: ${url.pathname}`);
-      assert(html.includes(`href="${reviewer.url}"`) && html.includes(reviewer.name) && html.includes(reviewer.jobTitle), `Reviewer must match the visible credit: ${url.pathname}`);
+      if (guideImages.has(url.pathname)) assert.equal(reviewer?.["@type"], "Person", `Missing confirmed engineer credit: ${url.pathname}`);
+      if (reviewer) {
+        assert(html.includes(`href="${reviewer.url}"`) && html.includes(reviewer.name) && html.includes(reviewer.jobTitle), `Reviewer must match the visible credit: ${url.pathname}`);
+      } else {
+        assert(!html.includes("Technical review by"), `Do not add an unconfirmed review credit: ${url.pathname}`);
+      }
     }
   }
   for (const [, href] of html.matchAll(/href="((?:\/|#)[^"]*)"/g)) {
@@ -137,6 +141,19 @@ const awsSitemapDate = sitemap.match(/<loc>https:\/\/www\.anrotex\.com\/blog\/re
 assert(awsSitemapDate, "The AWS guide must have a sitemap update date");
 assert.equal(awsArticle?.dateModified, awsSitemapDate, "The AWS article and sitemap must agree on the update date");
 const blog = await readFile("dist/blog/index.html", "utf8");
+const clusterService = await readFile("dist/kubernetes-scaling/index.html", "utf8");
+for (const [slug, focus, serviceHtml] of [
+  ["fixed-price-aws-cost-audit", "aws-review", aws],
+  ["cluster-autoscaling-limits-quotas", "kubernetes", clusterService],
+  ["scheduled-predictive-kubernetes-autoscaling", "kubernetes", clusterService],
+]) {
+  const path = `/blog/${slug}`;
+  const html = await readFile(`dist${path}/index.html`, "utf8");
+  assert(blog.includes(`href="${path}"`) && serviceHtml.includes(`href="${path}"`), `New guide must be discoverable from Insights and its service: ${path}`);
+  assert(html.includes(`href="/contact?focus=${focus}"`), `Missing focused enquiry: ${path}`);
+  assert.doesNotMatch(html, /illustrative|not a client result|publication boundaries|internal use|keyword target|SEO batch|VendorInsight/i);
+  assert(!html.includes('"reviewedBy"'), `New guide has no confirmed personal review credit: ${path}`);
+}
 const homepage = await readFile("dist/index.html", "utf8");
 const portfolio = await readFile("dist/portfolio/cloud-operations/index.html", "utf8");
 const lambdaGuide = await readFile("dist/blog/aws-lambda-rollback-github-actions/index.html", "utf8");
@@ -214,6 +231,9 @@ assert.match(notFound, /name="robots" content="noindex, nofollow"/);
 const { rewrites, redirects } = JSON.parse(await readFile("vercel.json", "utf8"));
 assert(redirects.some((rule) => rule.source === "/portfolio/cloud-operations/index.html" && rule.destination === "/portfolio/cloud-operations" && rule.permanent), "Preserve the legacy project URL with a permanent redirect");
 const publicPaths = new Set([...urls.map((url) => url.pathname), "/robots.txt", "/sitemap.xml"]);
+for (const { pathname } of urls) {
+  if (pathname !== "/") assert(rewrites.some(rule => rule.source === pathname && rule.destination === `${pathname}/index.html`), `Missing Vercel page rewrite: ${pathname}`);
+}
 for (const rewrite of rewrites) {
   assert(publicPaths.has(rewrite.source), `Unexpected route or catch-all: ${rewrite.source}`);
   await readFile(`dist${rewrite.destination}`);

@@ -108,6 +108,7 @@ export function articleSchema({
   datePublished,
   dateModified,
   image = DEFAULT_OG_IMAGE,
+  reviewed = true,
 }: {
   headline: string;
   description: string;
@@ -115,6 +116,7 @@ export function articleSchema({
   datePublished: string;
   dateModified: string;
   image?: string;
+  reviewed?: boolean;
 }): JsonLd {
   return {
     "@context": "https://schema.org",
@@ -134,7 +136,7 @@ export function articleSchema({
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `${SITE_URL}${path}#webpage`,
-      reviewedBy: guideReviewer,
+      ...(reviewed ? { reviewedBy: guideReviewer } : {}),
     },
     inLanguage: "en",
   };

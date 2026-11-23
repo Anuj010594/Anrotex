@@ -45,7 +45,7 @@ export default function KubernetesScalingBestPractices() {
               "A practical guide to Kubernetes scaling, autoscaling, resource requests, node capacity, availability, and production validation.",
             path: "/blog/kubernetes-scaling-best-practices",
             datePublished: "2026-06-17",
-            dateModified: "2026-10-07",
+            dateModified: "2026-11-23",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -63,7 +63,7 @@ export default function KubernetesScalingBestPractices() {
         title="Kubernetes scaling best practices for production workloads"
         description="Reliable Kubernetes autoscaling depends on accurate resource requests, meaningful demand signals, coordinated node capacity, and safeguards that keep traffic healthy during change."
         published="17 June 2026"
-        updated="7 October 2026"
+        updated="23 November 2026"
         readTime="13 minute read"
         toc={toc}
         ctaTitle="Make your cluster scale predictably."
@@ -541,6 +541,9 @@ kubectl -n scaling-demo describe pod <pending-pod-name>`}</code></pre>
             </TrackedLink>.
           </p>
         </div>
+        <h2 id="plan-capacity">Plan capacity for the next traffic peak</h2>
+        <p>Before increasing replica or node counts, use the <TrackedLink to="/blog/cluster-autoscaling-limits-quotas" eventName="Article Click" eventSource="kubernetes-guide-quotas">cluster autoscaling limits and quotas checklist</TrackedLink>. It covers account quotas, subnet addresses and the capacity available to each workload.</p>
+        <p>For predictable busy periods, read our <TrackedLink to="/blog/scheduled-predictive-kubernetes-autoscaling" eventName="Article Click" eventSource="kubernetes-guide-schedules">scheduled and predictive Kubernetes scaling guide</TrackedLink> to coordinate pods and nodes before demand arrives.</p>
       </InsightArticle>
     </>
   );

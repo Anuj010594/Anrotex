@@ -286,6 +286,7 @@ export default function AwsCostOptimization() {
               <h3 className="mt-6 font-bold text-brand-navy">Outside this review</h3>
               <p className="mt-2 leading-relaxed text-brand-navy">{awsReview.exclusions}</p>
               <TrackedLink to="/aws-review-preview" eventName="Service Click" eventSource="aws-review-deliverable-preview" className="mt-6 block font-semibold text-brand-navy underline underline-offset-4">Preview the findings and action plan</TrackedLink>
+              <TrackedLink to="/blog/fixed-price-aws-cost-audit" eventName="Article Click" eventSource="aws-review-buyer-guide" className="mt-4 block font-semibold text-brand-navy underline underline-offset-4">What to check before buying a fixed-price AWS audit</TrackedLink>
               <TrackedLink to={`/services#${awsReview.focus}`} eventName="Service Click" eventSource="aws-audit-review-scope" className="mt-6 inline-flex items-center gap-2 font-semibold text-brand-navy underline underline-offset-4">See the full scope and pricing terms<ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></TrackedLink>
             </div>
           </div>

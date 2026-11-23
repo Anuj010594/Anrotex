@@ -8,6 +8,39 @@ import { breadcrumbSchema } from "@/lib/seo";
 
 const posts = [
   {
+    topic: "AWS reviews",
+    problem: "Know what a fixed-price review will deliver.",
+    title: "Fixed-Price AWS Cost Audits: What to Check Before You Buy",
+    description: "Compare scope, fees, access and findings. See when Anrotex’s US$500 infrastructure review fits and when to scope a broader audit.",
+    link: "/blog/fixed-price-aws-cost-audit",
+    sections: [
+      { id: "compare-scope", label: "Compare audit scope and fees" },
+      { id: "questions-before-booking", label: "Questions to ask before booking" },
+    ],
+  },
+  {
+    topic: "Kubernetes capacity",
+    problem: "Find the limits that could stop your cluster growing.",
+    title: "Cluster Autoscaling Limits and Quotas",
+    description: "Review compute quotas, subnet addresses, node limits and pod capacity. Work through a capacity calculation before your next traffic peak.",
+    link: "/blog/cluster-autoscaling-limits-quotas",
+    sections: [
+      { id: "limits-to-review", label: "Use the limits checklist" },
+      { id: "capacity-example", label: "Check a capacity calculation" },
+    ],
+  },
+  {
+    topic: "Kubernetes autoscaling",
+    problem: "Prepare capacity before traffic rises.",
+    title: "Scheduled and Predictive Kubernetes Autoscaling",
+    description: "Choose between a schedule and a forecast, coordinate pods and nodes, and test changes in an existing cluster.",
+    link: "/blog/scheduled-predictive-kubernetes-autoscaling",
+    sections: [
+      { id: "choose-a-method", label: "Compare scaling methods" },
+      { id: "schedule-capacity", label: "Plan for a known traffic peak" },
+    ],
+  },
+  {
     topic: "AWS deployments",
     problem: "Know how to switch back when a Lambda release fails.",
     title: "AWS Lambda Deployment Rollback with GitHub Actions",
