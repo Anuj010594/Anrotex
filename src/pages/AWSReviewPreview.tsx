@@ -11,7 +11,7 @@ const [review] = STARTING_PROJECTS;
 
 export default function AWSReviewPreview() {
   return <>
-    <SEO title="AWS Infrastructure Review: What You Receive | Anrotex" description="Preview an AWS infrastructure review: resource findings, a worked EC2 cost estimate, access and recovery questions, and a practical action plan. US$500 for one workload." path="/aws-review-preview" structuredData={[breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Services", path: "/services" }, { name: "AWS review preview", path: "/aws-review-preview" }])]} />
+    <SEO title="AWS Infrastructure Review: What You Receive | Anrotex" description="See what a US$500 AWS infrastructure review includes: an EC2 cost example, access and recovery findings, and a clear action plan for your workload." path="/aws-review-preview" structuredData={[breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Services", path: "/services" }, { name: "AWS review preview", path: "/aws-review-preview" }])]} />
     <Navbar />
     <main className="bg-brand-off-white text-brand-navy">
       <PageHero eyebrow="Inside an AWS review" title="See what you receive before you book." description="A useful review explains what to change, why it matters and what to check first. This example follows a small AWS application through cost, access and recovery findings." />

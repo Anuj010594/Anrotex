@@ -16,7 +16,7 @@ const guides = [
 
 export default function About() {
   return <>
-    <SEO title="About Anrotex | Cloud & DevOps Engineers" description="Meet the engineers behind Anrotex IT Systems LLP. Based in Pune, India, we help small product teams and development agencies with AWS, Terraform and release delivery." path="/about" structuredData={[
+    <SEO title="About Anrotex | Cloud & DevOps Engineers" description="Meet Anrotex's cloud and DevOps engineers in Pune, India. We help small product teams and agencies with AWS, Terraform and release pipelines." path="/about" structuredData={[
       { "@context": "https://schema.org", "@type": "AboutPage", "@id": `${SITE_URL}/about#webpage`, url: `${SITE_URL}/about`, name: "About Anrotex", mainEntity: { "@id": `${SITE_URL}/#organization` } },
       { "@context": "https://schema.org", ...guideReviewer, worksFor: { "@id": `${SITE_URL}/#organization` } },
       breadcrumbSchema([{ name: "Home", path: "/" }, { name: "About", path: "/about" }]),
