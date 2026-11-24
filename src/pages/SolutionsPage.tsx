@@ -17,6 +17,7 @@ const projects = [
 const faqs = [
   ["Can you work alongside our developers?", "Yes. Bring us a defined part of the cloud or release work. We agree how our engineers will work with your technical lead, where decisions are recorded and who approves changes."],
   ["Who speaks to our client?", "We agree communication responsibilities before starting. Your agency keeps ownership of its client relationship. If a client discussion needs our engineers, we arrange it with you first."],
+  ["Can the work be delivered under our agency's brand?", "Tell us how you want Anrotex to work with your team. We agree client communication, how our engineers are introduced and the format of handover documents before the project starts. Your agency keeps ownership of the client relationship."],
   ["Can you help with an existing client environment?", "Yes. Start with the current setup and the change your client needs. Existing infrastructure changes are scoped separately from the Terraform AWS Foundation, which covers new infrastructure."],
   ["Is ongoing support included?", "The starting projects cover the agreed delivery and handover. Ongoing operations, additional environments and later changes need a separate agreement."],
 ];
@@ -38,6 +39,7 @@ export default function SolutionsPage() {
               <p className="mt-4 leading-relaxed text-brand-teal">A client launch needs infrastructure. A release process has too many manual steps. An existing AWS account needs a review before the next phase. We help you define the work, deliver it and leave the people running it with clear instructions.</p>
               <TrackedLink to="/contact?focus=agency" eventSource="agency-hero" className="mt-7 inline-flex items-center gap-2 rounded-full bg-brand-navy px-6 py-4 font-bold text-brand-off-white hover:bg-brand-teal">Discuss a client project <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" /></TrackedLink>
               <p className="mt-4 text-sm text-brand-teal">Free initial conversation · Scope agreed before work starts</p>
+              <p className="mt-5 leading-relaxed text-brand-teal">Anrotex delivers from India. Before agreeing a project, we check your client's supplier and access requirements, the time needed together and who will approve changes.</p>
             </div>
             <aside className="rounded-3xl bg-brand-mint/50 p-6 md:p-8">
               <h2 className="text-2xl font-bold">Your client relationship stays with you.</h2>
@@ -69,12 +71,13 @@ export default function SolutionsPage() {
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Agree the responsibilities before delivery starts.</h2>
             <ol className="mt-10 grid gap-8 md:grid-cols-2">
               {[
-                ["Define the outcome", "Share the application, current infrastructure, deadline and the part your team needs help with. We agree the deliverables, exclusions and how you will check the result."],
+                ["Define the outcome", "Share the application, current infrastructure, deadline and the part your team needs help with. Name your delivery lead and explain what must be ready for your client to accept the work."],
                 ["Arrange access and approvals", "Name the technical owner and the person who can approve environment changes. Agree the permissions, communication and review steps before providing access."],
                 ["Deliver and test", "Review changes with your team and check them in the agreed environment. Production work follows the approved scope and change process."],
                 ["Hand over the work", "Walk through the configuration, test results and operating instructions. Record remaining decisions and who owns support after the project."],
               ].map(([title, text], index) => <li key={title} className="border-t border-brand-navy/20 pt-5"><p className="text-sm font-bold text-brand-teal">0{index + 1}</p><h3 className="mt-3 text-xl font-bold">{title}</h3><p className="mt-3 leading-relaxed text-brand-teal">{text}</p></li>)}
             </ol>
+            <p className="mt-8 max-w-3xl leading-relaxed text-brand-teal">Preparing a client handover? <TrackedLink to="/blog/cicd-best-practices#release-kit" eventName="Article Click" eventSource="agency-handover-guide" className="font-semibold underline underline-offset-4">Use our release checklist</TrackedLink> to discuss release steps, recovery and who owns the work after delivery.</p>
           </div>
         </section>
         <CloudOperationsCard source="agency" />

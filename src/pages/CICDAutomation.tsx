@@ -36,6 +36,8 @@ const process = [
 ];
 
 const faqs = [
+  ["What does CI/CD consulting include?", "We review how your team builds, tests and releases an application, then agree the changes needed. The work can include pipeline configuration, deployment checks, access controls, recovery steps and handover. The fixed-price setup below is a focused starting point for one application in an existing AWS staging environment."],
+  ["Does the US$1,500 setup include production deployment?", "The fixed-price setup deploys to one existing AWS staging target. Production rollout, database migrations, new infrastructure and additional environments need a separate scope. We confirm the deployment target and the previous version that can safely be restored before starting."],
   ["Can you improve our existing CI/CD pipeline?", "Yes. We start with the current workflow and its bottlenecks. An engagement can focus on slow builds, unreliable releases, manual approvals, or rollback readiness without requiring a tool migration."],
   ["What access do you need?", "An assessment starts with relevant pipeline configuration, run history, and architecture context. We agree the minimum repository, runner, and environment permissions needed before implementation. Production changes follow an agreed rollout plan."],
   ["How do you handle rollbacks and database changes?", "We review application and database compatibility together. A previous application artifact is only useful if it still works with the current schema and configuration. The recovery plan can include a rollback, a forward fix, or a staged migration, depending on the workload."],
@@ -72,7 +74,7 @@ export default function CICDAutomation() {
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-teal">Founder-led pipeline consulting</p>
                 <h1 className="mt-5 text-4xl font-bold leading-[1.05] tracking-[-0.045em] sm:text-5xl lg:text-6xl">
-                  CI/CD automation for faster, safer releases.
+                  CI/CD automation and pipeline setup.
                 </h1>
                 <p className="mt-6 max-w-2xl text-lg leading-relaxed text-brand-teal">
                   Build or improve GitHub Actions, GitLab CI/CD, and Jenkins pipelines with Anrotex. We help engineering teams remove manual release steps, make failures easier to diagnose, and establish a recovery path they can use.
@@ -120,13 +122,20 @@ export default function CICDAutomation() {
                 </TrackedLink>
                 <TrackedLink to={`/services#${pipelineSetup.focus}`} eventName="Service Click" eventSource="cicd-setup-scope" className="font-semibold underline underline-offset-4">Full scope and pricing terms</TrackedLink>
               </div>
-              <p className="mt-6 leading-relaxed">See how we check a Lambda release and switch back when it fails. <TrackedLink to="/blog/aws-lambda-rollback-github-actions" eventName="Article Click" eventSource="cicd-setup-rollback-guide" className="font-semibold underline underline-offset-4">Read the Lambda rollback guide</TrackedLink>.</p>
+              <p className="mt-6 leading-relaxed">See a failed Lambda release switch back in our 72-second walkthrough, using a local test with simulated AWS responses. <TrackedLink to="/blog/aws-lambda-rollback-github-actions#watch-rollback" eventName="Article Click" eventSource="cicd-setup-rollback-guide" className="font-semibold underline underline-offset-4">Watch the rollback walkthrough</TrackedLink>.</p>
             </div>
             <div>
               <h3 className="text-xl font-bold">What we need before starting</h3>
               <p className="mt-4 leading-relaxed text-brand-navy">{pipelineSetup.inputs}</p>
+              <h3 className="mt-7 text-xl font-bold">What we check before handover</h3>
+              <ul className="mt-4 list-disc space-y-2 pl-5 leading-relaxed text-brand-navy">
+                <li>An agreed commit builds, passes the existing tests and deploys to staging.</li>
+                <li>The deployed application passes the agreed health checks.</li>
+                <li>A compatible previous version can be restored, with recovery limits documented.</li>
+              </ul>
               <h3 className="mt-7 text-xl font-bold">What needs a separate quote</h3>
               <p className="mt-4 leading-relaxed text-brand-navy">{pipelineSetup.exclusions}</p>
+              <p className="mt-4 leading-relaxed text-brand-navy">Need a new AWS environment first? <TrackedLink to="/terraform-aws" eventName="Service Click" eventSource="cicd-needs-infrastructure" className="font-semibold underline underline-offset-4">Check whether the Terraform AWS Foundation fits your application.</TrackedLink></p>
               <p className="mt-7 border-t border-brand-navy/15 pt-5 text-sm leading-relaxed text-brand-navy">Prices are in US dollars. Applicable taxes, AWS and CI usage, and third-party licenses are additional. Delivery starts after the scope is agreed and required access and inputs are ready.</p>
             </div>
           </div>

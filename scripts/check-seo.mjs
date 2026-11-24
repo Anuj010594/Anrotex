@@ -78,7 +78,7 @@ for (const url of urls) {
 }
 
 const cicd = await readFile("dist/ci-cd-automation/index.html", "utf8");
-assert.equal([...cicd.matchAll(/<details\b/g)].length, 5, "CI/CD FAQs must be in the initial HTML");
+assert.equal([...cicd.matchAll(/<details\b/g)].length, 7, "CI/CD FAQs must be in the initial HTML");
 assert(cicd.includes("A previous application artifact is only useful"), "Missing FAQ answer in prerendered content");
 assert(cicd.includes('href="/contact?focus=cicd"'), "Missing focused CI/CD enquiry link");
 const { html: contact } = await render("/contact?focus=cicd");
@@ -96,7 +96,7 @@ assert.match(cicdGuide, /<pre[^>]*aria-label="Node.js CI workflow"[^>]*tabindex=
 assert.doesNotMatch(cicdGuide, /illustrative|not a client result|publication boundaries|reviewed by Anrotex/i);
 
 const aws = await readFile("dist/aws-cost-optimization/index.html", "utf8");
-assert.equal([...aws.matchAll(/<details\b/g)].length, 6, "AWS FAQs must be in the initial HTML");
+assert.equal([...aws.matchAll(/<details\b/g)].length, 7, "AWS FAQs must be in the initial HTML");
 assert(aws.includes("Reducing covered usage can release capacity"), "Missing AWS FAQ answer in prerendered content");
 assert(aws.includes('href="/contact?focus=aws-audit"'), "Missing focused AWS enquiry link");
 assert.match((await render("/contact?focus=aws-audit")).html, /<option[^>]*selected=""[^>]*>AWS Cost Optimization Audit<\/option>/);
@@ -176,9 +176,9 @@ for (const [name, html] of [["Homepage", homepage], ["Services", services]]) {
 }
 assert.match((await render("/contact?focus=agency")).html, /<option[^>]*selected=""[^>]*>Agency cloud delivery<\/option>/);
 assert(terraform.includes("US$3,000") && terraform.includes("ECS Fargate"), "Terraform: preserve the agreed offer");
-assert.equal([...terraform.matchAll(/<details\b/g)].length, 5, "Terraform answers must be in initial HTML");
+assert.equal([...terraform.matchAll(/<details\b/g)].length, 7, "Terraform answers must be in initial HTML");
 for (const [name, html] of [["Portfolio", portfolio], ["Insights", blog], ["CI/CD guide", cicdGuide], ["CI/CD service", cicd]]) {
-  assert(html.includes('href="/blog/aws-lambda-rollback-github-actions"'), `${name}: missing Lambda walkthrough`);
+  assert.match(html, /href="\/blog\/aws-lambda-rollback-github-actions(?:#[^"]+)?"/, `${name}: missing Lambda walkthrough`);
 }
 for (const [name, html] of [["Portfolio", portfolio], ["Lambda guide", lambdaGuide]]) {
   assert(html.includes('href="/contact?focus=cicd-setup"'), `${name}: missing focused enquiry`);

@@ -11,6 +11,8 @@ const [, , foundation] = STARTING_PROJECTS;
 const description = `Terraform AWS setup for one containerized application on ECS Fargate. ${foundation.price} for staging and production configuration, checks, documentation and handover.`;
 const faqs = [
   ["What kind of application fits this project?", "A stateless HTTP application with a working container image and health endpoint. Stateless means the application does not rely on files stored inside a running container to retain customer data. We confirm the application's dependencies before agreeing the scope."],
+  ["Can our application connect to an existing database?", "Tell us which database and other services the application uses, where they run and how it connects to them. We review those dependencies before confirming fit. Creating a database, moving data or changing an existing database is outside the foundation's fixed scope."],
+  ["Does the foundation include Kubernetes or several AWS accounts?", "The fixed-price foundation uses ECS Fargate in one AWS account and region. Kubernetes, EKS, multiple accounts and multiple regions need a separate design and quote."],
   ["Can you bring our existing AWS resources into Terraform?", "That needs a separate scope. This foundation creates new infrastructure. Importing existing resources requires a review of ownership, dependencies and the risk of changing running services."],
   ["Does the price include AWS running costs?", "No. We prepare a running-cost estimate and agree a budget before provisioning. AWS usage, applicable taxes and third-party licenses are additional to the project fee. Actual usage can differ from the estimate."],
   ["Will you move our live traffic or build a deployment pipeline?", "Live traffic cutover and CI/CD pipeline creation are separate projects. This engagement validates the supplied application in staging and provisions the agreed production infrastructure after approval."],
@@ -71,7 +73,16 @@ export default function TerraformAWS() {
         </section>
         <section className="px-6 py-20">
           <div className="container grid gap-10 md:grid-cols-2">
-            <div><h2 className="text-3xl font-bold">What we need from you</h2><p className="mt-5 leading-relaxed text-brand-teal">{foundation.inputs}</p><p className="mt-4 leading-relaxed text-brand-teal">Tell us how the application stores data and which services it connects to. We check these dependencies before confirming that the foundation fits.</p></div>
+            <div>
+              <h2 className="text-3xl font-bold">Check whether your application is ready</h2>
+              <p className="mt-5 leading-relaxed text-brand-teal">This foundation suits a new web application or API that can run from a container image. Before we agree the project, check that:</p>
+              <ul className="mt-4 list-disc space-y-3 pl-5 leading-relaxed text-brand-teal">
+                <li>The image starts successfully and has an endpoint that reports whether the application is healthy.</li>
+                <li>Customer data is kept outside the running container, and you can describe any database or other service it needs.</li>
+                <li>You have an AWS account, a preferred region and a budget for running staging and production.</li>
+              </ul>
+              <p className="mt-4 leading-relaxed text-brand-teal">{foundation.inputs}</p>
+            </div>
             <aside className="rounded-3xl bg-brand-stone/50 p-6 md:p-8"><h2 className="text-2xl font-bold">What needs a separate scope</h2><p className="mt-4 leading-relaxed text-brand-teal">{foundation.exclusions}</p><p className="mt-5 leading-relaxed text-brand-teal">Already running on AWS? <TrackedLink to="/aws-cost-optimization" eventName="Service Click" eventSource="terraform-existing-aws" className="font-semibold underline underline-offset-4">Start with an infrastructure review</TrackedLink> to understand the existing environment.</p></aside>
           </div>
         </section>

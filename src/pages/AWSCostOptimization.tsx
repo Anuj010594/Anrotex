@@ -127,6 +127,11 @@ const accessPrinciples = [
 
 const faqs = [
   {
+    question: "Does the US$500 review cover our entire AWS account?",
+    answer:
+      `The ${awsReview.name} covers one agreed workload in one account and region, with up to 20 resources. It is a good starting point when you need cost, access and reliability findings for that workload. Reviewing other workloads, multiple accounts or a wider set of cost decisions needs a separate scope and price.`,
+  },
+  {
     question: "Is the AWS Cost Optimization Audit free?",
     answer:
       `The initial fit call is free. For one workload, the ${awsReview.name} costs ${awsReview.price} and covers costs, access and reliability within the scope shown above. A broader cost audit is quoted separately based on the accounts, services and decisions involved.`,
@@ -293,27 +298,22 @@ export default function AwsCostOptimization() {
           <p className="container mt-6 text-sm leading-relaxed text-brand-navy">Prices are in US dollars. Applicable taxes and cloud usage are additional. We confirm fit and agree the scope in writing before work starts.</p>
         </section>
 
-        <section className="border-y border-brand-navy/10 bg-brand-stone px-6 py-14">
-          <h2 className="container mb-8 text-2xl font-bold text-brand-navy">For a broader AWS cost audit</h2>
-          <div className="container grid gap-8 md:grid-cols-3">
-            <div>
-              <p className="text-4xl font-bold tracking-[-0.04em]">3–7 days</p>
-              <p className="mt-2 font-semibold text-brand-teal">
-                typical delivery after access is ready
-              </p>
+        <section aria-labelledby="choose-aws-review" className="border-y border-brand-navy/10 bg-brand-stone px-6 py-14">
+          <div className="container">
+            <h2 id="choose-aws-review" className="text-3xl font-bold">Which AWS review fits your team?</h2>
+            <div className="mt-8 grid gap-8 md:grid-cols-2">
+              <article>
+                <h3 className="text-xl font-bold">One workload needs a clear action plan</h3>
+                <p className="mt-3 leading-relaxed text-brand-teal">Choose the {awsReview.price} infrastructure review for up to 20 agreed resources in one account and region. It covers cost, access and reliability, with findings and a walkthrough in {awsReview.days} business days after the agreed inputs are ready.</p>
+                <TrackedLink to="/aws-review-preview" eventName="Service Click" eventSource="aws-review-choice-preview" className="mt-4 inline-block font-bold underline underline-offset-4">See what the review delivers</TrackedLink>
+              </article>
+              <article>
+                <h3 className="text-xl font-bold">Your cost questions span more workloads or accounts</h3>
+                <p className="mt-3 leading-relaxed text-brand-teal">Choose a broader cost audit when you need to compare spending across teams, investigate shared costs or assess commitments across a larger environment. We agree the accounts, decisions, delivery date and fixed price before starting.</p>
+                <TrackedLink to="/contact?focus=aws-audit" eventSource="aws-broader-audit-choice" className="mt-4 inline-block font-bold underline underline-offset-4">Discuss a broader AWS cost audit</TrackedLink>
+              </article>
             </div>
-            <div>
-              <p className="text-4xl font-bold tracking-[-0.04em]">6 areas</p>
-              <p className="mt-2 font-semibold text-brand-teal">
-                reviewed across cost, compute, data, network, EKS, and guardrails
-              </p>
-            </div>
-            <div>
-              <p className="text-4xl font-bold tracking-[-0.04em]">30/60/90</p>
-              <p className="mt-2 font-semibold text-brand-teal">
-                day implementation sequence included
-              </p>
-            </div>
+            <p className="mt-7 text-sm leading-relaxed text-brand-teal">Both reviews provide recommendations. Your team can make the changes, or we can agree a separate implementation project.</p>
           </div>
         </section>
 
