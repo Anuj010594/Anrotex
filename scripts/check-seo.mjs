@@ -166,6 +166,14 @@ for (const focus of ["aws-review", "cicd-setup", "terraform-foundation"]) {
 }
 const agency = await readFile("dist/solutions/index.html", "utf8");
 const terraform = await readFile("dist/terraform-aws/index.html", "utf8");
+const ecsGuide = await readFile("dist/blog/ecs-fargate-task-keeps-stopping/index.html", "utf8");
+const ecsExample = await readFile("src/content/examples/ecs_startup.py", "utf8");
+assert(ecsGuide.includes(escapeHtml(ecsExample)), "The ECS guide must display the complete tested startup example");
+assert(ecsGuide.includes('href="/contact?focus=devops"'), "ECS troubleshooting must lead to the scoped DevOps enquiry");
+assert.doesNotMatch(ecsGuide, /illustrative|not a client result|publication boundaries|internal use|keyword target|SEO batch/i);
+for (const html of [blog, terraform, await readFile("dist/devops-consulting/index.html", "utf8")]) {
+  assert(html.includes('href="/blog/ecs-fargate-task-keeps-stopping"'), "The ECS guide must be discoverable from Insights and related services");
+}
 for (const [name, html, focus] of [["Agency", agency, "agency"], ["Terraform", terraform, "terraform-foundation"]]) {
   assert(html.includes(`href="/contact?focus=${focus}"`), `${name}: missing focused enquiry`);
   assert(html.includes('href="/portfolio/cloud-operations"'), `${name}: missing engineering evidence`);

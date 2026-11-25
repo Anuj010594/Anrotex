@@ -23,6 +23,7 @@ const AwsCostReductionBlog = lazy(() => import("./pages/blog/AwsCostReductionBlo
 const CICDBestPractices = lazy(() => import("./pages/blog/CICDBestPractices"));
 const KubernetesScalingBestPractices = lazy(() => import("./pages/blog/KubernetesScalingBestPractices"));
 const Blog = lazy(() => import("./pages/Blog"));
+const ECSFargateTaskStopping = lazy(() => import("./pages/blog/ECSFargateTaskStopping"));
 const FixedPriceAWSCostAudit = lazy(() => import("./pages/blog/FixedPriceAWSCostAudit"));
 const ClusterAutoscalingLimits = lazy(() => import("./pages/blog/ClusterAutoscalingLimits"));
 const ScheduledPredictiveAutoscaling = lazy(() => import("./pages/blog/ScheduledPredictiveAutoscaling"));
@@ -113,6 +114,7 @@ function App() {
               element={<KubernetesScalingBestPractices />}
             />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/ecs-fargate-task-keeps-stopping" element={<ECSFargateTaskStopping />} />
             <Route path="/blog/fixed-price-aws-cost-audit" element={<FixedPriceAWSCostAudit />} />
             <Route path="/blog/cluster-autoscaling-limits-quotas" element={<ClusterAutoscalingLimits />} />
             <Route path="/blog/scheduled-predictive-kubernetes-autoscaling" element={<ScheduledPredictiveAutoscaling />} />

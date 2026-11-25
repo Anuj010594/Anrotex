@@ -22,6 +22,7 @@ const routes = [
   ["/devops-consulting", "DevOpsConsulting"],
   ["/terraform-aws", "TerraformAWS"],
   ["/blog", "Blog"],
+  ["/blog/ecs-fargate-task-keeps-stopping", "blog/ECSFargateTaskStopping"],
   ["/blog/fixed-price-aws-cost-audit", "blog/FixedPriceAWSCostAudit"],
   ["/blog/cluster-autoscaling-limits-quotas", "blog/ClusterAutoscalingLimits"],
   ["/blog/scheduled-predictive-kubernetes-autoscaling", "blog/ScheduledPredictiveAutoscaling"],

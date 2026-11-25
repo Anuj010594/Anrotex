@@ -8,6 +8,17 @@ import { breadcrumbSchema } from "@/lib/seo";
 
 const posts = [
   {
+    topic: "ECS Fargate",
+    problem: "Find why the task stops before starting another one.",
+    title: "ECS Fargate Task Keeps Stopping? Find the Cause and Fix It",
+    description: "Read the stopped reason and container logs, reproduce a missing-setting failure, and check that the application stays healthy after the fix.",
+    link: "/blog/ecs-fargate-task-keeps-stopping",
+    sections: [
+      { id: "read-task-details", label: "Inspect the failed task" },
+      { id: "try-the-failure", label: "Run the startup example" },
+    ],
+  },
+  {
     topic: "AWS reviews",
     problem: "Know what a fixed-price review will deliver.",
     title: "Fixed-Price AWS Cost Audits: What to Check Before You Buy",

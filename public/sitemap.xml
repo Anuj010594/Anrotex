@@ -46,11 +46,11 @@
   </url>
   <url>
     <loc>https://www.anrotex.com/devops-consulting</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/blog</loc>
-    <lastmod>2026-11-23</lastmod>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/blog/reduce-aws-costs</loc>
@@ -86,7 +86,11 @@
   </url>
   <url>
     <loc>https://www.anrotex.com/terraform-aws</loc>
-    <lastmod>2026-11-24</lastmod>
+    <lastmod>2026-11-25</lastmod>
+  </url>
+  <url>
+    <loc>https://www.anrotex.com/blog/ecs-fargate-task-keeps-stopping</loc>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://www.anrotex.com/blog/fixed-price-aws-cost-audit</loc>
