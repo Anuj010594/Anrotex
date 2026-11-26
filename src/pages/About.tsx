@@ -5,7 +5,7 @@ import PageHero from "@/components/PageHero";
 import Team from "@/components/Team";
 import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
-import { breadcrumbSchema, guideReviewer, SITE_URL } from "@/lib/seo";
+import { breadcrumbSchema, guideReviewer, SERVICE_COUNTRIES, SITE_URL } from "@/lib/seo";
 
 const guides = [
   ["Reduce AWS costs", "/blog/reduce-aws-costs"],
@@ -28,6 +28,14 @@ export default function About() {
         <div className="container grid gap-8 lg:grid-cols-2">
           <div><h2 className="text-3xl font-bold">Based in Pune. Working with teams abroad.</h2><p className="mt-5 leading-relaxed text-brand-teal">Anrotex IT Systems LLP is based in Pune, India. We work remotely with product and delivery teams, agreeing communication, system access and responsibilities before a project starts.</p><p className="mt-4 leading-relaxed text-brand-teal">For a product team, that might mean reviewing one AWS workload or improving one release pipeline. For an agency, it can mean delivering the cloud portion of a client project alongside its technical lead.</p><TrackedLink to="/solutions" eventName="Service Click" eventSource="about-agency" className="mt-5 inline-block font-semibold underline underline-offset-4">How we work with development agencies</TrackedLink></div>
           <aside className="rounded-3xl border border-brand-navy/15 bg-brand-stone/60 p-7"><h2 className="text-2xl font-bold">Company details</h2><dl className="mt-5 space-y-4 leading-relaxed"><div><dt className="font-semibold">Registered name</dt><dd>Anrotex IT Systems LLP</dd></div><div><dt className="font-semibold">Location</dt><dd>Pune, India</dd></div><div><dt className="font-semibold">LLPIN</dt><dd>ACY-8754</dd></div><div><dt className="font-semibold">Contact</dt><dd><a href="mailto:sales@anrotex.com" className="underline underline-offset-4">sales@anrotex.com</a><br /><a href="tel:+917972702722" className="underline underline-offset-4">+91 79727 02722</a></dd></div></dl><div className="mt-6 flex flex-wrap gap-x-5 gap-y-3 text-sm font-semibold"><a href="https://www.linkedin.com/company/anrotex-solutions/" className="underline underline-offset-4">LinkedIn</a><a href="https://techbehemoths.com/company/anrotex-it-systems-llp" className="underline underline-offset-4">TechBehemoths</a><a href="https://www.goodfirms.co/company/anrotex-it-systems-llp" className="underline underline-offset-4">GoodFirms</a></div></aside>
+        </div>
+      </section>
+      <section aria-labelledby="where-we-work" className="px-6 pb-16">
+        <div className="container rounded-3xl border border-brand-navy/15 bg-brand-mint/30 p-7 md:p-9">
+          <h2 id="where-we-work" className="scroll-mt-28 text-2xl font-bold md:text-3xl">Where can we work with your team?</h2>
+          <p className="mt-5 max-w-4xl leading-relaxed text-brand-teal">We offer remote cloud and DevOps engineering to teams in the {SERVICE_COUNTRIES.slice(0, -1).join(", ")} and the {SERVICE_COUNTRIES[SERVICE_COUNTRIES.length - 1]}. Our engineers work from Pune, India.</p>
+          <p className="mt-4 max-w-4xl leading-relaxed text-brand-teal">Before starting, we agree meeting times, communication and access permissions. Tell us about any supplier-location or data-access requirements so we can confirm whether the engagement is a fit.</p>
+          <TrackedLink to="/services#service-questions" eventName="Service Click" eventSource="about-service-questions" className="mt-5 inline-block font-semibold underline underline-offset-4">Compare projects and how we work</TrackedLink>
         </div>
       </section>
       <Team />

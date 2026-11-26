@@ -1,8 +1,15 @@
+import { STARTING_PROJECTS } from "./starting-projects";
+
 export const SITE_URL = "https://www.anrotex.com";
 export const SITE_NAME = "Anrotex";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og.png`;
 
 export type JsonLd = Record<string, unknown>;
+
+export const SERVICE_COUNTRIES = [
+  "United States", "Canada", "Australia", "Germany", "Poland",
+  "United Kingdom", "Netherlands", "Singapore", "United Arab Emirates",
+] as const;
 
 export const guideReviewer = {
   "@type": "Person",
@@ -19,7 +26,10 @@ export const organizationSchema: JsonLd = {
   "@id": `${SITE_URL}/#organization`,
   name: SITE_NAME,
   legalName: "Anrotex IT Systems LLP",
+  description: "Cloud and DevOps engineering for small product teams and development agencies, delivered remotely from Pune, India.",
   url: SITE_URL,
+  areaServed: SERVICE_COUNTRIES.map(name => ({ "@type": "Country", name })),
+  hasOfferCatalog: { "@id": `${SITE_URL}/services#project-catalog` },
   sameAs: [
     "https://www.linkedin.com/company/anrotex-solutions/",
     "https://techbehemoths.com/company/anrotex-it-systems-llp",
@@ -62,6 +72,33 @@ export const websiteSchema: JsonLd = {
   inLanguage: "en",
 };
 
+export const projectCatalogSchema: JsonLd = {
+  "@context": "https://schema.org",
+  "@type": "OfferCatalog",
+  "@id": `${SITE_URL}/services#project-catalog`,
+  name: "Anrotex cloud engineering projects",
+  url: `${SITE_URL}/services#starting-projects`,
+  itemListElement: STARTING_PROJECTS.map(project => ({
+    "@type": "Offer",
+    "@id": `${SITE_URL}/services#${project.focus}-offer`,
+    name: project.name,
+    price: project.price.replace("US$", "").replace(/,/g, ""),
+    priceCurrency: "USD",
+    url: `${SITE_URL}/services#${project.focus}`,
+    description: `${project.scope} ${project.days} business days after agreed access and inputs. ${project.exclusions} Applicable taxes, cloud and CI usage, and third-party licenses are additional.`,
+    seller: { "@id": `${SITE_URL}/#organization` },
+    itemOffered: {
+      "@type": "Service",
+      "@id": `${SITE_URL}/services#${project.focus}-service`,
+      name: project.name,
+      description: project.scope,
+      provider: { "@id": `${SITE_URL}/#organization` },
+      termsOfService: `${SITE_URL}/services#pricing-terms`,
+      areaServed: SERVICE_COUNTRIES.map(name => ({ "@type": "Country", name })),
+    },
+  })),
+};
+
 export function breadcrumbSchema(items: Array<{ name: string; path: string }>): JsonLd {
   return {
     "@context": "https://schema.org",
@@ -97,7 +134,7 @@ export function serviceSchema({
     provider: {
       "@id": `${SITE_URL}/#organization`,
     },
-    areaServed: "Worldwide",
+    areaServed: SERVICE_COUNTRIES.map(name => ({ "@type": "Country", name })),
   };
 }
 

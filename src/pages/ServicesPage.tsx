@@ -6,7 +6,7 @@ import PageHero from "@/components/PageHero";
 import SEO from "@/components/SEO";
 import TrackedLink from "@/components/TrackedLink";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { breadcrumbSchema } from "@/lib/seo";
+import { breadcrumbSchema, projectCatalogSchema } from "@/lib/seo";
 import { STARTING_PROJECTS } from "@/lib/starting-projects";
 
 const engagements = [
@@ -59,7 +59,7 @@ export default function ServicesPage() {
         title="DevOps & Cloud Engineering Services | Anrotex"
         description="AWS, CI/CD, Kubernetes and Terraform help for small product teams and development agencies. Compare focused projects, deliverables and what to bring to a first call."
         path="/services"
-        structuredData={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Services", path: "/services" }])}
+        structuredData={[breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Services", path: "/services" }]), projectCatalogSchema]}
       />
       <Navbar />
       <main className="min-h-screen">
@@ -102,13 +102,45 @@ export default function ServicesPage() {
                 </article>
               ))}
             </div>
-            <p className="mt-6 max-w-4xl text-sm leading-relaxed text-brand-teal">Prices are in USD for the scope shown. Applicable taxes, AWS and CI usage, and third-party licenses are additional. Delivery runs Monday–Friday from the agreed kickoff after required inputs and access are available; delays in client inputs or approvals move the delivery date. Additional work is quoted separately.</p>
+            <p id="pricing-terms" className="mt-6 max-w-4xl scroll-mt-24 text-sm leading-relaxed text-brand-teal">Prices are in USD for the scope shown. Applicable taxes, AWS and CI usage, and third-party licenses are additional. Delivery runs Monday–Friday from the agreed kickoff after required inputs and access are available; delays in client inputs or approvals move the delivery date. Additional work is quoted separately.</p>
             <p className="mt-3 max-w-4xl text-sm leading-relaxed text-brand-teal">Each project includes one consolidated feedback or clarification round. Implementation projects include progress updates at least twice weekly, documentation in your team's repository and correction of reproducible defects in our delivered configuration reported within 14 calendar days of handover. Ongoing operations and new features are scoped separately.</p>
             <p className="mt-5 max-w-3xl leading-relaxed text-brand-teal">Need a broader review across accounts or a detailed savings roadmap? <TrackedLink to="/aws-cost-optimization" eventName="Service Click" eventSource="services-project-broader-audit" className="font-semibold text-brand-navy underline underline-offset-4">Explore the separately scoped AWS cost optimization audit.</TrackedLink></p>
             <p className="mt-4 max-w-3xl leading-relaxed text-brand-teal">Working through the bill yourself? Follow our <TrackedLink to="/blog/reduce-aws-costs#why-bill-increased" eventName="Article Click" eventSource="services-aws-cost-guide" className="font-semibold text-brand-navy underline underline-offset-4">AWS cost reduction checklist</TrackedLink> to find which charges changed and decide what to investigate first.</p>
           </div>
         </section>
-        <section aria-labelledby="your-team" className="bg-brand-off-white px-6 pb-16 md:pb-20">
+        <section id="service-questions" aria-labelledby="service-questions-heading" className="scroll-mt-24 border-y border-brand-navy/10 bg-brand-mint/30 px-6 py-16 md:py-20">
+          <div className="container max-w-4xl">
+            <h2 id="service-questions-heading" className="text-3xl font-bold tracking-tight text-brand-navy md:text-4xl">Which project fits your team?</h2>
+            <div className="mt-8 space-y-8 text-brand-teal">
+              <article>
+                <h3 className="text-xl font-bold text-brand-navy">Do we need an AWS review, a pipeline or new infrastructure?</h3>
+                <p className="mt-3 leading-relaxed">Choose the <a href="#aws-review" className="font-semibold underline underline-offset-4">AWS Infrastructure Review</a> to understand cost, access and reliability concerns in one existing workload. Choose <a href="#cicd-setup" className="font-semibold underline underline-offset-4">CI/CD Pipeline Setup</a> when your application and AWS staging environment already work, but releases need automation. Choose the <TrackedLink to="/terraform-aws" eventName="Service Click" eventSource="services-answer-foundation" className="font-semibold underline underline-offset-4">Terraform AWS Foundation</TrackedLink> when a working stateless application needs new ECS Fargate infrastructure.</p>
+              </article>
+              <article>
+                <h3 className="text-xl font-bold text-brand-navy">What does each project cost, and how long does it take?</h3>
+                <ul className="mt-3 space-y-2 leading-relaxed">{STARTING_PROJECTS.map(project => <li key={project.focus}><a href={`#${project.focus}`} className="font-semibold underline underline-offset-4">{project.name}</a>: {project.price}, delivered in {project.days} business days after agreed access and inputs.</li>)}</ul>
+                <p className="mt-3 leading-relaxed">These are one-time fees for the scope shown. Taxes, cloud and CI usage, and third-party licenses are additional. <a href="#pricing-terms" className="font-semibold underline underline-offset-4">Read the pricing and delivery terms.</a></p>
+              </article>
+              <article>
+                <h3 className="text-xl font-bold text-brand-navy">Does the AWS review include changes to our systems?</h3>
+                <p className="mt-3 leading-relaxed">The review delivers an architecture overview, resource inventory and prioritized findings, followed by a 60-minute walkthrough. Implementation is quoted separately. <TrackedLink to="/aws-review-preview" eventName="Service Click" eventSource="services-answer-review-preview" className="font-semibold underline underline-offset-4">See a review finding and action plan.</TrackedLink></p>
+              </article>
+              <article>
+                <h3 className="text-xl font-bold text-brand-navy">Can a development agency hire Anrotex for a client project?</h3>
+                <p className="mt-3 leading-relaxed">Yes. We work alongside your technical or delivery lead on the agreed cloud infrastructure or deployment work. We confirm client access, responsibilities and handover before starting. <TrackedLink to="/solutions" eventName="Service Click" eventSource="services-answer-agency" className="font-semibold underline underline-offset-4">Read how agency delivery works.</TrackedLink></p>
+              </article>
+              <article>
+                <h3 className="text-xl font-bold text-brand-navy">What can we inspect before booking?</h3>
+                <p className="mt-3 leading-relaxed">Explore the <TrackedLink to="/portfolio/cloud-operations" eventName="Case Study Click" eventSource="services-answer-project" className="font-semibold underline underline-offset-4">Cloud Operations architecture and code</TrackedLink>, follow the <TrackedLink to="/blog/aws-lambda-rollback-github-actions" eventName="Article Click" eventSource="services-answer-rollback" className="font-semibold underline underline-offset-4">Lambda rollback walkthrough and tests</TrackedLink>, or use the <TrackedLink to="/blog/reduce-aws-costs#worksheet" eventName="Article Click" eventSource="services-answer-worksheet" className="font-semibold underline underline-offset-4">AWS cost-review worksheet</TrackedLink>. Each resource explains the checks and limits for applying the approach.</p>
+              </article>
+              <article>
+                <h3 className="text-xl font-bold text-brand-navy">Where is the team based, and how do we start?</h3>
+                <p className="mt-3 leading-relaxed">Anrotex IT Systems LLP is based in Pune, India and works remotely with small product teams and agencies. <TrackedLink to="/about#where-we-work" eventName="Service Click" eventSource="services-answer-location" className="font-semibold underline underline-offset-4">See the countries we serve and meet the engineers.</TrackedLink> <TrackedLink to="/contact" eventSource="services-answer-enquiry" className="font-semibold underline underline-offset-4">Send a short outline of your workload and timeline</TrackedLink> to arrange a free 30-minute consultation. We reply within one business day and agree the scope before you commit.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+        <section aria-labelledby="your-team" className="bg-brand-off-white px-6 pb-16 pt-16 md:pb-20 md:pt-20">
           <div className="container">
             <h2 id="your-team" className="max-w-3xl text-3xl font-bold tracking-tight text-brand-navy">Extra engineering help for the work ahead.</h2>
             <div className="mt-8 grid gap-6 md:grid-cols-2">

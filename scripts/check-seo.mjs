@@ -103,6 +103,27 @@ assert.match((await render("/contact?focus=aws-audit")).html, /<option[^>]*selec
 
 const services = await readFile("dist/services/index.html", "utf8");
 const about = await readFile("dist/about/index.html", "utf8");
+const serviceSchemas = [...services.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>(.*?)<\/script>/gs)]
+  .map(([, json]) => JSON.parse(json));
+const catalog = serviceSchemas.find(schema => schema["@type"] === "OfferCatalog");
+const organization = serviceSchemas.find(schema => schema["@type"] === "Organization");
+assert(catalog && catalog.itemListElement.length === 3, "Services: publish the three project offers as structured services");
+assert.equal(organization.hasOfferCatalog["@id"], catalog["@id"], "The company must identify its project catalog");
+for (const offer of catalog.itemListElement) {
+  const focus = new URL(offer.url).hash.slice(1);
+  const card = services.match(new RegExp(`<article id="${focus}"[^>]*>(.*?)</article>`, "s"))?.[1];
+  assert(card, `Missing visible project for structured offer: ${offer.name}`);
+  const visiblePrice = card.match(/US\$([\d,]+)/)?.[1]?.replace(/,/g, "");
+  assert.equal(offer.price, visiblePrice, `Structured price must match the card: ${offer.name}`);
+  assert.equal(offer.priceCurrency, "USD");
+  assert.equal(offer.itemOffered["@type"], "Service");
+  assert(card.includes(escapeHtml(offer.itemOffered.description)), `Structured scope must match the card: ${offer.name}`);
+  assert(services.includes(`id="${new URL(offer.itemOffered.termsOfService).hash.slice(1)}"`), "Offer terms must have a visible destination");
+}
+assert.equal(organization.areaServed.length, 9, "Keep the nine agreed service markets");
+for (const country of organization.areaServed) {
+  assert(about.includes(country.name), `Service country must be visible on About: ${country.name}`);
+}
 const reviewPreview = await readFile("dist/aws-review-preview/index.html", "utf8");
 assert(about.includes('id="anuj-dhadge"') && about.includes("Anrotex IT Systems LLP"), "About: keep the company identity and reviewer destination available");
 for (const [name, html] of [["About", about], ["AWS review preview", reviewPreview]]) {
