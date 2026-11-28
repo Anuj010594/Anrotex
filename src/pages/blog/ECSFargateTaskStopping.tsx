@@ -46,12 +46,12 @@ const inlineCodeClass = "!bg-transparent !p-0 !text-inherit";
 export default function ECSFargateTaskStopping() {
   return <>
     <SEO title="ECS Fargate Task Keeps Stopping? Causes & Fixes | Anrotex" description={description} path={path} type="article" structuredData={[
-      articleSchema({ headline: title, description, path, datePublished: "2026-11-25", dateModified: "2026-11-25", reviewed: false }),
+      articleSchema({ headline: title, description, path, datePublished: "2026-11-25", dateModified: "2026-11-28", reviewed: false }),
       breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Insights", path: "/blog" }, { name: "ECS Fargate troubleshooting", path }]),
     ]} />
     <InsightArticle eyebrow="ECS Fargate troubleshooting" title={title}
       description="Your container runs on your laptop. On AWS, it starts, stops and gets replaced. Follow the stopped-task details to the application error, then check that your fix holds."
-      published="25 November 2026" updated="25 November 2026" readTime="9 minute read" reviewed={false} toc={toc}
+      published="25 November 2026" updated="28 November 2026" readTime="9 minute read" reviewed={false} toc={toc}
       ctaTitle="Get your deployment working reliably." ctaDescription="Tell us which ECS service is failing and what changed. We can help investigate the cause and agree the work needed."
       ctaHref="/contact?focus=devops" ctaLabel="Discuss an ECS problem">
 
@@ -143,6 +143,8 @@ hello`}</code></pre>
       </div>
       <p><strong>Code 137 alone does not prove a memory shortage.</strong> Match it to the <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/out-of-memory.html">out-of-memory reason</a>, available memory measurements and shutdown events before changing capacity. A process can also be forcibly stopped when it does not finish within the configured <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definition_timeout">stop timeout</a>.</p>
       <p>For failed health checks, test the exact configured check. A <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/healthcheck.html">container health check</a> runs inside the container, while a load balancer checks the application over the network. They can fail for different reasons.</p>
+
+      <p>If image pulls, logs or secrets fail after a network change, trace the routes in our <TrackedLink to="/blog/ecs-fargate-nat-gateway-vpc-endpoints" eventName="Article Click" eventSource="ecs-troubleshooting-network">Fargate NAT gateway and private endpoint guide</TrackedLink>.</p>
 
       <h2 id="verify-recovery">Check that the ECS release stays healthy</h2>
       <p>Once the cause is understood, review the proposed change and deploy it to the agreed test environment. Keep the last compatible working revision available while validating the new one.</p>

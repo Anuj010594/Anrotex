@@ -83,6 +83,7 @@ export default function TerraformAWS() {
               </ul>
               <p className="mt-4 leading-relaxed text-brand-teal">{foundation.inputs}</p>
               <p className="mt-4 leading-relaxed text-brand-teal">Does the application start locally but stop on ECS? <TrackedLink to="/blog/ecs-fargate-task-keeps-stopping" eventName="Article Click" eventSource="terraform-ecs-troubleshooting" className="font-semibold underline underline-offset-4">Follow the stopped-task diagnosis and startup example.</TrackedLink></p>
+              <p className="mt-4 leading-relaxed text-brand-teal">Planning the network budget? <TrackedLink to="/blog/ecs-fargate-nat-gateway-vpc-endpoints" eventName="Article Click" eventSource="terraform-network-costs" className="font-semibold underline underline-offset-4">Compare NAT gateways and private endpoints for Fargate.</TrackedLink></p>
             </div>
             <aside className="rounded-3xl bg-brand-stone/50 p-6 md:p-8"><h2 className="text-2xl font-bold">What needs a separate scope</h2><p className="mt-4 leading-relaxed text-brand-teal">{foundation.exclusions}</p><p className="mt-5 leading-relaxed text-brand-teal">Already running on AWS? <TrackedLink to="/aws-cost-optimization" eventName="Service Click" eventSource="terraform-existing-aws" className="font-semibold underline underline-offset-4">Start with an infrastructure review</TrackedLink> to understand the existing environment.</p></aside>
           </div>

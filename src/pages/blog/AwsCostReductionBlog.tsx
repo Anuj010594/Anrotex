@@ -53,7 +53,7 @@ export default function AwsCostReductionBlog() {
               "Trace an AWS bill increase, choose which costs to investigate, and plan changes with an EC2 example and a free cost-review worksheet.",
             path: "/blog/reduce-aws-costs",
             datePublished: "2026-06-16",
-            dateModified: "2026-11-23",
+            dateModified: "2026-11-28",
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
@@ -68,7 +68,7 @@ export default function AwsCostReductionBlog() {
         title="How to reduce AWS costs: a practical checklist"
         description="Find which charges are driving your AWS bill, choose the changes worth testing, and measure the result. Start with unused resources, then review capacity, storage, network costs and commitments."
         published="16 June 2026"
-        updated="23 November 2026"
+        updated="28 November 2026"
         readTime="16 minute read"
         toc={toc}
         ctaTitle="Find the waste in your AWS estate."
@@ -518,6 +518,8 @@ export default function AwsCostReductionBlog() {
           and connectivity requirements, and include any remaining gateway hours
           and transfer costs in the estimate.
         </p>
+
+        <p>Running containers on ECS Fargate? Our <TrackedLink to="/blog/ecs-fargate-nat-gateway-vpc-endpoints" eventName="Article Click" eventSource="aws-guide-fargate-network">NAT gateway and VPC endpoint comparison</TrackedLink> includes the two-AZ costs, connection diagrams and checks before changing routes.</p>
 
         <h3 id="log-costs">CloudWatch logs and monitoring</h3>
         <p>

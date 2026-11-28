@@ -8,6 +8,17 @@ import { breadcrumbSchema } from "@/lib/seo";
 
 const posts = [
   {
+    topic: "Fargate networking",
+    problem: "Check the connections before changing the network bill.",
+    title: "Does Your ECS Fargate App Need a NAT Gateway?",
+    description: "Compare NAT and private endpoint costs across two Availability Zones, follow the network diagrams, and run the Python calculation and Terraform checks.",
+    link: "/blog/ecs-fargate-nat-gateway-vpc-endpoints",
+    sections: [
+      { id: "cost-comparison", label: "Compare monthly costs" },
+      { id: "terraform-example", label: "Check the endpoint configuration" },
+    ],
+  },
+  {
     topic: "ECS Fargate",
     problem: "Find why the task stops before starting another one.",
     title: "ECS Fargate Task Keeps Stopping? Find the Cause and Fix It",

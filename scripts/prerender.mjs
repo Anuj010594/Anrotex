@@ -23,6 +23,7 @@ const routes = [
   ["/terraform-aws", "TerraformAWS"],
   ["/blog", "Blog"],
   ["/blog/ecs-fargate-task-keeps-stopping", "blog/ECSFargateTaskStopping"],
+  ["/blog/ecs-fargate-nat-gateway-vpc-endpoints", "blog/FargateNATGateway"],
   ["/blog/fixed-price-aws-cost-audit", "blog/FixedPriceAWSCostAudit"],
   ["/blog/cluster-autoscaling-limits-quotas", "blog/ClusterAutoscalingLimits"],
   ["/blog/scheduled-predictive-kubernetes-autoscaling", "blog/ScheduledPredictiveAutoscaling"],
@@ -55,8 +56,8 @@ for (const [route, page] of [...routes, ["/404", "NotFound"]]) {
     .join("\n    ");
   const { html, head } = await render(route);
   const document = template
-    .replace("<!--seo-head-->", `${head}\n    ${preloads}`)
-    .replace('<div id="root"></div>', `<div id="root">${html}</div>`);
+    .replace("<!--seo-head-->", () => `${head}\n    ${preloads}`)
+    .replace('<div id="root"></div>', () => `<div id="root">${html}</div>`);
   const outputFile = route === "/404"
     ? path.join(distDirectory, "404.html")
     : path.join(distDirectory, route.slice(1), "index.html");

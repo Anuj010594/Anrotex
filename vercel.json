@@ -35,6 +35,7 @@
     { "source": "/terraform-aws", "destination": "/terraform-aws/index.html" },
     { "source": "/blog", "destination": "/blog/index.html" },
     { "source": "/blog/ecs-fargate-task-keeps-stopping", "destination": "/blog/ecs-fargate-task-keeps-stopping/index.html" },
+    { "source": "/blog/ecs-fargate-nat-gateway-vpc-endpoints", "destination": "/blog/ecs-fargate-nat-gateway-vpc-endpoints/index.html" },
     { "source": "/blog/fixed-price-aws-cost-audit", "destination": "/blog/fixed-price-aws-cost-audit/index.html" },
     { "source": "/blog/cluster-autoscaling-limits-quotas", "destination": "/blog/cluster-autoscaling-limits-quotas/index.html" },
     { "source": "/blog/scheduled-predictive-kubernetes-autoscaling", "destination": "/blog/scheduled-predictive-kubernetes-autoscaling/index.html" },

@@ -188,6 +188,16 @@ for (const focus of ["aws-review", "cicd-setup", "terraform-foundation"]) {
 const agency = await readFile("dist/solutions/index.html", "utf8");
 const terraform = await readFile("dist/terraform-aws/index.html", "utf8");
 const ecsGuide = await readFile("dist/blog/ecs-fargate-task-keeps-stopping/index.html", "utf8");
+const networkGuide = await readFile("dist/blog/ecs-fargate-nat-gateway-vpc-endpoints/index.html", "utf8");
+for (const source of ["fargate_network_costs.py", "fargate-endpoints/main.tf", "fargate-endpoints/endpoints.tftest.hcl"]) {
+  assert(networkGuide.includes(escapeHtml(await readFile(`src/content/examples/${source}`, "utf8"))), `Networking guide must display the exact tested example: ${source}`);
+}
+for (const html of [blog, terraform, awsGuide, ecsGuide]) {
+  assert(html.includes('href="/blog/ecs-fargate-nat-gateway-vpc-endpoints"'), "Networking guide must be discoverable from Insights, AWS costs, ECS and Terraform");
+}
+assert(networkGuide.includes('href="/contact?focus=aws-review"') && networkGuide.includes('href="/aws-review-preview"'), "Networking guide must lead to the review and preview");
+assert.equal([...networkGuide.matchAll(/<figure\b/g)].length, 2, "Networking guide must include both connection diagrams");
+assert.doesNotMatch(networkGuide, /illustrative|not a client result|publication boundaries|internal use|keyword target|SEO batch/i);
 const ecsExample = await readFile("src/content/examples/ecs_startup.py", "utf8");
 assert(ecsGuide.includes(escapeHtml(ecsExample)), "The ECS guide must display the complete tested startup example");
 assert(ecsGuide.includes('href="/contact?focus=devops"'), "ECS troubleshooting must lead to the scoped DevOps enquiry");
